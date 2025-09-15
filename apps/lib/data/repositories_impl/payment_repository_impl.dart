@@ -5,6 +5,7 @@ import '../local/isar_collections.dart';
 import '../local/mappers/entity_mappers.dart';
 import '../local/outbox_repository.dart';
 import '../remote/api_paths.dart';
+import 'package:cashier_app/services/key_value_service.dart';
 
 class PaymentRepositoryImpl implements PaymentRepository {
   final Isar isar;
@@ -73,5 +74,11 @@ class PaymentRepositoryImpl implements PaymentRepository {
       op: ApiPaths.delete,
       payload: {'id': id},
     );
+    // Clean up any locally stored tx reference for this payment
+    try {
+      await KeyValueService.remove('payment_ref_$id');
+    } catch (_) {
+      // Ignore if KV service not initialized (e.g., tests)
+    }
   }
 }

@@ -8,7 +8,11 @@ class ProductModel {
   @Index(unique: true, replace: true)
   late String uid;
   late String name;
+  @Index(unique: true, replace: true)
+  late String sku;
+  late int unitCost; // riel
   late int price; // riel
+  late int stock;
   @Index()
   late DateTime updatedAt;
 }

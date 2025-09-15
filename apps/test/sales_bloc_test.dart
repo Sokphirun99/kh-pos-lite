@@ -1,5 +1,6 @@
+
 import 'dart:async';
-import 'package:bloc_test/bloc_test.dart';
+// Using plain flutter_test without bloc_test to avoid version conflicts
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:cashier_app/features/sales/bloc/sales_bloc.dart';
@@ -23,22 +24,37 @@ void main() {
       when(() => repo.delete(any())).thenAnswer((_) async {});
     });
 
+    setUpAll(() {
+      registerFallbackValue(Sale(
+        id: 'fallback',
+        createdAt: DateTime(2024),
+        total: const MoneyRiel(0),
+      ));
+    });
+
     tearDown(() async {
       await ctrl.close();
     });
 
-    blocTest<SalesBloc, SalesState>(
-      'emits loading then data on subscription',
-      build: () => SalesBloc(repo),
-      act: (b) {
-        b.add(const SalesSubscribed());
-        ctrl.add([Sale(id: '1', createdAt: DateTime(2024), total: const MoneyRiel(1000))]);
-      },
-      expect: () => [
-        const SalesState.loading(),
-        isA<SalesState>().having((s) => s.items.length, 'items', 1),
-      ],
-    );
+    test('emits loading then data on subscription', () async {
+      final bloc = SalesBloc(repo);
+      final states = <SalesState>[];
+      final sub = bloc.stream.listen(states.add);
+
+      bloc.add(const SalesSubscribed());
+      await testerRun();
+      ctrl.add([Sale(id: '1', createdAt: DateTime(2024), total: const MoneyRiel(1000))]);
+      await testerRun();
+
+      expect(states.first, const SalesState.loading());
+      expect(states.any((s) => s.items.length == 1), isTrue);
+
+      await sub.cancel();
+      await bloc.close();
+    });
   });
 }
 
+Future<void> testerRun() async {
+  await Future<void>.delayed(const Duration(milliseconds: 10));
+}

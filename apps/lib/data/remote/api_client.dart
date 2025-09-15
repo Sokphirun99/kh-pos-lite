@@ -26,7 +26,7 @@ ApiClient buildApiClient({String? token, String baseUrl = 'https://api.example.c
   dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) async {
     String? t = token;
     t ??= await storage.read();
-    if (t.isNotEmpty) {
+    if (t != null && t.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $t';
     }
     handler.next(options);

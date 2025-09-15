@@ -34,6 +34,12 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
+  Future<Product?> getBySku(String sku) async {
+    final model = await isar.productModels.filter().skuEqualTo(sku).findFirst();
+    return model?.toDomain();
+  }
+
+  @override
   Future<List<Product>> list() async {
     final list = await isar.productModels.where().sortByName().findAll();
     return list.map((e) => e.toDomain()).toList(growable: false);
