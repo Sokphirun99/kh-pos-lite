@@ -1,0 +1,30 @@
+{
+  "appTitle": "KH POS Lite",
+  "tabProducts": "Products",
+  "tabSales": "Sales",
+  "tabPayments": "Payments",
+  "tabReports": "Reports",
+  "tabSettings": "Settings",
+  "loginTitle": "Sign in",
+  "loginSignIn": "Sign in",
+  "settingsLanguage": "Language",
+  "settingsLanguageKm": "Khmer",
+  "settingsLanguageEn": "English",
+  "settingsDarkMode": "Dark Mode"
+  ,
+  "settingsSyncNow": "Sync now",
+  "settingsSyncIdle": "Sync idle",
+  "settingsSyncing": "Syncing...",
+  "settingsSyncError": "Sync error: {message}"
+  ,
+  "settingsSyncDeleted": "Deleted",
+  "undo": "UNDO",
+  "noProducts": "No products",
+  "noSales": "No sales",
+  "noPayments": "No payments",
+  "lastSyncAt": "Last sync: {time}"
+  ,
+  "settingsShowSyncBanner": "Show sync banner"
+  ,
+  "settingsEnableBatchSync": "Enable batch sync"
+}

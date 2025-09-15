@@ -1,0 +1,28 @@
+{
+  "appTitle": "ខេអេច ភאָס លាយទ៍",
+  "tabProducts": "ផលិតផល",
+  "tabSales": "លក់",
+  "tabPayments": "ការទូទាត់",
+  "tabReports": "របាយការណ៍",
+  "tabSettings": "ការកំណត់",
+  "loginTitle": "ចូលប្រើ",
+  "loginSignIn": "ចូលប្រើ",
+  "settingsLanguage": "ភាសា",
+  "settingsLanguageKm": "ខ្មែរ",
+  "settingsLanguageEn": "អង់គ្លេស",
+  "settingsDarkMode": "របៀបងងឹត",
+  "settingsSyncNow": "សមកាលកម្មឥឡូវនេះ",
+  "settingsSyncIdle": "កំពុងសម្រាកសមកាលកម្ម",
+  "settingsSyncing": "កំពុងសមកាលកម្ម...",
+  "settingsSyncError": "កំហុសសមកាលកម្ម: {message}",
+  "settingsSyncDeleted": "បានលុប",
+  "undo": "មិនធ្វើវិញ",
+  "noProducts": "គ្មានផលិតផល",
+  "noSales": "គ្មានការលក់",
+  "noPayments": "គ្មានការទូទាត់",
+  "lastSyncAt": "សមកាលកម្មចុងក្រោយ: {time}"
+  ,
+  "settingsShowSyncBanner": "បង្ហាញបន្ទះសមកាលកម្ម"
+  ,
+  "settingsEnableBatchSync": "អនុញ្ញាតសមកាលកម្មជាក្បាល"
+}
