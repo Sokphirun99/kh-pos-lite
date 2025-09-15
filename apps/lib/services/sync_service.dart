@@ -32,7 +32,7 @@ class SyncService {
       }
       return;
     }
-    const batchSize = 20;
+    final batchSize = (KeyValueService.get<int>('sync_batch_size') ?? 20).clamp(5, 50);
     for (var i = 0; i < items.length; i += batchSize) {
       final batch = items.sublist(i, i + batchSize > items.length ? items.length : i + batchSize);
       for (final op in batch) {

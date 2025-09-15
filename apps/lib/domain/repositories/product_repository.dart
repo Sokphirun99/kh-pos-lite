@@ -6,5 +6,6 @@ abstract class ProductRepository {
   Future<void> delete(String id);
   Future<List<Product>> list();
   Future<Product?> getById(String id);
+  Future<Product?> getBySku(String sku);
   Stream<List<Product>> watchAll();
 }

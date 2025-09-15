@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cashier_app/features/auth/bloc/auth_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cashier_app/l10n/app_localizations.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -13,7 +13,7 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(l10n.loginTitle)),
       body: Center(
-        child: ElevatedButton(
+        child: FilledButton(
           onPressed: () async {
             context.read<AuthBloc>().add(const AuthSignedIn('dev-token'));
             // Optionally preload other state here

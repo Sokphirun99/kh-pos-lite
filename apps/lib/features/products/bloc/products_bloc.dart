@@ -16,6 +16,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     on<ProductAdded>(_onAdded);
     on<ProductUpdated>(_onUpdated);
     on<ProductDeleted>(_onDeleted);
+    on<_ProductsEmit>((event, emit) => emit(ProductsState.data(event.items)));
   }
 
   Future<void> _onSubscribed(ProductsSubscribed event, Emitter<ProductsState> emit) async {

@@ -12,12 +12,22 @@ extension ProductIsarMapper on Product {
   ProductModel toIsar() => ProductModel()
     ..uid = this.id
     ..name = this.name
+    ..sku = this.sku
+    ..unitCost = this.unitCost.amount
     ..price = this.price.amount
+    ..stock = this.stock
     ..updatedAt = DateTime.now().toUtc();
 }
 
 extension ProductModelDomainMapper on ProductModel {
-  Product toDomain() => Product(id: uid, name: name, price: MoneyRiel(price));
+  Product toDomain() => Product(
+        id: uid,
+        name: name,
+        sku: sku,
+        unitCost: MoneyRiel(unitCost),
+        price: MoneyRiel(price),
+        stock: stock,
+      );
 }
 
 extension SaleIsarMapper on Sale {
@@ -51,13 +61,23 @@ extension ProductDtoMapper on Product {
   ProductDto toDto() => ProductDto(
         id: this.id,
         name: this.name,
+        sku: this.sku,
+        unitCost: this.unitCost.amount,
         price: this.price.amount,
+        stock: this.stock,
         updatedAt: DateTime.now().toUtc().toIso8601String(),
       );
 }
 
 extension ProductFromDto on ProductDto {
-  Product toDomain() => Product(id: this.id, name: this.name, price: MoneyRiel(this.price));
+  Product toDomain() => Product(
+        id: this.id,
+        name: this.name,
+        sku: this.sku,
+        unitCost: MoneyRiel(this.unitCost),
+        price: MoneyRiel(this.price),
+        stock: this.stock,
+      );
 }
 
 extension SaleDtoMapper on Sale {

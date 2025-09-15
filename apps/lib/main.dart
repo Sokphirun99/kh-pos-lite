@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:bloc/bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'app/app.dart';
 import 'app/bloc_observer.dart';
@@ -15,8 +14,7 @@ import 'domain/repositories/product_repository.dart';
 import 'domain/repositories/sale_repository.dart';
 import 'domain/repositories/payment_repository.dart';
 import 'background/sync_task.dart';
-import 'package:workmanager/workmanager.dart';
-import 'package:workmanager/workmanager.dart' show ExistingWorkPolicy, BackoffPolicy, Constraints, NetworkType;
+import 'package:workmanager/workmanager.dart' show ExistingPeriodicWorkPolicy, BackoffPolicy, Constraints, NetworkType, Workmanager;
 import 'services/key_value_service.dart';
 
 Future<void> main() async {
@@ -39,7 +37,7 @@ Future<void> main() async {
     'syncPeriodic',
     syncTaskName,
     frequency: const Duration(minutes: 15),
-    existingWorkPolicy: ExistingWorkPolicy.keep,
+    existingWorkPolicy: ExistingPeriodicWorkPolicy.keep,
     constraints: Constraints(
       networkType: NetworkType.connected,
       requiresBatteryNotLow: true,

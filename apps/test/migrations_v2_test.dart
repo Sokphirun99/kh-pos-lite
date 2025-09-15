@@ -24,6 +24,7 @@ void main() {
         ..uid = 'p1'
         ..name = 'X'
         ..price = 1000
+        ..sku = 'DUMMY-SKU'
         ..updatedAt = DateTime.fromMillisecondsSinceEpoch(0).toUtc();
       await isar.productModels.put(p);
 
