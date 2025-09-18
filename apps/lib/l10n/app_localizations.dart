@@ -170,6 +170,18 @@ abstract class AppLocalizations {
   /// **'Dark Mode'**
   String get settingsDarkMode;
 
+  /// No description provided for @settingsGeneralSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace'**
+  String get settingsGeneralSection;
+
+  /// No description provided for @settingsGeneralSectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your profile and sync status.'**
+  String get settingsGeneralSectionSubtitle;
+
   /// No description provided for @settingsSyncNow.
   ///
   /// In en, this message translates to:
@@ -247,6 +259,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Batch size'**
   String get settingsBatchSize;
+
+  /// No description provided for @settingsBatchSizeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Process {size} invoices per batch'**
+  String settingsBatchSizeHint(Object size);
+
+  /// No description provided for @settingsPreferencesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get settingsPreferencesSection;
+
+  /// No description provided for @settingsPreferencesSectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Personalize how the app looks and feels.'**
+  String get settingsPreferencesSectionSubtitle;
+
+  /// No description provided for @settingsSyncSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Automation'**
+  String get settingsSyncSection;
+
+  /// No description provided for @settingsSyncSectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fine tune batch sync and inventory safeguards.'**
+  String get settingsSyncSectionSubtitle;
 
   /// No description provided for @aboutTitle.
   ///
@@ -470,6 +512,12 @@ abstract class AppLocalizations {
   /// **'Low stock threshold'**
   String get settingsLowStockThreshold;
 
+  /// No description provided for @settingsLowStockThresholdDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert when stock falls below {threshold}'**
+  String settingsLowStockThresholdDescription(Object threshold);
+
   /// No description provided for @adjustStockTitle.
   ///
   /// In en, this message translates to:
@@ -529,6 +577,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Allow oversell (warn only)'**
   String get settingsAllowOversell;
+
+  /// No description provided for @settingsReceiptSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt branding'**
+  String get settingsReceiptSection;
+
+  /// No description provided for @settingsReceiptSectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize how your shop appears on printed receipts.'**
+  String get settingsReceiptSectionSubtitle;
+
+  /// No description provided for @settingsPaymentSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment integrations'**
+  String get settingsPaymentSection;
+
+  /// No description provided for @settingsPaymentSectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share KHQR codes and connect Telegram bots.'**
+  String get settingsPaymentSectionSubtitle;
+
+  /// No description provided for @settingsDangerZone.
+  ///
+  /// In en, this message translates to:
+  /// **'Danger zone'**
+  String get settingsDangerZone;
+
+  /// No description provided for @settingsDangerZoneSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out of this device.'**
+  String get settingsDangerZoneSubtitle;
 
   /// No description provided for @exceedsStock.
   ///

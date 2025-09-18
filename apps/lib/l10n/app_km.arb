@@ -11,6 +11,8 @@
   "settingsLanguageKm": "ខ្មែរ",
   "settingsLanguageEn": "អង់គ្លេស",
   "settingsDarkMode": "របៀបងងឹត",
+  "settingsGeneralSection": "កន្លែងធ្វើការ",
+  "settingsGeneralSectionSubtitle": "គ្រប់គ្រងព័ត៌មានសម្គាល់ និងស្ថានភាពសមកាលកម្ម។",
   "settingsSyncNow": "សមកាលកម្មឥឡូវនេះ",
   "settingsSyncIdle": "កំពុងសម្រាកសមកាលកម្ម",
   "settingsSyncing": "កំពុងសមកាលកម្ម...",
@@ -20,14 +22,15 @@
   "noProducts": "គ្មានផលិតផល",
   "noSales": "គ្មានការលក់",
   "noPayments": "គ្មានការទូទាត់",
-  "lastSyncAt": "សមកាលកម្មចុងក្រោយ: {time}"
-  ,
-  "settingsShowSyncBanner": "បង្ហាញបន្ទះសមកាលកម្ម"
-  ,
-  "settingsEnableBatchSync": "អនុញ្ញាតសមកាលកម្មជាក្បាល"
-  ,
-  "settingsBatchSize": "ទំហំក្បាល"
-  ,
+  "lastSyncAt": "សមកាលកម្មចុងក្រោយ: {time}",
+  "settingsShowSyncBanner": "បង្ហាញបន្ទះសមកាលកម្ម",
+  "settingsEnableBatchSync": "អនុញ្ញាតសមកាលកម្មជាក្បាល",
+  "settingsBatchSize": "ទំហំក្បាល",
+  "settingsBatchSizeHint": "ដំណើរការ {size} វិក័យប័ត្រក្នុងមួយក្បាល",
+  "settingsPreferencesSection": "ចំណូលចិត្ត",
+  "settingsPreferencesSectionSubtitle": "ប្ដូររបៀបដែលកម្មវិធីមើលទៅ និងមានអារម្មណ៍។",
+  "settingsSyncSection": "សមកាលកម្មស្វ័យប្រវត្តិ",
+  "settingsSyncSectionSubtitle": "លៃតម្រូវសមកាលកម្មជាក្បាល និងការពារស្តុក។",
   "aboutTitle": "អំពីកម្មវិធី",
   "aboutDbVersion": "កំណែនៃមូលដ្ឋានទិន្នន័យ",
   "aboutAppVersion": "កំណែនៃកម្មវិធី",
@@ -69,6 +72,7 @@
   "txRefLabel": "លេខយោង: {ref}"
   ,
   "settingsLowStockThreshold": "កម្រិតស្តុកទាប",
+  "settingsLowStockThresholdDescription": "ជូនដំណឹងនៅពេលស្តុកទាបជាង {threshold}",
   "adjustStockTitle": "កែតម្រូវស្តុក",
   "stockLabel": "ស្តុក",
   "decrease": "បន្ថយ",
@@ -82,6 +86,12 @@
   "notEnoughStockFor": "ស្តុកមិនគ្រប់សម្រាប់ {name}។ នៅសល់: {qty}"
   ,
   "settingsAllowOversell": "អនុញ្ញាតលក់លើស (ព្រមានតែប៉ុណ្ណោះ)",
+  "settingsReceiptSection": "ម៉ាកវិក្កយបត្រ",
+  "settingsReceiptSectionSubtitle": "ប្ដូររូបរាងហាងលើវិក្កយបត្រ។",
+  "settingsPaymentSection": "ការរួមបញ្ចូលការទូទាត់",
+  "settingsPaymentSectionSubtitle": "ចែករំលែក KHQR និងភ្ជាប់បុត Telegram។",
+  "settingsDangerZone": "តំបន់គ្រោះថ្នាក់",
+  "settingsDangerZoneSubtitle": "ចាកចេញពីឧបករណ៍នេះ។",
   "exceedsStock": "លើសស្តុក"
   ,
   "receipt": "វិក្កយបត្រ",
