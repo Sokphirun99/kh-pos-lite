@@ -179,6 +179,12 @@ class AppLocalizationsKm extends AppLocalizations {
   String get settingsDarkMode => 'របៀបងងឹត';
 
   @override
+  String get settingsGeneralSection => 'កន្លែងធ្វើការ';
+
+  @override
+  String get settingsGeneralSectionSubtitle => 'គ្រប់គ្រងព័ត៌មានសម្គាល់ និងស្ថានភាពសមកាលកម្ម។';
+
+  @override
   String get settingsSyncNow => 'សមកាលកម្មឥឡូវនេះ';
 
   @override
@@ -223,6 +229,23 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get settingsBatchSize => 'ទំហំក្បាល';
+
+  @override
+  String settingsBatchSizeHint(Object size) {
+    return 'ដំណើរការ $size វិក័យប័ត្រក្នុងមួយក្បាល';
+  }
+
+  @override
+  String get settingsPreferencesSection => 'ចំណូលចិត្ត';
+
+  @override
+  String get settingsPreferencesSectionSubtitle => 'ប្ដូររបៀបដែលកម្មវិធីមើលទៅ និងមានអារម្មណ៍។';
+
+  @override
+  String get settingsSyncSection => 'សមកាលកម្មស្វ័យប្រវត្តិ';
+
+  @override
+  String get settingsSyncSectionSubtitle => 'លៃតម្រូវសមកាលកម្មជាក្បាល និងការពារស្តុក។';
 
   @override
   String get aboutTitle => 'អំពីកម្មវិធី';
@@ -369,6 +392,11 @@ class AppLocalizationsKm extends AppLocalizations {
   String get settingsLowStockThreshold => 'កម្រិតស្តុកទាប';
 
   @override
+  String settingsLowStockThresholdDescription(Object threshold) {
+    return 'ជូនដំណឹងនៅពេលស្តុកទាបជាង $threshold';
+  }
+
+  @override
   String get adjustStockTitle => 'កែតម្រូវស្តុក';
 
   @override
@@ -399,6 +427,24 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get settingsAllowOversell => 'អនុញ្ញាតលក់លើស (ព្រមានតែប៉ុណ្ណោះ)';
+
+  @override
+  String get settingsReceiptSection => 'ម៉ាកវិក្កយបត្រ';
+
+  @override
+  String get settingsReceiptSectionSubtitle => 'ប្ដូររូបរាងហាងលើវិក្កយបត្រ។';
+
+  @override
+  String get settingsPaymentSection => 'ការរួមបញ្ចូលការទូទាត់';
+
+  @override
+  String get settingsPaymentSectionSubtitle => 'ចែករំលែក KHQR និងភ្ជាប់បុត Telegram។';
+
+  @override
+  String get settingsDangerZone => 'តំបន់គ្រោះថ្នាក់';
+
+  @override
+  String get settingsDangerZoneSubtitle => 'ចាកចេញពីឧបករណ៍នេះ។';
 
   @override
   String get exceedsStock => 'លើសស្តុក';

@@ -179,6 +179,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsDarkMode => 'Dark Mode';
 
   @override
+  String get settingsGeneralSection => 'Workspace';
+
+  @override
+  String get settingsGeneralSectionSubtitle => 'Manage your profile and sync status.';
+
+  @override
   String get settingsSyncNow => 'Sync now';
 
   @override
@@ -223,6 +229,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsBatchSize => 'Batch size';
+
+  @override
+  String settingsBatchSizeHint(Object size) {
+    return 'Process $size invoices per batch';
+  }
+
+  @override
+  String get settingsPreferencesSection => 'Preferences';
+
+  @override
+  String get settingsPreferencesSectionSubtitle => 'Personalize how the app looks and feels.';
+
+  @override
+  String get settingsSyncSection => 'Automation';
+
+  @override
+  String get settingsSyncSectionSubtitle => 'Fine tune batch sync and inventory safeguards.';
 
   @override
   String get aboutTitle => 'About';
@@ -369,6 +392,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsLowStockThreshold => 'Low stock threshold';
 
   @override
+  String settingsLowStockThresholdDescription(Object threshold) {
+    return 'Alert when stock falls below $threshold';
+  }
+
+  @override
   String get adjustStockTitle => 'Adjust Stock';
 
   @override
@@ -399,6 +427,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsAllowOversell => 'Allow oversell (warn only)';
+
+  @override
+  String get settingsReceiptSection => 'Receipt branding';
+
+  @override
+  String get settingsReceiptSectionSubtitle => 'Customize how your shop appears on printed receipts.';
+
+  @override
+  String get settingsPaymentSection => 'Payment integrations';
+
+  @override
+  String get settingsPaymentSectionSubtitle => 'Share KHQR codes and connect Telegram bots.';
+
+  @override
+  String get settingsDangerZone => 'Danger zone';
+
+  @override
+  String get settingsDangerZoneSubtitle => 'Sign out of this device.';
 
   @override
   String get exceedsStock => 'Exceeds stock';

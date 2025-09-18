@@ -54,27 +54,28 @@
   "settingsLanguage": "Language",
   "settingsLanguageKm": "Khmer",
   "settingsLanguageEn": "English",
-  "settingsDarkMode": "Dark Mode"
-  ,
+  "settingsDarkMode": "Dark Mode",
+  "settingsGeneralSection": "Workspace",
+  "settingsGeneralSectionSubtitle": "Manage your profile and sync status.",
   "settingsSyncNow": "Sync now",
   "settingsSyncIdle": "Sync idle",
   "settingsSyncing": "Syncing...",
-  "settingsSyncError": "Sync error: {message}"
-  ,
+  "settingsSyncError": "Sync error: {message}",
   "settingsSyncDeleted": "Deleted",
   "undo": "UNDO",
   "noProducts": "No products",
   "noSales": "No sales",
   "salesEmptyDescription": "Create a sale to start tracking payments.",
   "noPayments": "No payments",
-  "lastSyncAt": "Last sync: {time}"
-  ,
-  "settingsShowSyncBanner": "Show sync banner"
-  ,
-  "settingsEnableBatchSync": "Enable batch sync"
-  ,
-  "settingsBatchSize": "Batch size"
-  ,
+  "lastSyncAt": "Last sync: {time}",
+  "settingsShowSyncBanner": "Show sync banner",
+  "settingsEnableBatchSync": "Enable batch sync",
+  "settingsBatchSize": "Batch size",
+  "settingsBatchSizeHint": "Process {size} invoices per batch",
+  "settingsPreferencesSection": "Preferences",
+  "settingsPreferencesSectionSubtitle": "Personalize how the app looks and feels.",
+  "settingsSyncSection": "Automation",
+  "settingsSyncSectionSubtitle": "Fine tune batch sync and inventory safeguards.",
   "aboutTitle": "About",
   "aboutDbVersion": "DB version",
   "aboutAppVersion": "App version",
@@ -126,6 +127,7 @@
   "txRefLabel": "Ref: {ref}"
   ,
   "settingsLowStockThreshold": "Low stock threshold",
+  "settingsLowStockThresholdDescription": "Alert when stock falls below {threshold}",
   "adjustStockTitle": "Adjust Stock",
   "stockLabel": "Stock",
   "decrease": "Decrease",
@@ -139,6 +141,12 @@
   "notEnoughStockFor": "Not enough stock for {name}. Available: {qty}"
   ,
   "settingsAllowOversell": "Allow oversell (warn only)",
+  "settingsReceiptSection": "Receipt branding",
+  "settingsReceiptSectionSubtitle": "Customize how your shop appears on printed receipts.",
+  "settingsPaymentSection": "Payment integrations",
+  "settingsPaymentSectionSubtitle": "Share KHQR codes and connect Telegram bots.",
+  "settingsDangerZone": "Danger zone",
+  "settingsDangerZoneSubtitle": "Sign out of this device.",
   "exceedsStock": "Exceeds stock"
   ,
   "receipt": "Receipt",
