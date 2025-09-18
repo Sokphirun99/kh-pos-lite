@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:cashier_app/features/products/presentation/products_screen.dart';
 import 'package:cashier_app/features/products/presentation/stock_adjustments_screen.dart';
+import 'package:cashier_app/features/customers/presentation/customers_screen.dart';
 import 'package:cashier_app/features/sales/presentation/sales_screen.dart';
 import 'package:cashier_app/features/sales/presentation/sale_detail_screen.dart';
 import 'package:cashier_app/features/receipts/receipt_preview_screen.dart';
@@ -45,6 +46,11 @@ GoRouter buildRouter(BuildContext context) {
             path: '/',
             name: 'products',
             builder: (context, state) => const ProductsScreen(),
+          ),
+          GoRoute(
+            path: '/customers',
+            name: 'customers',
+            builder: (context, state) => const CustomersScreen(),
           ),
           GoRoute(
             path: '/stock',

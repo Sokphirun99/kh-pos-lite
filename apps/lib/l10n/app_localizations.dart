@@ -104,35 +104,299 @@ abstract class AppLocalizations {
   /// **'KH POS Lite'**
   String get appTitle;
 
-  /// No description provided for @tabProducts.
+  /// No description provided for @tabItems.
   ///
   /// In en, this message translates to:
-  /// **'Products'**
-  String get tabProducts;
+  /// **'Items'**
+  String get tabItems;
 
-  /// No description provided for @tabSales.
+  /// No description provided for @tabCustomers.
   ///
   /// In en, this message translates to:
-  /// **'Sales'**
-  String get tabSales;
+  /// **'Customers'**
+  String get tabCustomers;
 
-  /// No description provided for @tabPayments.
+  /// No description provided for @tabInvoices.
   ///
   /// In en, this message translates to:
-  /// **'Payments'**
-  String get tabPayments;
-
-  /// No description provided for @tabReports.
-  ///
-  /// In en, this message translates to:
-  /// **'Reports'**
-  String get tabReports;
+  /// **'Invoices'**
+  String get tabInvoices;
 
   /// No description provided for @tabSettings.
   ///
   /// In en, this message translates to:
   /// **'Settings'**
   String get tabSettings;
+
+  /// No description provided for @itemsSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Item Name'**
+  String get itemsSearchHint;
+
+  /// No description provided for @itemsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Item Not Found'**
+  String get itemsEmptyTitle;
+
+  /// No description provided for @itemsEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Item might be not in your list'**
+  String get itemsEmptySubtitle;
+
+  /// No description provided for @itemsCreateButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Create New Item'**
+  String get itemsCreateButton;
+
+  /// No description provided for @itemsSkuOnlyFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Search SKU only'**
+  String get itemsSkuOnlyFilter;
+
+  /// No description provided for @itemsAdjustStockTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust Stock'**
+  String get itemsAdjustStockTooltip;
+
+  /// No description provided for @itemsCreateTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Item'**
+  String get itemsCreateTooltip;
+
+  /// No description provided for @itemsStockChip.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock: {count}'**
+  String itemsStockChip(Object count);
+
+  /// No description provided for @itemsFormTitleCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Item'**
+  String get itemsFormTitleCreate;
+
+  /// No description provided for @itemsFormTitleEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Item'**
+  String get itemsFormTitleEdit;
+
+  /// No description provided for @itemsFormSectionBasicInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Info'**
+  String get itemsFormSectionBasicInfo;
+
+  /// No description provided for @itemsFormSectionNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get itemsFormSectionNote;
+
+  /// No description provided for @itemsFormSectionImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Image'**
+  String get itemsFormSectionImage;
+
+  /// No description provided for @itemsFieldName.
+  ///
+  /// In en, this message translates to:
+  /// **'Item Name'**
+  String get itemsFieldName;
+
+  /// No description provided for @itemsFieldCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Item Code'**
+  String get itemsFieldCode;
+
+  /// No description provided for @itemsFieldUnitCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit Cost (៛)'**
+  String get itemsFieldUnitCost;
+
+  /// No description provided for @itemsFieldPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Price (៛)'**
+  String get itemsFieldPrice;
+
+  /// No description provided for @itemsFieldStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock'**
+  String get itemsFieldStock;
+
+  /// No description provided for @itemsFieldNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your note'**
+  String get itemsFieldNoteHint;
+
+  /// No description provided for @itemsAddImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Image'**
+  String get itemsAddImage;
+
+  /// No description provided for @itemsPriceValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'Price must be greater than or equal to the unit cost'**
+  String get itemsPriceValidation;
+
+  /// No description provided for @itemsSkuExists.
+  ///
+  /// In en, this message translates to:
+  /// **'SKU already exists'**
+  String get itemsSkuExists;
+
+  /// No description provided for @itemsSkuFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Use 3-32 characters: letters, digits, _ or -'**
+  String get itemsSkuFormat;
+
+  /// No description provided for @customersSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Name, Phone'**
+  String get customersSearchHint;
+
+  /// No description provided for @customersEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Not Found'**
+  String get customersEmptyTitle;
+
+  /// No description provided for @customersEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer might be not in your list'**
+  String get customersEmptySubtitle;
+
+  /// No description provided for @customersCreateButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Create New Customer'**
+  String get customersCreateButton;
+
+  /// No description provided for @customersCreateTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Customer'**
+  String get customersCreateTooltip;
+
+  /// No description provided for @customersFormTitleCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Customer'**
+  String get customersFormTitleCreate;
+
+  /// No description provided for @customersFormTitleEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Customer'**
+  String get customersFormTitleEdit;
+
+  /// No description provided for @customersSectionBasicInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Info'**
+  String get customersSectionBasicInfo;
+
+  /// No description provided for @customersSectionAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get customersSectionAddress;
+
+  /// No description provided for @customersSectionNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get customersSectionNote;
+
+  /// No description provided for @customersFieldFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get customersFieldFullName;
+
+  /// No description provided for @customersFieldPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get customersFieldPhone;
+
+  /// No description provided for @customersFieldAltPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Alternative Phone'**
+  String get customersFieldAltPhone;
+
+  /// No description provided for @customersFieldVatTin.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT TIN'**
+  String get customersFieldVatTin;
+
+  /// No description provided for @customersFieldAddressHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get customersFieldAddressHint;
+
+  /// No description provided for @customersFieldNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your note'**
+  String get customersFieldNoteHint;
+
+  /// No description provided for @customersVatLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get customersVatLabel;
+
+  /// No description provided for @customersPrivacyHint.
+  ///
+  /// In en, this message translates to:
+  /// **"We respect your customers' privacy and never share their details."**
+  String get customersPrivacyHint;
+
+  /// No description provided for @customersDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer deleted'**
+  String get customersDeleted;
+
+  /// No description provided for @commonDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get commonDone;
+
+  /// No description provided for @formRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get formRequired;
+
+  /// No description provided for @formNonNegative.
+  ///
+  /// In en, this message translates to:
+  /// **'Must be zero or greater'**
+  String get formNonNegative;
 
   /// No description provided for @loginTitle.
   ///
