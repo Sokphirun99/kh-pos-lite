@@ -12,19 +12,153 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'KH POS Lite';
 
   @override
-  String get tabProducts => 'Products';
+  String get tabItems => 'Items';
 
   @override
-  String get tabSales => 'Sales';
+  String get tabCustomers => 'Customers';
 
   @override
-  String get tabPayments => 'Payments';
-
-  @override
-  String get tabReports => 'Reports';
+  String get tabInvoices => 'Invoices';
 
   @override
   String get tabSettings => 'Settings';
+
+  @override
+  String get itemsSearchHint => 'Item Name';
+
+  @override
+  String get itemsEmptyTitle => 'Item Not Found';
+
+  @override
+  String get itemsEmptySubtitle => 'Item might be not in your list';
+
+  @override
+  String get itemsCreateButton => 'Create New Item';
+
+  @override
+  String get itemsSkuOnlyFilter => 'Search SKU only';
+
+  @override
+  String get itemsAdjustStockTooltip => 'Adjust Stock';
+
+  @override
+  String get itemsCreateTooltip => 'Create Item';
+
+  @override
+  String itemsStockChip(Object count) {
+    return 'Stock: $count';
+  }
+
+  @override
+  String get itemsFormTitleCreate => 'Create Item';
+
+  @override
+  String get itemsFormTitleEdit => 'Edit Item';
+
+  @override
+  String get itemsFormSectionBasicInfo => 'Basic Info';
+
+  @override
+  String get itemsFormSectionNote => 'Note';
+
+  @override
+  String get itemsFormSectionImage => 'Image';
+
+  @override
+  String get itemsFieldName => 'Item Name';
+
+  @override
+  String get itemsFieldCode => 'Item Code';
+
+  @override
+  String get itemsFieldUnitCost => 'Unit Cost (៛)';
+
+  @override
+  String get itemsFieldPrice => 'Price (៛)';
+
+  @override
+  String get itemsFieldStock => 'Stock';
+
+  @override
+  String get itemsFieldNoteHint => 'Write your note';
+
+  @override
+  String get itemsAddImage => 'Add Image';
+
+  @override
+  String get itemsPriceValidation => 'Price must be greater than or equal to the unit cost';
+
+  @override
+  String get itemsSkuExists => 'SKU already exists';
+
+  @override
+  String get itemsSkuFormat => 'Use 3-32 characters: letters, digits, _ or -';
+
+  @override
+  String get customersSearchHint => 'Name, Phone';
+
+  @override
+  String get customersEmptyTitle => 'Customer Not Found';
+
+  @override
+  String get customersEmptySubtitle => 'Customer might be not in your list';
+
+  @override
+  String get customersCreateButton => 'Create New Customer';
+
+  @override
+  String get customersCreateTooltip => 'Create Customer';
+
+  @override
+  String get customersFormTitleCreate => 'Create Customer';
+
+  @override
+  String get customersFormTitleEdit => 'Edit Customer';
+
+  @override
+  String get customersSectionBasicInfo => 'Basic Info';
+
+  @override
+  String get customersSectionAddress => 'Address';
+
+  @override
+  String get customersSectionNote => 'Note';
+
+  @override
+  String get customersFieldFullName => 'Full Name';
+
+  @override
+  String get customersFieldPhone => 'Phone';
+
+  @override
+  String get customersFieldAltPhone => 'Alternative Phone';
+
+  @override
+  String get customersFieldVatTin => 'VAT TIN';
+
+  @override
+  String get customersFieldAddressHint => 'Address';
+
+  @override
+  String get customersFieldNoteHint => 'Write your note';
+
+  @override
+  String get customersVatLabel => 'VAT';
+
+  @override
+  String get customersPrivacyHint => "We respect your customers' privacy and never share their details.";
+
+  @override
+  String get customersDeleted => 'Customer deleted';
+
+  @override
+  String get commonDone => 'Done';
+
+  @override
+  String get formRequired => 'Required';
+
+  @override
+  String get formNonNegative => 'Must be zero or greater';
 
   @override
   String get loginTitle => 'Sign in';

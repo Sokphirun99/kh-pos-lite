@@ -4,6 +4,9 @@ import 'package:cashier_app/domain/value_objects/money_riel.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cashier_app/domain/repositories/product_repository.dart';
+import 'package:cashier_app/l10n/app_localizations.dart';
+import 'package:cashier_app/features/common/widgets/app_form_styles.dart';
+import 'package:cashier_app/features/common/widgets/section_header.dart';
 
 class ProductFormPage extends StatefulWidget {
   final Product? existing;
@@ -20,6 +23,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
   late final TextEditingController _unitCost;
   late final TextEditingController _price;
   late final TextEditingController _stock;
+  late final TextEditingController _note;
 
   @override
   void initState() {
@@ -29,6 +33,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
     _unitCost = TextEditingController(text: widget.existing?.unitCost.amount.toString() ?? '');
     _price = TextEditingController(text: widget.existing?.price.amount.toString() ?? '');
     _stock = TextEditingController(text: widget.existing?.stock.toString() ?? '');
+    _note = TextEditingController();
   }
 
   @override
@@ -38,14 +43,19 @@ class _ProductFormPageState extends State<ProductFormPage> {
     _unitCost.dispose();
     _price.dispose();
     _stock.dispose();
+    _note.dispose();
     super.dispose();
   }
 
-  String? _required(String? v) => (v == null || v.trim().isEmpty) ? 'Required' : null;
+  String? _required(String? v) {
+    final l10n = AppLocalizations.of(context)!;
+    return (v == null || v.trim().isEmpty) ? l10n.formRequired : null;
+  }
   String? _nonNegativeInt(String? v) {
-    if (v == null || v.trim().isEmpty) return 'Required';
+    final l10n = AppLocalizations.of(context)!;
+    if (v == null || v.trim().isEmpty) return l10n.formRequired;
     final n = int.tryParse(v);
-    if (n == null || n < 0) return 'Must be >= 0';
+    if (n == null || n < 0) return l10n.formNonNegative;
     return null;
   }
 
@@ -54,16 +64,18 @@ class _ProductFormPageState extends State<ProductFormPage> {
     if (base != null) return base;
     final s = v!.trim();
     final ok = RegExp(r'^[A-Za-z0-9_-]{3,32}\$?').hasMatch(s);
-    if (!ok) return '3-32 chars, letters/digits/_-';
+    if (!ok) return AppLocalizations.of(context)!.itemsSkuFormat;
     return null;
   }
+
+  bool get _isEditing => widget.existing != null;
 
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
     final unit = int.parse(_unitCost.text.trim());
     final price = int.parse(_price.text.trim());
     if (price < unit) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Price must be >= Unit cost')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.itemsPriceValidation)));
       return;
     }
 
@@ -73,7 +85,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
     final existing = await repo.getBySku(inputSku);
     final editingId = widget.existing?.id;
     if (existing != null && existing.id != editingId) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('SKU already exists')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.itemsSkuExists)));
       return;
     }
 
@@ -90,46 +102,118 @@ class _ProductFormPageState extends State<ProductFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    final bottom = MediaQuery.of(context).viewInsets.bottom;
-    return Padding(
-      padding: EdgeInsets.only(bottom: bottom),
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(widget.existing == null ? 'Add Product' : 'Edit Product', style: Theme.of(context).textTheme.titleLarge),
-                const SizedBox(height: 12),
-                TextFormField(controller: _name, decoration: const InputDecoration(labelText: 'Name'), validator: _required),
-                TextFormField(controller: _sku, decoration: const InputDecoration(labelText: 'SKU'), validator: _skuRule),
-                TextFormField(controller: _unitCost, decoration: const InputDecoration(labelText: 'Unit cost (៛)'), keyboardType: TextInputType.number, validator: _nonNegativeInt),
-                TextFormField(controller: _price, decoration: const InputDecoration(labelText: 'Price (៛)'), keyboardType: TextInputType.number, validator: _nonNegativeInt),
-                TextFormField(controller: _stock, decoration: const InputDecoration(labelText: 'Stock'), keyboardType: TextInputType.number, validator: _nonNegativeInt),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () => Navigator.of(context).maybePop(),
-                        child: const Text('Cancel'),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: FilledButton(
-                        onPressed: _save,
-                        child: const Text('Save'),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-              ],
-            ),
+    final theme = Theme.of(context);
+    final viewInsets = MediaQuery.of(context).viewInsets;
+    return Scaffold(
+      appBar: AppBar(
+        leading: const CloseButton(),
+        title: Text(_isEditing ? AppLocalizations.of(context)!.itemsFormTitleEdit : AppLocalizations.of(context)!.itemsFormTitleCreate),
+        actions: [
+          TextButton(
+            onPressed: _save,
+            child: Text(AppLocalizations.of(context)!.commonDone),
           ),
+        ],
+      ),
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final l10n = AppLocalizations.of(context)!;
+            return SingleChildScrollView(
+              padding: EdgeInsets.only(bottom: viewInsets.bottom + 24),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SectionHeader(l10n.itemsFormSectionBasicInfo),
+                        TextFormField(
+                          controller: _name,
+                          decoration: AppFormStyles.fieldDecoration(
+                            context,
+                            label: l10n.itemsFieldName,
+                          ),
+                          validator: _required,
+                          textInputAction: TextInputAction.next,
+                        ),
+                        const SizedBox(height: 12),
+                        TextFormField(
+                          controller: _sku,
+                          decoration: AppFormStyles.fieldDecoration(
+                            context,
+                            label: l10n.itemsFieldCode,
+                          ),
+                          validator: _skuRule,
+                          textInputAction: TextInputAction.next,
+                        ),
+                        const SizedBox(height: 12),
+                        TextFormField(
+                          controller: _unitCost,
+                          decoration: AppFormStyles.fieldDecoration(
+                            context,
+                            label: l10n.itemsFieldUnitCost,
+                          ),
+                          keyboardType: TextInputType.number,
+                          validator: _nonNegativeInt,
+                          textInputAction: TextInputAction.next,
+                        ),
+                        const SizedBox(height: 12),
+                        TextFormField(
+                          controller: _price,
+                          decoration: AppFormStyles.fieldDecoration(
+                            context,
+                            label: l10n.itemsFieldPrice,
+                          ),
+                          keyboardType: TextInputType.number,
+                          validator: _nonNegativeInt,
+                          textInputAction: TextInputAction.next,
+                        ),
+                        const SizedBox(height: 12),
+                        TextFormField(
+                          controller: _stock,
+                          decoration: AppFormStyles.fieldDecoration(
+                            context,
+                            label: l10n.itemsFieldStock,
+                          ),
+                          keyboardType: TextInputType.number,
+                          validator: _nonNegativeInt,
+                          textInputAction: TextInputAction.done,
+                        ),
+                        SectionHeader(l10n.itemsFormSectionNote),
+                        TextFormField(
+                          controller: _note,
+                          minLines: 3,
+                          maxLines: 5,
+                          decoration: AppFormStyles.fieldDecoration(
+                            context,
+                            label: l10n.itemsFieldNoteHint,
+                          ),
+                        ),
+                        SectionHeader(l10n.itemsFormSectionImage),
+                        SizedBox(
+                          width: double.infinity,
+                          child: OutlinedButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(Icons.add_photo_alternate_outlined),
+                            label: Text(l10n.itemsAddImage),
+                            style: OutlinedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 18),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                              foregroundColor: theme.colorScheme.primary,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
