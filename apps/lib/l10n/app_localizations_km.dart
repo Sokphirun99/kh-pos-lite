@@ -71,6 +71,9 @@ class AppLocalizationsKm extends AppLocalizations {
   String get noSales => 'គ្មានការលក់';
 
   @override
+  String get salesEmptyDescription => 'បង្កើតការលក់ដើម្បីចាប់ផ្តើមតាមដានការទូទាត់។';
+
+  @override
   String get noPayments => 'គ្មានការទូទាត់';
 
   @override
@@ -164,7 +167,34 @@ class AppLocalizationsKm extends AppLocalizations {
   }
 
   @override
+  String get salesAppBarSubtitle => 'តាមដានការទូទាត់ និងសមតុល្យអតិថិជន';
+
+  @override
   String get receivePayment => 'ទទួលការទូទាត់';
+
+  @override
+  String get salesSummaryTotal => 'ទឹកប្រាក់លក់សរុប';
+
+  @override
+  String get salesSummaryOutstanding => 'ទឹកប្រាក់នៅសល់';
+
+  @override
+  String get salesSummaryCompleted => 'បានទូទាត់ពេញលេញ';
+
+  @override
+  String get salesCardTotal => 'តម្លៃការលក់';
+
+  @override
+  String get salesStatusOutstanding => 'នៅខ្វះ';
+
+  @override
+  String get salesViewDetails => 'មើលលម្អិត';
+
+  @override
+  String get salesDeleteTooltip => 'លុបការលក់';
+
+  @override
+  String get salesNewSale => 'ការលក់ថ្មី';
 
   @override
   String get balance => 'សមតុល្យ';

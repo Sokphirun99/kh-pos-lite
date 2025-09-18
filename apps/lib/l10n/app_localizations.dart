@@ -218,6 +218,12 @@ abstract class AppLocalizations {
   /// **'No sales'**
   String get noSales;
 
+  /// No description provided for @salesEmptyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a sale to start tracking payments.'**
+  String get salesEmptyDescription;
+
   /// No description provided for @noPayments.
   ///
   /// In en, this message translates to:
@@ -392,11 +398,65 @@ abstract class AppLocalizations {
   /// **'Sale recorded. Remaining: {amount}'**
   String saleCompletedRemaining(Object amount);
 
+  /// No description provided for @salesAppBarSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Monitor customer payments and balances'**
+  String get salesAppBarSubtitle;
+
   /// No description provided for @receivePayment.
   ///
   /// In en, this message translates to:
   /// **'Receive Payment'**
   String get receivePayment;
+
+  /// No description provided for @salesSummaryTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total sales'**
+  String get salesSummaryTotal;
+
+  /// No description provided for @salesSummaryOutstanding.
+  ///
+  /// In en, this message translates to:
+  /// **'Outstanding balance'**
+  String get salesSummaryOutstanding;
+
+  /// No description provided for @salesSummaryCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid in full'**
+  String get salesSummaryCompleted;
+
+  /// No description provided for @salesCardTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Sale total'**
+  String get salesCardTotal;
+
+  /// No description provided for @salesStatusOutstanding.
+  ///
+  /// In en, this message translates to:
+  /// **'Outstanding'**
+  String get salesStatusOutstanding;
+
+  /// No description provided for @salesViewDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'View details'**
+  String get salesViewDetails;
+
+  /// No description provided for @salesDeleteTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete sale'**
+  String get salesDeleteTooltip;
+
+  /// No description provided for @salesNewSale.
+  ///
+  /// In en, this message translates to:
+  /// **'New sale'**
+  String get salesNewSale;
 
   /// No description provided for @balance.
   ///

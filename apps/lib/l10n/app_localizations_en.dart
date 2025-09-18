@@ -71,6 +71,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noSales => 'No sales';
 
   @override
+  String get salesEmptyDescription => 'Create a sale to start tracking payments.';
+
+  @override
   String get noPayments => 'No payments';
 
   @override
@@ -164,7 +167,34 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get salesAppBarSubtitle => 'Monitor customer payments and balances';
+
+  @override
   String get receivePayment => 'Receive Payment';
+
+  @override
+  String get salesSummaryTotal => 'Total sales';
+
+  @override
+  String get salesSummaryOutstanding => 'Outstanding balance';
+
+  @override
+  String get salesSummaryCompleted => 'Paid in full';
+
+  @override
+  String get salesCardTotal => 'Sale total';
+
+  @override
+  String get salesStatusOutstanding => 'Outstanding';
+
+  @override
+  String get salesViewDetails => 'View details';
+
+  @override
+  String get salesDeleteTooltip => 'Delete sale';
+
+  @override
+  String get salesNewSale => 'New sale';
 
   @override
   String get balance => 'Balance';
