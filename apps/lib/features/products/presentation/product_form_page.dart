@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cashier_app/domain/repositories/product_repository.dart';
 import 'package:cashier_app/l10n/app_localizations.dart';
+import 'package:cashier_app/l10n/app_localizations_en.dart';
 import 'package:cashier_app/features/common/widgets/app_form_styles.dart';
 import 'package:cashier_app/features/common/widgets/section_header.dart';
 
@@ -28,11 +29,18 @@ class _ProductFormPageState extends State<ProductFormPage> {
   @override
   void initState() {
     super.initState();
-    _name = TextEditingController(text: widget.existing?.name ?? '');
-    _sku = TextEditingController(text: widget.existing?.sku ?? '');
-    _unitCost = TextEditingController(text: widget.existing?.unitCost.amount.toString() ?? '');
-    _price = TextEditingController(text: widget.existing?.price.amount.toString() ?? '');
-    _stock = TextEditingController(text: widget.existing?.stock.toString() ?? '');
+    final existing = widget.existing;
+    _name = TextEditingController(text: existing?.name ?? '');
+    _sku = TextEditingController(text: existing?.sku ?? '');
+    _unitCost = TextEditingController(
+      text: existing != null ? existing.unitCost.amount.toString() : '',
+    );
+    _price = TextEditingController(
+      text: existing != null ? existing.price.amount.toString() : '',
+    );
+    _stock = TextEditingController(
+      text: existing != null ? existing.stock.toString() : '',
+    );
     _note = TextEditingController();
   }
 
@@ -47,12 +55,17 @@ class _ProductFormPageState extends State<ProductFormPage> {
     super.dispose();
   }
 
+  AppLocalizations _l10n(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations) ??
+        AppLocalizationsEn();
+  }
+
   String? _required(String? v) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = _l10n(context);
     return (v == null || v.trim().isEmpty) ? l10n.formRequired : null;
   }
   String? _nonNegativeInt(String? v) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = _l10n(context);
     if (v == null || v.trim().isEmpty) return l10n.formRequired;
     final n = int.tryParse(v);
     if (n == null || n < 0) return l10n.formNonNegative;
@@ -63,8 +76,8 @@ class _ProductFormPageState extends State<ProductFormPage> {
     final base = _required(v);
     if (base != null) return base;
     final s = v!.trim();
-    final ok = RegExp(r'^[A-Za-z0-9_-]{3,32}\$?').hasMatch(s);
-    if (!ok) return AppLocalizations.of(context)!.itemsSkuFormat;
+    final ok = RegExp(r'^[A-Za-z0-9_-]{3,32}$').hasMatch(s);
+    if (!ok) return _l10n(context).itemsSkuFormat;
     return null;
   }
 
@@ -75,7 +88,10 @@ class _ProductFormPageState extends State<ProductFormPage> {
     final unit = int.parse(_unitCost.text.trim());
     final price = int.parse(_price.text.trim());
     if (price < unit) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.itemsPriceValidation)));
+      final l10n = _l10n(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.itemsPriceValidation)),
+      );
       return;
     }
 
@@ -85,7 +101,10 @@ class _ProductFormPageState extends State<ProductFormPage> {
     final existing = await repo.getBySku(inputSku);
     final editingId = widget.existing?.id;
     if (existing != null && existing.id != editingId) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.itemsSkuExists)));
+      final l10n = _l10n(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.itemsSkuExists)),
+      );
       return;
     }
 
@@ -102,23 +121,25 @@ class _ProductFormPageState extends State<ProductFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = _l10n(context);
     final theme = Theme.of(context);
     final viewInsets = MediaQuery.of(context).viewInsets;
     return Scaffold(
       appBar: AppBar(
         leading: const CloseButton(),
-        title: Text(_isEditing ? AppLocalizations.of(context)!.itemsFormTitleEdit : AppLocalizations.of(context)!.itemsFormTitleCreate),
+        title: Text(
+          _isEditing ? l10n.itemsFormTitleEdit : l10n.itemsFormTitleCreate,
+        ),
         actions: [
           TextButton(
             onPressed: _save,
-            child: Text(AppLocalizations.of(context)!.commonDone),
+            child: Text(l10n.commonDone),
           ),
         ],
       ),
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            final l10n = AppLocalizations.of(context)!;
             return SingleChildScrollView(
               padding: EdgeInsets.only(bottom: viewInsets.bottom + 24),
               child: ConstrainedBox(
