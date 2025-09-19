@@ -410,6 +410,30 @@ abstract class AppLocalizations {
   /// **'Sign in'**
   String get loginSignIn;
 
+  /// No description provided for @loginSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track sales, print receipts, and sync automatically.'**
+  String get loginSubtitle;
+
+  /// No description provided for @loginFeatureOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Works offline and syncs when you're back online.'**
+  String get loginFeatureOffline;
+
+  /// No description provided for @loginFeatureReceipts.
+  ///
+  /// In en, this message translates to:
+  /// **'Print beautiful receipts or share invoices instantly.'**
+  String get loginFeatureReceipts;
+
+  /// No description provided for @loginFeatureKhqr.
+  ///
+  /// In en, this message translates to:
+  /// **'Collect cashless payments with KHQR and Telegram alerts.'**
+  String get loginFeatureKhqr;
+
   /// No description provided for @settingsLanguage.
   ///
   /// In en, this message translates to:
@@ -505,6 +529,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No payments'**
   String get noPayments;
+
+  /// No description provided for @paymentsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get paymentsTitle;
+
+  /// No description provided for @paymentsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review collections across cash and transfer channels.'**
+  String get paymentsSubtitle;
+
+  /// No description provided for @paymentsSummaryCollected.
+  ///
+  /// In en, this message translates to:
+  /// **'Collected'**
+  String get paymentsSummaryCollected;
+
+  /// No description provided for @paymentsSummaryCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments recorded'**
+  String get paymentsSummaryCount;
+
+  /// No description provided for @paymentsFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get paymentsFilterAll;
+
+  /// No description provided for @paymentsFilterCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get paymentsFilterCash;
+
+  /// No description provided for @paymentsFilterTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer'**
+  String get paymentsFilterTransfer;
+
+  /// No description provided for @paymentsSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by sale, method, or reference'**
+  String get paymentsSearchHint;
+
+  /// No description provided for @paymentsEmptyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Add payments as you collect cash or receive transfers.'**
+  String get paymentsEmptyDescription;
+
+  /// No description provided for @paymentsMethodLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment method'**
+  String get paymentsMethodLabel;
+
+  /// No description provided for @paymentsFormSaleId.
+  ///
+  /// In en, this message translates to:
+  /// **'Sale ID'**
+  String get paymentsFormSaleId;
+
+  /// No description provided for @paymentsFormSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Save payment'**
+  String get paymentsFormSubmit;
 
   /// No description provided for @lastSyncAt.
   ///

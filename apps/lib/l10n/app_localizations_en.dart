@@ -167,6 +167,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginSignIn => 'Sign in';
 
   @override
+  String get loginSubtitle => 'Track sales, print receipts, and sync automatically.';
+
+  @override
+  String get loginFeatureOffline => "Works offline and syncs when you're back online.";
+
+  @override
+  String get loginFeatureReceipts => 'Print beautiful receipts or share invoices instantly.';
+
+  @override
+  String get loginFeatureKhqr => 'Collect cashless payments with KHQR and Telegram alerts.';
+
+  @override
   String get settingsLanguage => 'Language';
 
   @override
@@ -215,6 +227,42 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noPayments => 'No payments';
+
+  @override
+  String get paymentsTitle => 'Payments';
+
+  @override
+  String get paymentsSubtitle => 'Review collections across cash and transfer channels.';
+
+  @override
+  String get paymentsSummaryCollected => 'Collected';
+
+  @override
+  String get paymentsSummaryCount => 'Payments recorded';
+
+  @override
+  String get paymentsFilterAll => 'All';
+
+  @override
+  String get paymentsFilterCash => 'Cash';
+
+  @override
+  String get paymentsFilterTransfer => 'Transfer';
+
+  @override
+  String get paymentsSearchHint => 'Search by sale, method, or reference';
+
+  @override
+  String get paymentsEmptyDescription => 'Add payments as you collect cash or receive transfers.';
+
+  @override
+  String get paymentsMethodLabel => 'Payment method';
+
+  @override
+  String get paymentsFormSaleId => 'Sale ID';
+
+  @override
+  String get paymentsFormSubmit => 'Save payment';
 
   @override
   String lastSyncAt(Object time) {

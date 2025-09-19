@@ -28,6 +28,7 @@ class AppTheme {
     );
 
     return base.copyWith(
+      scaffoldBackgroundColor: scheme.surface,
       textTheme: merged,
       inputDecorationTheme: _inputDecorationTheme(scheme),
       filledButtonTheme: _filledButtonTheme(scheme),
@@ -38,14 +39,34 @@ class AppTheme {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
-      cardTheme: const CardThemeData(clipBehavior: Clip.antiAlias, surfaceTintColor: Colors.transparent),
-      appBarTheme: AppBarTheme(
-        centerTitle: false,
-        titleTextStyle: merged.titleLarge?.copyWith(color: scheme.onSurface),
+      cardTheme: CardTheme(
+        clipBehavior: Clip.antiAlias,
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        margin: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
-      navigationBarTheme: NavigationBarThemeData(
-        indicatorColor: scheme.secondaryContainer,
-        labelTextStyle: WidgetStateProperty.all(merged.labelMedium),
+      listTileTheme: ListTileThemeData(
+        iconColor: scheme.primary,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        tileColor: scheme.surface,
+      ),
+      appBarTheme: base.appBarTheme.copyWith(
+        centerTitle: false,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+        titleTextStyle: merged.titleLarge?.copyWith(
+          color: scheme.onSurface,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      navigationBarTheme: base.navigationBarTheme.copyWith(
+        indicatorColor: scheme.secondaryContainer.withOpacity(0.65),
+        backgroundColor: scheme.surface,
+        elevation: 0,
+        height: 72,
+        labelTextStyle: MaterialStateProperty.all(merged.labelMedium),
       ),
     );
   }
@@ -66,6 +87,7 @@ class AppTheme {
       titleSmall: heading.titleSmall,
     );
     return base.copyWith(
+      scaffoldBackgroundColor: scheme.surface,
       textTheme: merged,
       inputDecorationTheme: _inputDecorationTheme(scheme),
       filledButtonTheme: _filledButtonTheme(scheme),
@@ -76,14 +98,34 @@ class AppTheme {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
-      cardTheme: const CardThemeData(clipBehavior: Clip.antiAlias, surfaceTintColor: Colors.transparent),
-      appBarTheme: AppBarTheme(
-        centerTitle: false,
-        titleTextStyle: merged.titleLarge?.copyWith(color: scheme.onSurface),
+      cardTheme: CardTheme(
+        clipBehavior: Clip.antiAlias,
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        margin: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
-      navigationBarTheme: NavigationBarThemeData(
-        indicatorColor: scheme.secondaryContainer,
-        labelTextStyle: WidgetStateProperty.all(merged.labelMedium),
+      listTileTheme: ListTileThemeData(
+        iconColor: scheme.primary,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        tileColor: scheme.surface,
+      ),
+      appBarTheme: base.appBarTheme.copyWith(
+        centerTitle: false,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+        titleTextStyle: merged.titleLarge?.copyWith(
+          color: scheme.onSurface,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      navigationBarTheme: base.navigationBarTheme.copyWith(
+        indicatorColor: scheme.secondaryContainer.withOpacity(0.65),
+        backgroundColor: scheme.surface,
+        elevation: 0,
+        height: 72,
+        labelTextStyle: MaterialStateProperty.all(merged.labelMedium),
       ),
     );
   }
