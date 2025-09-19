@@ -3,13 +3,18 @@ import 'package:hive_flutter/hive_flutter.dart';
 class KeyValueService {
   static const String _boxName = 'app';
   static Box? _box;
+  static bool _initialized = false;
 
   static Future<void> init() async {
-    if (!Hive.isAdapterRegistered(0)) {
-      // No adapters to register now; placeholder
+    if (!_initialized) {
+      await Hive.initFlutter();
+      _initialized = true;
     }
-    await Hive.initFlutter();
-    _box = await Hive.openBox(_boxName);
+    if (!Hive.isBoxOpen(_boxName)) {
+      _box = await Hive.openBox(_boxName);
+    } else {
+      _box = Hive.box(_boxName);
+    }
   }
 
   static Box _ensure() {

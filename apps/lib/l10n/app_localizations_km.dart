@@ -167,6 +167,18 @@ class AppLocalizationsKm extends AppLocalizations {
   String get loginSignIn => 'ចូលប្រើ';
 
   @override
+  String get loginSubtitle => 'តាមដានការលក់ បោះពុម្ពវិក្កយបត្រ និងសមកាលកម្មដោយស្វ័យប្រវត្តិ។';
+
+  @override
+  String get loginFeatureOffline => 'ធ្វើការបានទោះនៅក្រៅបណ្តាញ ហើយសមកាលកម្មនៅពេលតភ្ជាប់ឡើងវិញ។';
+
+  @override
+  String get loginFeatureReceipts => 'បោះពុម្ពវិក្កយបត្រមានសោភ័ណភាព ឬចែករំលែកវិក្កយបត្រតាមអ៊ីលេកត្រូនិកភ្លាមៗ។';
+
+  @override
+  String get loginFeatureKhqr => 'ទទួលការទូទាត់គ្មានសាច់ប្រាក់ជាមួយ KHQR និងការជូនដំណឹង Telegram។';
+
+  @override
   String get settingsLanguage => 'ភាសា';
 
   @override
@@ -215,6 +227,42 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get noPayments => 'គ្មានការទូទាត់';
+
+  @override
+  String get paymentsTitle => 'ការទូទាត់';
+
+  @override
+  String get paymentsSubtitle => 'ពិនិត្យទឹកប្រាក់ដែលទទួលបានតាមសាច់ប្រាក់ និងផ្ទេរប្រាក់។';
+
+  @override
+  String get paymentsSummaryCollected => 'ទឹកប្រាក់ដែលបានទទួល';
+
+  @override
+  String get paymentsSummaryCount => 'ការទូទាត់ដែលបានកត់ត្រា';
+
+  @override
+  String get paymentsFilterAll => 'ទាំងអស់';
+
+  @override
+  String get paymentsFilterCash => 'សាច់ប្រាក់';
+
+  @override
+  String get paymentsFilterTransfer => 'ផ្ទេរប្រាក់';
+
+  @override
+  String get paymentsSearchHint => 'ស្វែងរកតាមការលក់ វិធីទូទាត់ ឬលេខយោង';
+
+  @override
+  String get paymentsEmptyDescription => 'បន្ថែមការទូទាត់នៅពេលទទួលសាច់ប្រាក់ ឬទទួលការផ្ទេរប្រាក់។';
+
+  @override
+  String get paymentsMethodLabel => 'វិធីទូទាត់';
+
+  @override
+  String get paymentsFormSaleId => 'លេខកូដការលក់';
+
+  @override
+  String get paymentsFormSubmit => 'រក្សាទុកការទូទាត់';
 
   @override
   String lastSyncAt(Object time) {
