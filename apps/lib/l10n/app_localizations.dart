@@ -122,6 +122,12 @@ abstract class AppLocalizations {
   /// **'Invoices'**
   String get tabInvoices;
 
+  /// No description provided for @tabSales.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales'**
+  String get tabSales;
+
   /// No description provided for @tabSettings.
   ///
   /// In en, this message translates to:
@@ -371,7 +377,7 @@ abstract class AppLocalizations {
   /// No description provided for @customersPrivacyHint.
   ///
   /// In en, this message translates to:
-  /// **"We respect your customers' privacy and never share their details."**
+  /// **'We respect your customers\' privacy and never share their details.'**
   String get customersPrivacyHint;
 
   /// No description provided for @customersDeleted.
@@ -419,7 +425,7 @@ abstract class AppLocalizations {
   /// No description provided for @loginFeatureOffline.
   ///
   /// In en, this message translates to:
-  /// **'Works offline and syncs when you're back online.'**
+  /// **'Works offline and syncs when you\'re back online.'**
   String get loginFeatureOffline;
 
   /// No description provided for @loginFeatureReceipts.

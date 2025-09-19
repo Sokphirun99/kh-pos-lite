@@ -39,7 +39,7 @@ class AppTheme {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         clipBehavior: Clip.antiAlias,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
@@ -98,7 +98,7 @@ class AppTheme {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         clipBehavior: Clip.antiAlias,
         surfaceTintColor: Colors.transparent,
         elevation: 0,

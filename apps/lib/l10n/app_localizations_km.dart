@@ -21,6 +21,9 @@ class AppLocalizationsKm extends AppLocalizations {
   String get tabInvoices => 'វិក្កយបត្រ';
 
   @override
+  String get tabSales => 'ការលក់';
+
+  @override
   String get tabSettings => 'ការកំណត់';
 
   @override
@@ -146,7 +149,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get customersVatLabel => 'VAT';
 
   @override
-  String get customersPrivacyHint => 'យើងគោរពភាពឯកជនរបស់អតិថិជន ហើយមិនចែករំលែកទិន្នន័យរបស់ពួកគេទេ។';
+  String get customersPrivacyHint =>
+      'យើងគោរពភាពឯកជនរបស់អតិថិជន ហើយមិនចែករំលែកទិន្នន័យរបស់ពួកគេទេ។';
 
   @override
   String get customersDeleted => 'បានលុបអតិថិជន';
@@ -167,16 +171,20 @@ class AppLocalizationsKm extends AppLocalizations {
   String get loginSignIn => 'ចូលប្រើ';
 
   @override
-  String get loginSubtitle => 'តាមដានការលក់ បោះពុម្ពវិក្កយបត្រ និងសមកាលកម្មដោយស្វ័យប្រវត្តិ។';
+  String get loginSubtitle =>
+      'តាមដានការលក់ បោះពុម្ពវិក្កយបត្រ និងសមកាលកម្មដោយស្វ័យប្រវត្តិ។';
 
   @override
-  String get loginFeatureOffline => 'ធ្វើការបានទោះនៅក្រៅបណ្តាញ ហើយសមកាលកម្មនៅពេលតភ្ជាប់ឡើងវិញ។';
+  String get loginFeatureOffline =>
+      'ធ្វើការបានទោះនៅក្រៅបណ្តាញ ហើយសមកាលកម្មនៅពេលតភ្ជាប់ឡើងវិញ។';
 
   @override
-  String get loginFeatureReceipts => 'បោះពុម្ពវិក្កយបត្រមានសោភ័ណភាព ឬចែករំលែកវិក្កយបត្រតាមអ៊ីលេកត្រូនិកភ្លាមៗ។';
+  String get loginFeatureReceipts =>
+      'បោះពុម្ពវិក្កយបត្រមានសោភ័ណភាព ឬចែករំលែកវិក្កយបត្រតាមអ៊ីលេកត្រូនិកភ្លាមៗ។';
 
   @override
-  String get loginFeatureKhqr => 'ទទួលការទូទាត់គ្មានសាច់ប្រាក់ជាមួយ KHQR និងការជូនដំណឹង Telegram។';
+  String get loginFeatureKhqr =>
+      'ទទួលការទូទាត់គ្មានសាច់ប្រាក់ជាមួយ KHQR និងការជូនដំណឹង Telegram។';
 
   @override
   String get settingsLanguage => 'ភាសា';
@@ -194,7 +202,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get settingsGeneralSection => 'កន្លែងធ្វើការ';
 
   @override
-  String get settingsGeneralSectionSubtitle => 'គ្រប់គ្រងព័ត៌មានសម្គាល់ និងស្ថានភាពសមកាលកម្ម។';
+  String get settingsGeneralSectionSubtitle =>
+      'គ្រប់គ្រងព័ត៌មានសម្គាល់ និងស្ថានភាពសមកាលកម្ម។';
 
   @override
   String get settingsSyncNow => 'សមកាលកម្មឥឡូវនេះ';
@@ -223,7 +232,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get noSales => 'គ្មានការលក់';
 
   @override
-  String get salesEmptyDescription => 'បង្កើតការលក់ដើម្បីចាប់ផ្តើមតាមដានការទូទាត់។';
+  String get salesEmptyDescription =>
+      'បង្កើតការលក់ដើម្បីចាប់ផ្តើមតាមដានការទូទាត់។';
 
   @override
   String get noPayments => 'គ្មានការទូទាត់';
@@ -232,7 +242,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get paymentsTitle => 'ការទូទាត់';
 
   @override
-  String get paymentsSubtitle => 'ពិនិត្យទឹកប្រាក់ដែលទទួលបានតាមសាច់ប្រាក់ និងផ្ទេរប្រាក់។';
+  String get paymentsSubtitle =>
+      'ពិនិត្យទឹកប្រាក់ដែលទទួលបានតាមសាច់ប្រាក់ និងផ្ទេរប្រាក់។';
 
   @override
   String get paymentsSummaryCollected => 'ទឹកប្រាក់ដែលបានទទួល';
@@ -253,7 +264,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get paymentsSearchHint => 'ស្វែងរកតាមការលក់ វិធីទូទាត់ ឬលេខយោង';
 
   @override
-  String get paymentsEmptyDescription => 'បន្ថែមការទូទាត់នៅពេលទទួលសាច់ប្រាក់ ឬទទួលការផ្ទេរប្រាក់។';
+  String get paymentsEmptyDescription =>
+      'បន្ថែមការទូទាត់នៅពេលទទួលសាច់ប្រាក់ ឬទទួលការផ្ទេរប្រាក់។';
 
   @override
   String get paymentsMethodLabel => 'វិធីទូទាត់';
@@ -287,13 +299,15 @@ class AppLocalizationsKm extends AppLocalizations {
   String get settingsPreferencesSection => 'ចំណូលចិត្ត';
 
   @override
-  String get settingsPreferencesSectionSubtitle => 'ប្ដូររបៀបដែលកម្មវិធីមើលទៅ និងមានអារម្មណ៍។';
+  String get settingsPreferencesSectionSubtitle =>
+      'ប្ដូររបៀបដែលកម្មវិធីមើលទៅ និងមានអារម្មណ៍។';
 
   @override
   String get settingsSyncSection => 'សមកាលកម្មស្វ័យប្រវត្តិ';
 
   @override
-  String get settingsSyncSectionSubtitle => 'លៃតម្រូវសមកាលកម្មជាក្បាល និងការពារស្តុក។';
+  String get settingsSyncSectionSubtitle =>
+      'លៃតម្រូវសមកាលកម្មជាក្បាល និងការពារស្តុក។';
 
   @override
   String get aboutTitle => 'អំពីកម្មវិធី';
@@ -486,7 +500,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get settingsPaymentSection => 'ការរួមបញ្ចូលការទូទាត់';
 
   @override
-  String get settingsPaymentSectionSubtitle => 'ចែករំលែក KHQR និងភ្ជាប់បុត Telegram។';
+  String get settingsPaymentSectionSubtitle =>
+      'ចែករំលែក KHQR និងភ្ជាប់បុត Telegram។';
 
   @override
   String get settingsDangerZone => 'តំបន់គ្រោះថ្នាក់';

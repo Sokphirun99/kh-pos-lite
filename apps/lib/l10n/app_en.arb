@@ -3,6 +3,7 @@
   "tabItems": "Items",
   "tabCustomers": "Customers",
   "tabInvoices": "Invoices",
+  "tabSales": "Sales",
   "tabSettings": "Settings",
   "itemsSearchHint": "Item Name",
   "itemsEmptyTitle": "Item Not Found",
