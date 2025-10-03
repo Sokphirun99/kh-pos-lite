@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cashier_app/l10n/app_localizations.dart';
 import 'package:cashier_app/features/common/widgets/empty_placeholder.dart';
 import 'customer_form_page.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomersScreen extends StatefulWidget {
   const CustomersScreen({super.key});
@@ -27,35 +28,16 @@ class _CustomersScreenState extends State<CustomersScreen> {
         .toList();
   }
 
-  InputDecoration _searchDecoration(BuildContext context) {
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
-    final l10n = AppLocalizations.of(context)!;
-    return InputDecoration(
-      hintText: l10n.customersSearchHint,
-      prefixIcon: const Icon(Icons.search),
-      filled: true,
-      fillColor: scheme.surfaceVariant.withOpacity(theme.brightness == Brightness.dark ? 0.35 : 0.6),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(18),
-        borderSide: BorderSide.none,
-      ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-    );
-  }
+  // Using Material 3 SearchBar; no custom decoration needed.
 
   Future<void> _createCustomer() async {
-    final result = await Navigator.of(context).push<CustomerDraft>(
-      MaterialPageRoute(builder: (_) => const CustomerFormPage()),
-    );
+    final result = await context.pushNamed<CustomerDraft>('customer_new');
     if (result == null) return;
     setState(() => _customers.add(result));
   }
 
   Future<void> _editCustomer(CustomerDraft customer) async {
-    final result = await Navigator.of(context).push<CustomerDraft>(
-      MaterialPageRoute(builder: (_) => CustomerFormPage(existing: customer)),
-    );
+    final result = await context.pushNamed<CustomerDraft>('customer_edit', pathParameters: {'id': customer.id}, extra: customer);
     if (result == null) return;
     setState(() {
       final index = _customers.indexWhere((element) => element.id == result.id);
@@ -67,7 +49,7 @@ class _CustomersScreenState extends State<CustomersScreen> {
 
   void _removeCustomer(CustomerDraft customer) {
     setState(() => _customers.removeWhere((c) => c.id == customer.id));
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(l10n.customersDeleted),
@@ -82,7 +64,7 @@ class _CustomersScreenState extends State<CustomersScreen> {
   }
 
   Widget _emptyState(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     return EmptyPlaceholder(
       icon: Icons.person_outline,
       title: l10n.customersEmptyTitle,
@@ -94,7 +76,7 @@ class _CustomersScreenState extends State<CustomersScreen> {
 
   Widget _buildCustomerCard(BuildContext context, CustomerDraft customer) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final muted = theme.colorScheme.onSurfaceVariant.withOpacity(0.8);
     final chips = <Widget>[];
     if (customer.phone.isNotEmpty) {
@@ -163,32 +145,24 @@ class _CustomersScreenState extends State<CustomersScreen> {
     return Chip(
       avatar: Icon(icon, size: 18, color: theme.colorScheme.primary),
       label: Text(text),
-      backgroundColor: theme.colorScheme.surfaceVariant.withOpacity(theme.brightness == Brightness.dark ? 0.35 : 0.7),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final filtered = _filteredCustomers;
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.tabCustomers),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            tooltip: l10n.customersCreateTooltip,
-            onPressed: _createCustomer,
-          ),
-        ],
       ),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-            child: TextField(
-              decoration: _searchDecoration(context),
+            child: SearchBar(
+              hintText: l10n.customersSearchHint,
+              leading: const Icon(Icons.search),
               onChanged: (value) => setState(() => _query = value),
             ),
           ),
@@ -219,6 +193,11 @@ class _CustomersScreenState extends State<CustomersScreen> {
                   ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _createCustomer,
+        icon: const Icon(Icons.add),
+        label: Text(l10n.customersCreateButton),
       ),
     );
   }

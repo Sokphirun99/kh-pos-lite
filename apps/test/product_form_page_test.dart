@@ -20,7 +20,7 @@ void main() {
       when(() => repo.getBySku(any())).thenAnswer((_) async => null);
     });
 
-    Widget _wrap(Widget child) {
+    Widget wrap(Widget child) {
       return RepositoryProvider<ProductRepository>.value(
         value: repo,
         child: MaterialApp(
@@ -30,7 +30,7 @@ void main() {
     }
 
     testWidgets('shows Required errors when fields empty', (tester) async {
-      await tester.pumpWidget(_wrap(const ProductFormPage()));
+      await tester.pumpWidget(wrap(const ProductFormPage()));
 
       // Tap Save without filling anything
       await tester.tap(find.widgetWithText(ElevatedButton, 'Save'));
@@ -50,7 +50,7 @@ void main() {
             stock: 5,
           ));
 
-      await tester.pumpWidget(_wrap(const ProductFormPage()));
+      await tester.pumpWidget(wrap(const ProductFormPage()));
 
       await tester.enterText(find.widgetWithText(TextFormField, 'Name'), 'New');
       await tester.enterText(find.widgetWithText(TextFormField, 'SKU'), 'DUP-SKU');

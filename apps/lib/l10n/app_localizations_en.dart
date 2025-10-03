@@ -12,6 +12,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'KH POS Lite';
 
   @override
+  String get loginSubtitle =>
+      'Track sales, print receipts, and sync automatically.';
+
+  @override
+  String get loginEmailLabel => 'Email or username';
+
+  @override
+  String get loginPasswordLabel => 'Password';
+
+  @override
+  String get loginSignIn => 'Sign in';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get show => 'Show';
+
+  @override
+  String get hide => 'Hide';
+
+  @override
   String get tabItems => 'Items';
 
   @override
@@ -167,13 +189,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loginTitle => 'Sign in';
-
-  @override
-  String get loginSignIn => 'Sign in';
-
-  @override
-  String get loginSubtitle =>
-      'Track sales, print receipts, and sync automatically.';
 
   @override
   String get loginFeatureOffline =>

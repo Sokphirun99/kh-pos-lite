@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cashier_app/domain/entities/payment.dart';
 import 'package:cashier_app/domain/repositories/payment_repository.dart';
 import 'package:isar/isar.dart';
@@ -9,6 +11,9 @@ import 'package:cashier_app/services/key_value_service.dart';
 
 class PaymentRepositoryImpl implements PaymentRepository {
   final Isar isar;
+  StreamController<List<Payment>>? _watchAllController;
+  StreamSubscription<List<PaymentModel>>? _watchAllSubscription;
+  List<Payment>? _watchAllCache;
   PaymentRepositoryImpl(this.isar);
 
   @override
@@ -55,10 +60,36 @@ class PaymentRepositoryImpl implements PaymentRepository {
 
   @override
   Stream<List<Payment>> watchAll() {
-    return isar.paymentModels
+    final existing = _watchAllController;
+    if (existing != null) {
+      return existing.stream;
+    }
+
+    final controller = StreamController<List<Payment>>.broadcast();
+    controller
+      ..onListen = () {
+        final cached = _watchAllCache;
+        if (cached != null) {
+          controller.add(cached);
+        }
+      }
+      ..onCancel = () async {
+        if (!controller.hasListener) {
+          await _watchAllSubscription?.cancel();
+          _watchAllSubscription = null;
+          _watchAllController = null;
+        }
+      };
+    _watchAllController = controller;
+    _watchAllSubscription = isar.paymentModels
         .where()
         .watch(fireImmediately: true)
-        .asyncMap((models) async => models.map((e) => e.toDomain()).toList(growable: false));
+        .listen((models) {
+      final data = models.map((e) => e.toDomain()).toList(growable: false);
+      _watchAllCache = data;
+      controller.add(data);
+    });
+    return controller.stream;
   }
 
   @override

@@ -157,7 +157,7 @@ class SaleDetailScreen extends StatelessWidget {
                               final p = pays[i];
                               final ref = KeyValueService.get<String>('payment_ref_${p.id}');
 
-                              Future<void> _deletePayment() async {
+                              Future<void> deletePayment() async {
                                 final prevRef = ref;
                                 await payRepo.delete(p.id);
                                 if (prevRef != null && prevRef.isNotEmpty) {
@@ -184,7 +184,7 @@ class SaleDetailScreen extends StatelessWidget {
                                 key: ValueKey(p.id),
                                 background: Container(color: Colors.red),
                                 direction: DismissDirection.endToStart,
-                                onDismissed: (_) async => _deletePayment(),
+                                onDismissed: (_) async => deletePayment(),
                                 child: ListTile(
                                   leading: const Icon(Icons.payments),
                                   title: Text('៛${p.amount.amount}'),
@@ -207,7 +207,7 @@ class SaleDetailScreen extends StatelessWidget {
                                         ),
                                       IconButton(
                                         icon: const Icon(Icons.delete),
-                                        onPressed: _deletePayment,
+                                        onPressed: deletePayment,
                                       ),
                                     ],
                                   ),

@@ -54,18 +54,14 @@ class _SellScreenState extends State<SellScreen> {
             )
           ],
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(96),
+            preferredSize: const Size.fromHeight(92),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Column(
                 children: [
-                  TextField(
-                    decoration: const InputDecoration(
-                      hintText: 'Search products',
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                    ),
+                  SearchBar(
+                    hintText: 'Search products',
+                    leading: const Icon(Icons.search),
                     onChanged: (v) => setState(() => query = v.trim().toLowerCase()),
                   ),
                   const SizedBox(height: 8),
@@ -166,7 +162,10 @@ class _ProductTile extends StatelessWidget {
                         visualDensity: VisualDensity.compact,
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         label: Text(AppLocalizations.of(context).lowStock),
-                        backgroundColor: Colors.orangeAccent.withOpacity(0.7),
+                        backgroundColor: Theme.of(context).colorScheme.errorContainer,
+                        labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.onErrorContainer,
+                        ),
                       ),
                     );
                   })

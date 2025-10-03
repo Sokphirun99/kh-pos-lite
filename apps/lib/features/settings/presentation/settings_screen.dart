@@ -18,7 +18,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final isDark = context.watch<ThemeCubit>().state;
     final locale = context.watch<LocaleCubit>().state;
     final flags = context.watch<FeatureFlagsCubit>().state;
@@ -220,7 +220,7 @@ class SettingsScreen extends StatelessWidget {
                     _SettingsTile(
                       leading: const Icon(Icons.qr_code_2),
                       title: Text(l10n.settingsKhqrTitle),
-                      subtitle: Text(khqrPath == null ? l10n.settingsKhqrNotSet : khqrPath),
+                      subtitle: Text(khqrPath ?? l10n.settingsKhqrNotSet),
                     ),
                     if (khqrPath != null)
                       Padding(
@@ -339,7 +339,7 @@ class _SettingTextFieldState extends State<_SettingTextField> {
           ),
           isDense: true,
           filled: true,
-          fillColor: theme.colorScheme.surfaceVariant.withOpacity(theme.brightness == Brightness.dark ? 0.24 : 0.5),
+          fillColor: theme.colorScheme.surfaceContainerHighest.withOpacity(theme.brightness == Brightness.dark ? 0.24 : 0.5),
         ),
         onChanged: (v) => KeyValueService.set<String>(widget.storageKey, v.trim()),
       ),
@@ -378,7 +378,7 @@ class _SettingsSection extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           elevation: 0,
           margin: EdgeInsets.zero,
-          color: theme.colorScheme.surfaceVariant.withOpacity(theme.brightness == Brightness.dark ? 0.3 : 0.8),
+          color: theme.colorScheme.surfaceContainerHighest.withOpacity(theme.brightness == Brightness.dark ? 0.3 : 0.8),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           child: Column(
             children: [

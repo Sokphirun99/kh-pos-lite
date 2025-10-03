@@ -6,7 +6,6 @@ import 'package:cashier_app/domain/repositories/product_repository.dart';
 import 'package:cashier_app/l10n/app_localizations.dart';
 import 'package:cashier_app/features/common/widgets/empty_placeholder.dart';
 import 'package:cashier_app/features/common/widgets/sync_banner.dart';
-import 'product_form_page.dart';
 import 'package:cashier_app/services/key_value_service.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,9 +21,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
   bool skuOnly = false;
 
   Future<void> _openForm(BuildContext context, {Product? existing}) async {
-    final result = await Navigator.of(context).push<Product>(
-      MaterialPageRoute(builder: (_) => ProductFormPage(existing: existing)),
-    );
+    final result = existing == null
+        ? await context.pushNamed<Product>('product_new')
+        : await context.pushNamed<Product>('product_edit', pathParameters: {'id': existing.id}, extra: existing);
     if (result == null) return;
     final bloc = context.read<ProductsBloc>();
     if (existing == null) {
@@ -34,25 +33,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
     }
   }
 
-  InputDecoration _searchDecoration(BuildContext context) {
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
-    final l10n = AppLocalizations.of(context)!;
-    return InputDecoration(
-      hintText: l10n.itemsSearchHint,
-      prefixIcon: const Icon(Icons.search),
-      filled: true,
-      fillColor: scheme.surfaceVariant.withOpacity(theme.brightness == Brightness.dark ? 0.35 : 0.6),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(18),
-        borderSide: BorderSide.none,
-      ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-    );
-  }
-
   Widget _emptyState(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     return EmptyPlaceholder(
       icon: Icons.inventory_2_outlined,
       title: l10n.itemsEmptyTitle,
@@ -67,12 +49,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
     final subtitleStyle = theme.textTheme.bodyMedium?.copyWith(
       color: theme.colorScheme.onSurfaceVariant.withOpacity(0.8),
     );
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
 
     return Card(
       clipBehavior: Clip.antiAlias,
       margin: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       child: InkWell(
         onTap: () => _openForm(context, existing: product),
         child: Padding(
@@ -100,9 +81,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       final snackL10n = AppLocalizations.of(context);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text(snackL10n?.settingsSyncDeleted ?? 'Deleted'),
+                          content: Text(snackL10n.settingsSyncDeleted),
                           action: SnackBarAction(
-                            label: snackL10n?.undo ?? 'UNDO',
+                            label: snackL10n.undo,
                             onPressed: () {
                               context.read<ProductsBloc>().add(ProductAdded(product));
                             },
@@ -135,17 +116,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
     );
   }
 
-  Widget _infoChip(BuildContext context, String text) {
-    final theme = Theme.of(context);
-    return Chip(
-      label: Text(text),
-      backgroundColor: theme.colorScheme.surfaceVariant.withOpacity(theme.brightness == Brightness.dark ? 0.35 : 0.7),
-    );
-  }
+  Widget _infoChip(BuildContext context, String text) => Chip(label: Text(text));
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     return BlocProvider(
       create: (ctx) => ProductsBloc(ctx.read<ProductRepository>())..add(const ProductsSubscribed()),
       child: Scaffold(
@@ -157,11 +132,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
               tooltip: l10n.itemsAdjustStockTooltip,
               onPressed: () => context.pushNamed('stock_adjustments'),
             ),
-            IconButton(
-              icon: const Icon(Icons.add),
-              tooltip: l10n.itemsCreateTooltip,
-              onPressed: () => _openForm(context),
-            ),
           ],
         ),
         body: Column(
@@ -172,8 +142,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextField(
-                    decoration: _searchDecoration(context),
+                  SearchBar(
+                    hintText: l10n.itemsSearchHint,
+                    leading: const Icon(Icons.search),
                     onChanged: (v) => setState(() => query = v.trim().toLowerCase()),
                   ),
                   const SizedBox(height: 12),
@@ -191,7 +162,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 builder: (context, state) {
                   if (state.isLoading) return const Center(child: CircularProgressIndicator());
                   if (state.error != null) return Center(child: Text(state.error!));
-                  final l10n = AppLocalizations.of(context);
                   final items = state.items
                       .where((p) {
                         if (query.isEmpty) return true;
@@ -224,9 +194,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           final snackL10n = AppLocalizations.of(context);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text(snackL10n?.settingsSyncDeleted ?? 'Deleted'),
+                              content: Text(snackL10n.settingsSyncDeleted),
                               action: SnackBarAction(
-                                label: snackL10n?.undo ?? 'UNDO',
+                                label: snackL10n.undo,
                                 onPressed: () {
                                   context.read<ProductsBloc>().add(ProductAdded(p));
                                 },
@@ -242,6 +212,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
               ),
             ),
           ],
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () => _openForm(context),
+          icon: const Icon(Icons.add),
+          label: Text(l10n.itemsCreateButton),
         ),
       ),
     );

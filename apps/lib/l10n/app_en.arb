@@ -1,5 +1,12 @@
 {
   "appTitle": "KH POS Lite",
+  "loginSubtitle": "Sign in to continue",
+  "loginEmailLabel": "Email or username",
+  "loginPasswordLabel": "Password",
+  "loginSignIn": "Sign in",
+  "fieldRequired": "This field is required",
+  "show": "Show",
+  "hide": "Hide",
   "tabItems": "Items",
   "tabCustomers": "Customers",
   "tabInvoices": "Invoices",

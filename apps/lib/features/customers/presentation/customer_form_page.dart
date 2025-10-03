@@ -65,7 +65,7 @@ class _CustomerFormPageState extends State<CustomerFormPage> {
     super.dispose();
   }
 
-  String? _required(String? value) => value == null || value.trim().isEmpty ? AppLocalizations.of(context)!.formRequired : null;
+  String? _required(String? value) => value == null || value.trim().isEmpty ? AppLocalizations.of(context).formRequired : null;
 
   void _save() {
     if (!_formKey.currentState!.validate()) return;
@@ -85,7 +85,7 @@ class _CustomerFormPageState extends State<CustomerFormPage> {
   @override
   Widget build(BuildContext context) {
     final viewInsets = MediaQuery.of(context).viewInsets;
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(

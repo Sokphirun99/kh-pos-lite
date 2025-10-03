@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cashier_app/domain/entities/sale.dart';
 import 'package:cashier_app/domain/repositories/sale_repository.dart';
 import 'package:isar/isar.dart';
@@ -8,6 +10,9 @@ import '../remote/api_paths.dart';
 
 class SaleRepositoryImpl implements SaleRepository {
   final Isar isar;
+  StreamController<List<Sale>>? _watchAllController;
+  StreamSubscription<List<SaleModel>>? _watchAllSubscription;
+  List<Sale>? _watchAllCache;
   SaleRepositoryImpl(this.isar);
 
   @override
@@ -54,11 +59,37 @@ class SaleRepositoryImpl implements SaleRepository {
 
   @override
   Stream<List<Sale>> watchAll() {
-    return isar.saleModels
+    final existing = _watchAllController;
+    if (existing != null) {
+      return existing.stream;
+    }
+
+    final controller = StreamController<List<Sale>>.broadcast();
+    controller
+      ..onListen = () {
+        final cached = _watchAllCache;
+        if (cached != null) {
+          controller.add(cached);
+        }
+      }
+      ..onCancel = () async {
+        if (!controller.hasListener) {
+          await _watchAllSubscription?.cancel();
+          _watchAllSubscription = null;
+          _watchAllController = null;
+        }
+      };
+    _watchAllController = controller;
+    _watchAllSubscription = isar.saleModels
         .where()
         .sortByCreatedAt()
         .watch(fireImmediately: true)
-        .asyncMap((models) async => models.map((e) => e.toDomain()).toList(growable: false));
+        .listen((models) {
+      final data = models.map((e) => e.toDomain()).toList(growable: false);
+      _watchAllCache = data;
+      controller.add(data);
+    });
+    return controller.stream;
   }
 
   @override

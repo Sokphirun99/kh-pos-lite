@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:cashier_app/domain/entities/product.dart';
 import 'package:cashier_app/domain/value_objects/money_riel.dart';

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
 
 Future<void> testExecutable(FutureOr<void> Function() main) async {

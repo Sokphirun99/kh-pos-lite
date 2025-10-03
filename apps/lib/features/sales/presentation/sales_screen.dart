@@ -286,7 +286,7 @@ class _SummaryTile extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
-          color: theme.colorScheme.surface.withOpacity(0.8),
+          color: theme.colorScheme.surfaceContainerHigh,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
@@ -342,9 +342,7 @@ class _SaleCard extends StatelessWidget {
     final remainingLabel = '៛${currencyFormat.format(remaining)}';
     final isPaid = remaining <= 0;
     final statusLabel = isPaid ? l10n.paid : l10n.salesStatusOutstanding;
-    final statusColor = isPaid
-        ? theme.colorScheme.primaryContainer
-        : theme.colorScheme.errorContainer.withOpacity(0.2);
+    final statusColor = isPaid ? theme.colorScheme.primaryContainer : theme.colorScheme.errorContainer;
     final statusTextColor = isPaid
         ? theme.colorScheme.onPrimaryContainer
         : theme.colorScheme.error;
@@ -456,7 +454,7 @@ class _SaleCard extends StatelessWidget {
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
-                  color: theme.colorScheme.surfaceVariant.withOpacity(0.4),
+                  color: theme.colorScheme.surfaceContainerHigh,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

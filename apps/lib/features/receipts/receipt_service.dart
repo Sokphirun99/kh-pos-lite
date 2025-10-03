@@ -65,10 +65,9 @@ class ReceiptService {
               pw.Text('Payments', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
               pw.SizedBox(height: 4),
               ...payments.map((p) => pw.Column(children: [
-                    _kv('${p.method}', formatRiel(p.amount.amount)),
+                    _kv(p.method, formatRiel(p.amount.amount)),
                     pw.SizedBox(height: 2),
-                  ])).
-                  toList(),
+                  ])),
               pw.SizedBox(height: 8),
               pw.Text(shop.footer?.isNotEmpty == true ? shop.footer! : 'Thank you!', textAlign: pw.TextAlign.center),
             ],
@@ -103,7 +102,7 @@ class ReceiptService {
       // Alignment: ESC a n (0 left, 1 center, 2 right)
       bytes.addAll([0x1B, 0x40]);
       bytes.addAll([0x1B, 0x61, center ? 1 : 0]);
-      final data = (text + '\n').codeUnits;
+      final data = ('$text\n').codeUnits;
       bytes.addAll(data);
     }
 

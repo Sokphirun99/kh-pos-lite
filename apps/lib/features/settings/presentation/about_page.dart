@@ -29,9 +29,9 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final last = context.watch<SyncBloc>().state.lastSynced;
-    final lastSyncText = last != null ? (l10n?.lastSyncAt(DateFormat.Hm().format(last.toLocal())) ?? '') : '-';
+    final lastSyncText = last != null ? (l10n.lastSyncAt(DateFormat.Hm().format(last.toLocal())) ?? '') : '-';
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.aboutTitle ?? 'About')),
+      appBar: AppBar(title: Text(l10n.aboutTitle ?? 'About')),
       body: FutureBuilder<Map<String, String>>(
         future: _loadInfo(),
         builder: (context, snap) {
@@ -39,7 +39,7 @@ class AboutPage extends StatelessWidget {
           return ListView(
             children: [
               ListTile(
-                title: Text(l10n?.aboutAppVersion ?? 'App version'),
+                title: Text(l10n.aboutAppVersion ?? 'App version'),
                 subtitle: Text(data?['appVersion'] ?? '...'),
                 trailing: const Icon(Icons.copy),
                 onTap: () async {
@@ -47,16 +47,16 @@ class AboutPage extends StatelessWidget {
                   await Clipboard.setData(ClipboardData(text: text));
                   if (!context.mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(l10n?.aboutCopied ?? 'Copied')),
+                    SnackBar(content: Text(l10n.aboutCopied ?? 'Copied')),
                   );
                 },
               ),
               ListTile(
-                title: Text(l10n?.aboutDbVersion ?? 'DB version'),
+                title: Text(l10n.aboutDbVersion ?? 'DB version'),
                 subtitle: Text(data?['dbVersion'] ?? '...'),
               ),
               ListTile(
-                title: Text(l10n?.aboutLastSync ?? 'Last sync'),
+                title: Text(l10n.aboutLastSync ?? 'Last sync'),
                 subtitle: Text(lastSyncText),
               ),
               const Divider(),
@@ -69,14 +69,14 @@ class AboutPage extends StatelessWidget {
                 }).query;
                 return ListTile(
                   leading: const Icon(Icons.bug_report_outlined),
-                  title: Text(l10n?.aboutQaParams ?? 'QA params'),
+                  title: Text(l10n.aboutQaParams ?? 'QA params'),
                   subtitle: Text(params),
                   trailing: const Icon(Icons.copy),
                   onTap: () async {
                     await Clipboard.setData(ClipboardData(text: params));
                     if (!context.mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(l10n?.aboutCopied ?? 'Copied')),
+                      SnackBar(content: Text(l10n.aboutCopied ?? 'Copied')),
                     );
                   },
                 );
@@ -84,17 +84,17 @@ class AboutPage extends StatelessWidget {
               const Divider(),
               ListTile(
                 leading: const Icon(Icons.delete_forever, color: Colors.red),
-                title: Text(l10n?.aboutResetLocalDb ?? 'Reset local data'),
-                subtitle: Text(l10n?.aboutResetLocalDbHint ?? 'Long-press to reset'),
+                title: Text(l10n.aboutResetLocalDb ?? 'Reset local data'),
+                subtitle: Text(l10n.aboutResetLocalDbHint ?? 'Long-press to reset'),
                 onLongPress: () async {
                   final confirmed = await showDialog<bool>(
                     context: context,
                     builder: (ctx) => AlertDialog(
-                      title: Text(l10n?.aboutConfirmTitle ?? 'Confirm reset'),
-                      content: Text(l10n?.aboutConfirmMessage ?? 'This will delete local data. Continue?'),
+                      title: Text(l10n.aboutConfirmTitle ?? 'Confirm reset'),
+                      content: Text(l10n.aboutConfirmMessage ?? 'This will delete local data. Continue?'),
                       actions: [
-                        TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text(l10n?.cancel ?? 'Cancel')),
-                        ElevatedButton(onPressed: () => Navigator.of(ctx).pop(true), child: Text(l10n?.ok ?? 'OK')),
+                        TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text(l10n.cancel ?? 'Cancel')),
+                        ElevatedButton(onPressed: () => Navigator.of(ctx).pop(true), child: Text(l10n.ok ?? 'OK')),
                       ],
                     ),
                   );
@@ -113,12 +113,12 @@ class AboutPage extends StatelessWidget {
                     await HydratedBloc.storage.clear();
                     if (!context.mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(l10n?.aboutResetDone ?? 'Local data cleared')),
+                      SnackBar(content: Text(l10n.aboutResetDone ?? 'Local data cleared')),
                     );
                   } catch (e) {
                     if (!context.mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('${l10n?.error ?? 'Error'}: $e')),
+                      SnackBar(content: Text('${l10n.error ?? 'Error'}: $e')),
                     );
                   }
                 },

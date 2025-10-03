@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cashier_app/features/products/bloc/products_bloc.dart';
 import 'package:cashier_app/domain/repositories/product_repository.dart';
-import 'package:cashier_app/domain/entities/product.dart';
 import 'package:cashier_app/l10n/app_localizations.dart';
 
 class StockAdjustmentsScreen extends StatelessWidget {

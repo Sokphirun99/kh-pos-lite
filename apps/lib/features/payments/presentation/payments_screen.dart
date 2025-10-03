@@ -261,9 +261,7 @@ class _PaymentsSummaryCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        gradient: LinearGradient(
-          colors: [scheme.primaryContainer, scheme.secondaryContainer.withOpacity(0.85)],
-        ),
+        gradient: LinearGradient(colors: [scheme.primaryContainer, scheme.secondaryContainer]),
       ),
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -319,7 +317,7 @@ class _SummaryTile extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
-          color: theme.colorScheme.surface.withOpacity(0.9),
+          color: theme.colorScheme.surfaceContainerHigh,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
@@ -358,7 +356,6 @@ class _PaymentsFilterBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -376,11 +373,9 @@ class _PaymentsFilterBar extends StatelessWidget {
           onSelectionChanged: (values) => onFilterChanged(values.first),
         ),
         const SizedBox(height: 12),
-        TextField(
-          decoration: InputDecoration(
-            prefixIcon: const Icon(Icons.search),
-            hintText: l10n.paymentsSearchHint,
-          ),
+        SearchBar(
+          leading: const Icon(Icons.search),
+          hintText: l10n.paymentsSearchHint,
           onChanged: onSearchChanged,
         ),
       ],
@@ -501,10 +496,6 @@ class _InfoChip extends StatelessWidget {
     return Chip(
       avatar: Icon(icon, size: 18, color: theme.colorScheme.primary),
       label: Text(label),
-      backgroundColor: theme.colorScheme.surfaceVariant.withOpacity(
-        theme.brightness == Brightness.dark ? 0.35 : 0.65,
-      ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     );
   }
 }

@@ -12,6 +12,28 @@ class AppLocalizationsKm extends AppLocalizations {
   String get appTitle => 'ខេអេច ភאָס លាយទ៍';
 
   @override
+  String get loginSubtitle =>
+      'តាមដានការលក់ បោះពុម្ពវិក្កយបត្រ និងសមកាលកម្មដោយស្វ័យប្រវត្តិ។';
+
+  @override
+  String get loginEmailLabel => 'អ៊ីមែល ឬឈ្មោះអ្នកប្រើ';
+
+  @override
+  String get loginPasswordLabel => 'ពាក្យសម្ងាត់';
+
+  @override
+  String get loginSignIn => 'ចូលប្រើ';
+
+  @override
+  String get fieldRequired => 'ត្រូវការបំពេញ';
+
+  @override
+  String get show => 'បង្ហាញ';
+
+  @override
+  String get hide => 'លាក់';
+
+  @override
   String get tabItems => 'ទំនិញ';
 
   @override
@@ -166,13 +188,6 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get loginTitle => 'ចូលប្រើ';
-
-  @override
-  String get loginSignIn => 'ចូលប្រើ';
-
-  @override
-  String get loginSubtitle =>
-      'តាមដានការលក់ បោះពុម្ពវិក្កយបត្រ និងសមកាលកម្មដោយស្វ័យប្រវត្តិ។';
 
   @override
   String get loginFeatureOffline =>

@@ -20,7 +20,7 @@ class EmptyPlaceholder extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final muted = colorScheme.onSurfaceVariant.withOpacity(0.7);
+    final muted = colorScheme.onSurfaceVariant;
 
     return Center(
       child: Padding(
@@ -32,8 +32,7 @@ class EmptyPlaceholder extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: colorScheme.surfaceVariant
-                    .withOpacity(theme.brightness == Brightness.dark ? 0.35 : 0.5),
+                color: colorScheme.surfaceContainerHigh,
               ),
               child: Icon(icon, size: 48, color: colorScheme.onSurfaceVariant),
             ),
