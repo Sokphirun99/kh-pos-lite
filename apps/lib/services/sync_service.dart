@@ -70,7 +70,7 @@ class SyncService {
     // Tombstones for products
     try {
       final deletedProducts = await api.get<List<dynamic>>('/products/deleted');
-      final delList = (deletedProducts.data ?? []);
+      final delList = deletedProducts.data ?? <String>[];
       await isar.writeTxn(() async {
         for (final id in delList.cast<String>()) {
           final existing = await isar.productModels.filter().uidEqualTo(id).findFirst();
