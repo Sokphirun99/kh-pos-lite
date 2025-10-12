@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cashier_app/domain/repositories/product_repository.dart';
 import 'package:cashier_app/domain/entities/product.dart';
 import 'package:isar/isar.dart';
@@ -9,6 +11,9 @@ import '../remote/api_paths.dart';
 /// Placeholder implementation wiring to local/remote sources later.
 class ProductRepositoryImpl implements ProductRepository {
   final Isar isar;
+  StreamController<List<Product>>? _watchAllController;
+  StreamSubscription<List<ProductModel>>? _watchAllSubscription;
+  List<Product>? _watchAllCache;
   ProductRepositoryImpl(this.isar);
 
   @override
@@ -77,10 +82,36 @@ class ProductRepositoryImpl implements ProductRepository {
 
   @override
   Stream<List<Product>> watchAll() {
-    return isar.productModels
+    final existing = _watchAllController;
+    if (existing != null) {
+      return existing.stream;
+    }
+
+    final controller = StreamController<List<Product>>.broadcast();
+    controller
+      ..onListen = () {
+        final cached = _watchAllCache;
+        if (cached != null) {
+          controller.add(cached);
+        }
+      }
+      ..onCancel = () async {
+        if (!controller.hasListener) {
+          await _watchAllSubscription?.cancel();
+          _watchAllSubscription = null;
+          _watchAllController = null;
+        }
+      };
+    _watchAllController = controller;
+    _watchAllSubscription = isar.productModels
         .where()
         .sortByName()
         .watch(fireImmediately: true)
-        .asyncMap((models) async => models.map((e) => e.toDomain()).toList(growable: false));
+        .listen((models) {
+      final data = models.map((e) => e.toDomain()).toList(growable: false);
+      _watchAllCache = data;
+      controller.add(data);
+    });
+    return controller.stream;
   }
 }

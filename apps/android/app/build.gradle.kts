@@ -24,6 +24,7 @@ android {
         applicationId = "com.khpos.cashier.cashier_app"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
+        // Many dependencies (e.g. flutter_secure_storage >=9) require minSdk 23
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

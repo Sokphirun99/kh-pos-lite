@@ -18,7 +18,6 @@ import '../domain/repositories/sale_repository.dart';
 import '../domain/repositories/payment_repository.dart';
 import '../features/settings/bloc/feature_flags_cubit.dart';
 
-/// App root: place for providers/routing later.
 class App extends StatelessWidget {
   const App({super.key});
 
@@ -34,10 +33,7 @@ class App extends StatelessWidget {
         BlocProvider(create: (_) => ReportsCubit()),
         BlocProvider(create: (_) => FeatureFlagsCubit()),
         BlocProvider(create: (ctx) {
-          final token = ctx.read<AuthBloc>().state.when(
-                unauthenticated: () => null,
-                authenticated: (t) => t,
-              );
+          final token = ctx.read<AuthBloc>().state.whenOrNull(authenticated: (t) => t);
           final api = buildApiClient(token: token);
           return SyncBloc(SyncService(api));
         }),
@@ -67,15 +63,5 @@ class App extends StatelessWidget {
         );
       }),
     );
-  }
-}
-
-/// Temporary home placeholder until real routing is added.
-class _PlaceholderHome extends StatelessWidget {
-  const _PlaceholderHome();
-
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox.shrink();
   }
 }

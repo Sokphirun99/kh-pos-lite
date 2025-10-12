@@ -104,11 +104,65 @@ abstract class AppLocalizations {
   /// **'KH POS Lite'**
   String get appTitle;
 
-  /// No description provided for @tabProducts.
+  /// No description provided for @loginSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Products'**
-  String get tabProducts;
+  /// **'Track sales, print receipts, and sync automatically.'**
+  String get loginSubtitle;
+
+  /// No description provided for @loginEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email or username'**
+  String get loginEmailLabel;
+
+  /// No description provided for @loginPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get loginPasswordLabel;
+
+  /// No description provided for @loginSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get loginSignIn;
+
+  /// No description provided for @fieldRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get fieldRequired;
+
+  /// No description provided for @show.
+  ///
+  /// In en, this message translates to:
+  /// **'Show'**
+  String get show;
+
+  /// No description provided for @hide.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide'**
+  String get hide;
+
+  /// No description provided for @tabItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Items'**
+  String get tabItems;
+
+  /// No description provided for @tabCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers'**
+  String get tabCustomers;
+
+  /// No description provided for @tabInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get tabInvoices;
 
   /// No description provided for @tabSales.
   ///
@@ -116,23 +170,281 @@ abstract class AppLocalizations {
   /// **'Sales'**
   String get tabSales;
 
-  /// No description provided for @tabPayments.
-  ///
-  /// In en, this message translates to:
-  /// **'Payments'**
-  String get tabPayments;
-
-  /// No description provided for @tabReports.
-  ///
-  /// In en, this message translates to:
-  /// **'Reports'**
-  String get tabReports;
-
   /// No description provided for @tabSettings.
   ///
   /// In en, this message translates to:
   /// **'Settings'**
   String get tabSettings;
+
+  /// No description provided for @itemsSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Item Name'**
+  String get itemsSearchHint;
+
+  /// No description provided for @itemsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Item Not Found'**
+  String get itemsEmptyTitle;
+
+  /// No description provided for @itemsEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Item might be not in your list'**
+  String get itemsEmptySubtitle;
+
+  /// No description provided for @itemsCreateButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Create New Item'**
+  String get itemsCreateButton;
+
+  /// No description provided for @itemsSkuOnlyFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Search SKU only'**
+  String get itemsSkuOnlyFilter;
+
+  /// No description provided for @itemsAdjustStockTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust Stock'**
+  String get itemsAdjustStockTooltip;
+
+  /// No description provided for @itemsCreateTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Item'**
+  String get itemsCreateTooltip;
+
+  /// No description provided for @itemsStockChip.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock: {count}'**
+  String itemsStockChip(Object count);
+
+  /// No description provided for @itemsFormTitleCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Item'**
+  String get itemsFormTitleCreate;
+
+  /// No description provided for @itemsFormTitleEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Item'**
+  String get itemsFormTitleEdit;
+
+  /// No description provided for @itemsFormSectionBasicInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Info'**
+  String get itemsFormSectionBasicInfo;
+
+  /// No description provided for @itemsFormSectionNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get itemsFormSectionNote;
+
+  /// No description provided for @itemsFormSectionImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Image'**
+  String get itemsFormSectionImage;
+
+  /// No description provided for @itemsFieldName.
+  ///
+  /// In en, this message translates to:
+  /// **'Item Name'**
+  String get itemsFieldName;
+
+  /// No description provided for @itemsFieldCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Item Code'**
+  String get itemsFieldCode;
+
+  /// No description provided for @itemsFieldUnitCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit Cost (៛)'**
+  String get itemsFieldUnitCost;
+
+  /// No description provided for @itemsFieldPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Price (៛)'**
+  String get itemsFieldPrice;
+
+  /// No description provided for @itemsFieldStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock'**
+  String get itemsFieldStock;
+
+  /// No description provided for @itemsFieldNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your note'**
+  String get itemsFieldNoteHint;
+
+  /// No description provided for @itemsAddImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Image'**
+  String get itemsAddImage;
+
+  /// No description provided for @itemsPriceValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'Price must be greater than or equal to the unit cost'**
+  String get itemsPriceValidation;
+
+  /// No description provided for @itemsSkuExists.
+  ///
+  /// In en, this message translates to:
+  /// **'SKU already exists'**
+  String get itemsSkuExists;
+
+  /// No description provided for @itemsSkuFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Use 3-32 characters: letters, digits, _ or -'**
+  String get itemsSkuFormat;
+
+  /// No description provided for @customersSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Name, Phone'**
+  String get customersSearchHint;
+
+  /// No description provided for @customersEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Not Found'**
+  String get customersEmptyTitle;
+
+  /// No description provided for @customersEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer might be not in your list'**
+  String get customersEmptySubtitle;
+
+  /// No description provided for @customersCreateButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Create New Customer'**
+  String get customersCreateButton;
+
+  /// No description provided for @customersCreateTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Customer'**
+  String get customersCreateTooltip;
+
+  /// No description provided for @customersFormTitleCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Customer'**
+  String get customersFormTitleCreate;
+
+  /// No description provided for @customersFormTitleEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Customer'**
+  String get customersFormTitleEdit;
+
+  /// No description provided for @customersSectionBasicInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Info'**
+  String get customersSectionBasicInfo;
+
+  /// No description provided for @customersSectionAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get customersSectionAddress;
+
+  /// No description provided for @customersSectionNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get customersSectionNote;
+
+  /// No description provided for @customersFieldFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get customersFieldFullName;
+
+  /// No description provided for @customersFieldPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get customersFieldPhone;
+
+  /// No description provided for @customersFieldAltPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Alternative Phone'**
+  String get customersFieldAltPhone;
+
+  /// No description provided for @customersFieldVatTin.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT TIN'**
+  String get customersFieldVatTin;
+
+  /// No description provided for @customersFieldAddressHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get customersFieldAddressHint;
+
+  /// No description provided for @customersFieldNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your note'**
+  String get customersFieldNoteHint;
+
+  /// No description provided for @customersVatLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get customersVatLabel;
+
+  /// No description provided for @customersPrivacyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'We respect your customers\' privacy and never share their details.'**
+  String get customersPrivacyHint;
+
+  /// No description provided for @customersDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer deleted'**
+  String get customersDeleted;
+
+  /// No description provided for @commonDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get commonDone;
+
+  /// No description provided for @formRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get formRequired;
+
+  /// No description provided for @formNonNegative.
+  ///
+  /// In en, this message translates to:
+  /// **'Must be zero or greater'**
+  String get formNonNegative;
 
   /// No description provided for @loginTitle.
   ///
@@ -140,11 +452,23 @@ abstract class AppLocalizations {
   /// **'Sign in'**
   String get loginTitle;
 
-  /// No description provided for @loginSignIn.
+  /// No description provided for @loginFeatureOffline.
   ///
   /// In en, this message translates to:
-  /// **'Sign in'**
-  String get loginSignIn;
+  /// **'Works offline and syncs when you\'re back online.'**
+  String get loginFeatureOffline;
+
+  /// No description provided for @loginFeatureReceipts.
+  ///
+  /// In en, this message translates to:
+  /// **'Print beautiful receipts or share invoices instantly.'**
+  String get loginFeatureReceipts;
+
+  /// No description provided for @loginFeatureKhqr.
+  ///
+  /// In en, this message translates to:
+  /// **'Collect cashless payments with KHQR and Telegram alerts.'**
+  String get loginFeatureKhqr;
 
   /// No description provided for @settingsLanguage.
   ///
@@ -169,6 +493,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dark Mode'**
   String get settingsDarkMode;
+
+  /// No description provided for @settingsGeneralSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace'**
+  String get settingsGeneralSection;
+
+  /// No description provided for @settingsGeneralSectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your profile and sync status.'**
+  String get settingsGeneralSectionSubtitle;
 
   /// No description provided for @settingsSyncNow.
   ///
@@ -218,11 +554,89 @@ abstract class AppLocalizations {
   /// **'No sales'**
   String get noSales;
 
+  /// No description provided for @salesEmptyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a sale to start tracking payments.'**
+  String get salesEmptyDescription;
+
   /// No description provided for @noPayments.
   ///
   /// In en, this message translates to:
   /// **'No payments'**
   String get noPayments;
+
+  /// No description provided for @paymentsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get paymentsTitle;
+
+  /// No description provided for @paymentsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review collections across cash and transfer channels.'**
+  String get paymentsSubtitle;
+
+  /// No description provided for @paymentsSummaryCollected.
+  ///
+  /// In en, this message translates to:
+  /// **'Collected'**
+  String get paymentsSummaryCollected;
+
+  /// No description provided for @paymentsSummaryCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments recorded'**
+  String get paymentsSummaryCount;
+
+  /// No description provided for @paymentsFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get paymentsFilterAll;
+
+  /// No description provided for @paymentsFilterCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get paymentsFilterCash;
+
+  /// No description provided for @paymentsFilterTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer'**
+  String get paymentsFilterTransfer;
+
+  /// No description provided for @paymentsSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by sale, method, or reference'**
+  String get paymentsSearchHint;
+
+  /// No description provided for @paymentsEmptyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Add payments as you collect cash or receive transfers.'**
+  String get paymentsEmptyDescription;
+
+  /// No description provided for @paymentsMethodLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment method'**
+  String get paymentsMethodLabel;
+
+  /// No description provided for @paymentsFormSaleId.
+  ///
+  /// In en, this message translates to:
+  /// **'Sale ID'**
+  String get paymentsFormSaleId;
+
+  /// No description provided for @paymentsFormSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Save payment'**
+  String get paymentsFormSubmit;
 
   /// No description provided for @lastSyncAt.
   ///
@@ -247,6 +661,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Batch size'**
   String get settingsBatchSize;
+
+  /// No description provided for @settingsBatchSizeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Process {size} invoices per batch'**
+  String settingsBatchSizeHint(Object size);
+
+  /// No description provided for @settingsPreferencesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get settingsPreferencesSection;
+
+  /// No description provided for @settingsPreferencesSectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Personalize how the app looks and feels.'**
+  String get settingsPreferencesSectionSubtitle;
+
+  /// No description provided for @settingsSyncSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Automation'**
+  String get settingsSyncSection;
+
+  /// No description provided for @settingsSyncSectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fine tune batch sync and inventory safeguards.'**
+  String get settingsSyncSectionSubtitle;
 
   /// No description provided for @aboutTitle.
   ///
@@ -392,11 +836,65 @@ abstract class AppLocalizations {
   /// **'Sale recorded. Remaining: {amount}'**
   String saleCompletedRemaining(Object amount);
 
+  /// No description provided for @salesAppBarSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Monitor customer payments and balances'**
+  String get salesAppBarSubtitle;
+
   /// No description provided for @receivePayment.
   ///
   /// In en, this message translates to:
   /// **'Receive Payment'**
   String get receivePayment;
+
+  /// No description provided for @salesSummaryTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total sales'**
+  String get salesSummaryTotal;
+
+  /// No description provided for @salesSummaryOutstanding.
+  ///
+  /// In en, this message translates to:
+  /// **'Outstanding balance'**
+  String get salesSummaryOutstanding;
+
+  /// No description provided for @salesSummaryCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid in full'**
+  String get salesSummaryCompleted;
+
+  /// No description provided for @salesCardTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Sale total'**
+  String get salesCardTotal;
+
+  /// No description provided for @salesStatusOutstanding.
+  ///
+  /// In en, this message translates to:
+  /// **'Outstanding'**
+  String get salesStatusOutstanding;
+
+  /// No description provided for @salesViewDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'View details'**
+  String get salesViewDetails;
+
+  /// No description provided for @salesDeleteTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete sale'**
+  String get salesDeleteTooltip;
+
+  /// No description provided for @salesNewSale.
+  ///
+  /// In en, this message translates to:
+  /// **'New sale'**
+  String get salesNewSale;
 
   /// No description provided for @balance.
   ///
@@ -470,6 +968,12 @@ abstract class AppLocalizations {
   /// **'Low stock threshold'**
   String get settingsLowStockThreshold;
 
+  /// No description provided for @settingsLowStockThresholdDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert when stock falls below {threshold}'**
+  String settingsLowStockThresholdDescription(Object threshold);
+
   /// No description provided for @adjustStockTitle.
   ///
   /// In en, this message translates to:
@@ -529,6 +1033,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Allow oversell (warn only)'**
   String get settingsAllowOversell;
+
+  /// No description provided for @settingsReceiptSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt branding'**
+  String get settingsReceiptSection;
+
+  /// No description provided for @settingsReceiptSectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize how your shop appears on printed receipts.'**
+  String get settingsReceiptSectionSubtitle;
+
+  /// No description provided for @settingsPaymentSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment integrations'**
+  String get settingsPaymentSection;
+
+  /// No description provided for @settingsPaymentSectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share KHQR codes and connect Telegram bots.'**
+  String get settingsPaymentSectionSubtitle;
+
+  /// No description provided for @settingsDangerZone.
+  ///
+  /// In en, this message translates to:
+  /// **'Danger zone'**
+  String get settingsDangerZone;
+
+  /// No description provided for @settingsDangerZoneSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out of this device.'**
+  String get settingsDangerZoneSubtitle;
 
   /// No description provided for @exceedsStock.
   ///

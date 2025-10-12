@@ -17,3 +17,10 @@ class AuthSignedOut extends AuthEvent {
   const AuthSignedOut();
 }
 
+class AuthLoginRequested extends AuthEvent {
+  final String email;
+  final String password;
+  const AuthLoginRequested({required this.email, required this.password});
+  @override
+  List<Object?> get props => [email, password];
+}

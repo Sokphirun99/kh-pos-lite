@@ -12,25 +12,194 @@ class AppLocalizationsKm extends AppLocalizations {
   String get appTitle => 'ខេអេច ភאָס លាយទ៍';
 
   @override
-  String get tabProducts => 'ផលិតផល';
+  String get loginSubtitle =>
+      'តាមដានការលក់ បោះពុម្ពវិក្កយបត្រ និងសមកាលកម្មដោយស្វ័យប្រវត្តិ។';
 
   @override
-  String get tabSales => 'លក់';
+  String get loginEmailLabel => 'អ៊ីមែល ឬឈ្មោះអ្នកប្រើ';
 
   @override
-  String get tabPayments => 'ការទូទាត់';
+  String get loginPasswordLabel => 'ពាក្យសម្ងាត់';
 
   @override
-  String get tabReports => 'របាយការណ៍';
+  String get loginSignIn => 'ចូលប្រើ';
+
+  @override
+  String get fieldRequired => 'ត្រូវការបំពេញ';
+
+  @override
+  String get show => 'បង្ហាញ';
+
+  @override
+  String get hide => 'លាក់';
+
+  @override
+  String get tabItems => 'ទំនិញ';
+
+  @override
+  String get tabCustomers => 'អតិថិជន';
+
+  @override
+  String get tabInvoices => 'វិក្កយបត្រ';
+
+  @override
+  String get tabSales => 'ការលក់';
 
   @override
   String get tabSettings => 'ការកំណត់';
 
   @override
+  String get itemsSearchHint => 'ឈ្មោះទំនិញ';
+
+  @override
+  String get itemsEmptyTitle => 'រកមិនឃើញទំនិញ';
+
+  @override
+  String get itemsEmptySubtitle => 'ទំនិញអាចមិនមានក្នុងបញ្ជីរបស់អ្នក';
+
+  @override
+  String get itemsCreateButton => 'បង្កើតទំនិញថ្មី';
+
+  @override
+  String get itemsSkuOnlyFilter => 'ស្វែងរកតាម SKU ប៉ុណ្ណោះ';
+
+  @override
+  String get itemsAdjustStockTooltip => 'កែតម្រូវស្តុក';
+
+  @override
+  String get itemsCreateTooltip => 'បង្កើតទំនិញ';
+
+  @override
+  String itemsStockChip(Object count) {
+    return 'ស្តុក: $count';
+  }
+
+  @override
+  String get itemsFormTitleCreate => 'បង្កើតទំនិញ';
+
+  @override
+  String get itemsFormTitleEdit => 'កែប្រែទំនិញ';
+
+  @override
+  String get itemsFormSectionBasicInfo => 'ព័ត៍មានមូលដ្ឋាន';
+
+  @override
+  String get itemsFormSectionNote => 'កំណត់ចំណាំ';
+
+  @override
+  String get itemsFormSectionImage => 'រូបភាព';
+
+  @override
+  String get itemsFieldName => 'ឈ្មោះទំនិញ';
+
+  @override
+  String get itemsFieldCode => 'កូដទំនិញ';
+
+  @override
+  String get itemsFieldUnitCost => 'តម្លៃដើម (៛)';
+
+  @override
+  String get itemsFieldPrice => 'តម្លៃលក់ (៛)';
+
+  @override
+  String get itemsFieldStock => 'ស្តុក';
+
+  @override
+  String get itemsFieldNoteHint => 'សរសេរកំណត់ចំណាំរបស់អ្នក';
+
+  @override
+  String get itemsAddImage => 'បន្ថែមរូបភាព';
+
+  @override
+  String get itemsPriceValidation => 'តម្លៃលក់ត្រូវតែធំជាងឬស្មើតម្លៃដើម';
+
+  @override
+  String get itemsSkuExists => 'SKU នេះមានរួចហើយ';
+
+  @override
+  String get itemsSkuFormat => 'ប្រើតួអក្សរ 3-32: អក្សរ លេខ _ ឬ -';
+
+  @override
+  String get customersSearchHint => 'ឈ្មោះ, ទូរស័ព្ទ';
+
+  @override
+  String get customersEmptyTitle => 'រកមិនឃើញអតិថិជន';
+
+  @override
+  String get customersEmptySubtitle => 'អតិថិជនអាចមិនមានក្នុងបញ្ជីរបស់អ្នក';
+
+  @override
+  String get customersCreateButton => 'បង្កើតអតិថិជនថ្មី';
+
+  @override
+  String get customersCreateTooltip => 'បង្កើតអតិថិជន';
+
+  @override
+  String get customersFormTitleCreate => 'បង្កើតអតិថិជន';
+
+  @override
+  String get customersFormTitleEdit => 'កែប្រែអតិថិជន';
+
+  @override
+  String get customersSectionBasicInfo => 'ព័ត៍មានមូលដ្ឋាន';
+
+  @override
+  String get customersSectionAddress => 'អាសយដ្ឋាន';
+
+  @override
+  String get customersSectionNote => 'កំណត់ចំណាំ';
+
+  @override
+  String get customersFieldFullName => 'ឈ្មោះពេញ';
+
+  @override
+  String get customersFieldPhone => 'ទូរស័ព្ទ';
+
+  @override
+  String get customersFieldAltPhone => 'ទូរស័ព្ទបន្ថែម';
+
+  @override
+  String get customersFieldVatTin => 'លេខ VAT';
+
+  @override
+  String get customersFieldAddressHint => 'អាសយដ្ឋាន';
+
+  @override
+  String get customersFieldNoteHint => 'សរសេរកំណត់ចំណាំរបស់អ្នក';
+
+  @override
+  String get customersVatLabel => 'VAT';
+
+  @override
+  String get customersPrivacyHint =>
+      'យើងគោរពភាពឯកជនរបស់អតិថិជន ហើយមិនចែករំលែកទិន្នន័យរបស់ពួកគេទេ។';
+
+  @override
+  String get customersDeleted => 'បានលុបអតិថិជន';
+
+  @override
+  String get commonDone => 'រួចរាល់';
+
+  @override
+  String get formRequired => 'ត្រូវការ';
+
+  @override
+  String get formNonNegative => 'ត្រូវតែធំជាងឬស្មើសូន្យ';
+
+  @override
   String get loginTitle => 'ចូលប្រើ';
 
   @override
-  String get loginSignIn => 'ចូលប្រើ';
+  String get loginFeatureOffline =>
+      'ធ្វើការបានទោះនៅក្រៅបណ្តាញ ហើយសមកាលកម្មនៅពេលតភ្ជាប់ឡើងវិញ។';
+
+  @override
+  String get loginFeatureReceipts =>
+      'បោះពុម្ពវិក្កយបត្រមានសោភ័ណភាព ឬចែករំលែកវិក្កយបត្រតាមអ៊ីលេកត្រូនិកភ្លាមៗ។';
+
+  @override
+  String get loginFeatureKhqr =>
+      'ទទួលការទូទាត់គ្មានសាច់ប្រាក់ជាមួយ KHQR និងការជូនដំណឹង Telegram។';
 
   @override
   String get settingsLanguage => 'ភាសា';
@@ -43,6 +212,13 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get settingsDarkMode => 'របៀបងងឹត';
+
+  @override
+  String get settingsGeneralSection => 'កន្លែងធ្វើការ';
+
+  @override
+  String get settingsGeneralSectionSubtitle =>
+      'គ្រប់គ្រងព័ត៌មានសម្គាល់ និងស្ថានភាពសមកាលកម្ម។';
 
   @override
   String get settingsSyncNow => 'សមកាលកម្មឥឡូវនេះ';
@@ -71,7 +247,49 @@ class AppLocalizationsKm extends AppLocalizations {
   String get noSales => 'គ្មានការលក់';
 
   @override
+  String get salesEmptyDescription =>
+      'បង្កើតការលក់ដើម្បីចាប់ផ្តើមតាមដានការទូទាត់។';
+
+  @override
   String get noPayments => 'គ្មានការទូទាត់';
+
+  @override
+  String get paymentsTitle => 'ការទូទាត់';
+
+  @override
+  String get paymentsSubtitle =>
+      'ពិនិត្យទឹកប្រាក់ដែលទទួលបានតាមសាច់ប្រាក់ និងផ្ទេរប្រាក់។';
+
+  @override
+  String get paymentsSummaryCollected => 'ទឹកប្រាក់ដែលបានទទួល';
+
+  @override
+  String get paymentsSummaryCount => 'ការទូទាត់ដែលបានកត់ត្រា';
+
+  @override
+  String get paymentsFilterAll => 'ទាំងអស់';
+
+  @override
+  String get paymentsFilterCash => 'សាច់ប្រាក់';
+
+  @override
+  String get paymentsFilterTransfer => 'ផ្ទេរប្រាក់';
+
+  @override
+  String get paymentsSearchHint => 'ស្វែងរកតាមការលក់ វិធីទូទាត់ ឬលេខយោង';
+
+  @override
+  String get paymentsEmptyDescription =>
+      'បន្ថែមការទូទាត់នៅពេលទទួលសាច់ប្រាក់ ឬទទួលការផ្ទេរប្រាក់។';
+
+  @override
+  String get paymentsMethodLabel => 'វិធីទូទាត់';
+
+  @override
+  String get paymentsFormSaleId => 'លេខកូដការលក់';
+
+  @override
+  String get paymentsFormSubmit => 'រក្សាទុកការទូទាត់';
 
   @override
   String lastSyncAt(Object time) {
@@ -86,6 +304,25 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get settingsBatchSize => 'ទំហំក្បាល';
+
+  @override
+  String settingsBatchSizeHint(Object size) {
+    return 'ដំណើរការ $size វិក័យប័ត្រក្នុងមួយក្បាល';
+  }
+
+  @override
+  String get settingsPreferencesSection => 'ចំណូលចិត្ត';
+
+  @override
+  String get settingsPreferencesSectionSubtitle =>
+      'ប្ដូររបៀបដែលកម្មវិធីមើលទៅ និងមានអារម្មណ៍។';
+
+  @override
+  String get settingsSyncSection => 'សមកាលកម្មស្វ័យប្រវត្តិ';
+
+  @override
+  String get settingsSyncSectionSubtitle =>
+      'លៃតម្រូវសមកាលកម្មជាក្បាល និងការពារស្តុក។';
 
   @override
   String get aboutTitle => 'អំពីកម្មវិធី';
@@ -164,7 +401,34 @@ class AppLocalizationsKm extends AppLocalizations {
   }
 
   @override
+  String get salesAppBarSubtitle => 'តាមដានការទូទាត់ និងសមតុល្យអតិថិជន';
+
+  @override
   String get receivePayment => 'ទទួលការទូទាត់';
+
+  @override
+  String get salesSummaryTotal => 'ទឹកប្រាក់លក់សរុប';
+
+  @override
+  String get salesSummaryOutstanding => 'ទឹកប្រាក់នៅសល់';
+
+  @override
+  String get salesSummaryCompleted => 'បានទូទាត់ពេញលេញ';
+
+  @override
+  String get salesCardTotal => 'តម្លៃការលក់';
+
+  @override
+  String get salesStatusOutstanding => 'នៅខ្វះ';
+
+  @override
+  String get salesViewDetails => 'មើលលម្អិត';
+
+  @override
+  String get salesDeleteTooltip => 'លុបការលក់';
+
+  @override
+  String get salesNewSale => 'ការលក់ថ្មី';
 
   @override
   String get balance => 'សមតុល្យ';
@@ -205,6 +469,11 @@ class AppLocalizationsKm extends AppLocalizations {
   String get settingsLowStockThreshold => 'កម្រិតស្តុកទាប';
 
   @override
+  String settingsLowStockThresholdDescription(Object threshold) {
+    return 'ជូនដំណឹងនៅពេលស្តុកទាបជាង $threshold';
+  }
+
+  @override
   String get adjustStockTitle => 'កែតម្រូវស្តុក';
 
   @override
@@ -235,6 +504,25 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get settingsAllowOversell => 'អនុញ្ញាតលក់លើស (ព្រមានតែប៉ុណ្ណោះ)';
+
+  @override
+  String get settingsReceiptSection => 'ម៉ាកវិក្កយបត្រ';
+
+  @override
+  String get settingsReceiptSectionSubtitle => 'ប្ដូររូបរាងហាងលើវិក្កយបត្រ។';
+
+  @override
+  String get settingsPaymentSection => 'ការរួមបញ្ចូលការទូទាត់';
+
+  @override
+  String get settingsPaymentSectionSubtitle =>
+      'ចែករំលែក KHQR និងភ្ជាប់បុត Telegram។';
+
+  @override
+  String get settingsDangerZone => 'តំបន់គ្រោះថ្នាក់';
+
+  @override
+  String get settingsDangerZoneSubtitle => 'ចាកចេញពីឧបករណ៍នេះ។';
 
   @override
   String get exceedsStock => 'លើសស្តុក';

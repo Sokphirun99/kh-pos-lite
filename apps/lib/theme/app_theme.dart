@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
@@ -8,114 +9,95 @@ class AppTheme {
 
   static ThemeData get dark => darkFrom(ColorScheme.fromSeed(seedColor: seed, brightness: Brightness.dark));
 
-  static ThemeData lightFrom(ColorScheme scheme) {
-    final base = ThemeData(colorScheme: scheme, useMaterial3: true);
+  // Build a Material 3 theme using FlexColorScheme.
+  static ThemeData lightFrom(ColorScheme? dynamicScheme) {
+    final theme = FlexThemeData.light(
+      // Prefer dynamic scheme when available (Android 12+), otherwise seed.
+      colorScheme: dynamicScheme,
+      scheme: dynamicScheme == null ? FlexScheme.tealM3 : null,
+      useMaterial3: true,
+      visualDensity: VisualDensity.standard,
+      keyColors: const FlexKeyColors(useSecondary: true, useTertiary: true),
+      subThemesData: const FlexSubThemesData(
+        defaultRadius: 16,
+        inputDecoratorIsFilled: true,
+        inputDecoratorBorderType: FlexInputBorderType.outline,
+        inputDecoratorRadius: 12,
+        chipRadius: 10,
+        navigationBarHeight: 72,
+        navigationBarMutedUnselectedIcon: true,
+        navigationBarMutedUnselectedLabel: true,
+        navigationBarIndicatorOpacity: 0.65,
+        elevatedButtonRadius: 12,
+        filledButtonRadius: 12,
+        outlinedButtonRadius: 12,
+        segmentedButtonRadius: 12,
+        textButtonRadius: 12,
+        popupMenuRadius: 12,
+        dialogRadius: 20,
+        bottomSheetRadius: 20,
+        cardRadius: 20,
+      ),
+      // Make surfaces slightly more elevated on light theme for depth.
+      surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+      blendLevel: 10,
+    );
 
-    // Body: Noto Sans Khmer; Headings/Titles: Kantumruy
-    final bodyText = GoogleFonts.notoSansKhmerTextTheme(base.textTheme);
-    final heading = GoogleFonts.kantumruyProTextTheme(base.textTheme);
+    return _withTypography(theme);
+  }
 
-    final merged = bodyText.copyWith(
-      displayLarge: heading.displayLarge,
-      displayMedium: heading.displayMedium,
-      displaySmall: heading.displaySmall,
-      headlineLarge: heading.headlineLarge,
-      headlineMedium: heading.headlineMedium,
-      headlineSmall: heading.headlineSmall,
-      titleLarge: heading.titleLarge,
-      titleMedium: heading.titleMedium,
-      titleSmall: heading.titleSmall,
+  static ThemeData darkFrom(ColorScheme? dynamicScheme) {
+    final theme = FlexThemeData.dark(
+      colorScheme: dynamicScheme,
+      scheme: dynamicScheme == null ? FlexScheme.tealM3 : null,
+      useMaterial3: true,
+      visualDensity: VisualDensity.standard,
+      keyColors: const FlexKeyColors(useSecondary: true, useTertiary: true),
+      subThemesData: const FlexSubThemesData(
+        defaultRadius: 16,
+        inputDecoratorIsFilled: true,
+        inputDecoratorBorderType: FlexInputBorderType.outline,
+        inputDecoratorRadius: 12,
+        chipRadius: 10,
+        navigationBarHeight: 72,
+        navigationBarMutedUnselectedIcon: true,
+        navigationBarMutedUnselectedLabel: true,
+        navigationBarIndicatorOpacity: 0.65,
+        elevatedButtonRadius: 12,
+        filledButtonRadius: 12,
+        outlinedButtonRadius: 12,
+        segmentedButtonRadius: 12,
+        textButtonRadius: 12,
+        popupMenuRadius: 12,
+        dialogRadius: 20,
+        bottomSheetRadius: 20,
+        cardRadius: 20,
+      ),
+      surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+      blendLevel: 12,
+    );
+
+    return _withTypography(theme, dark: true);
+  }
+
+  // Apply GoogleFonts (Khmer friendly) typography atop the base theme.
+  static ThemeData _withTypography(ThemeData base, {bool dark = false}) {
+    final body = GoogleFonts.notoSansKhmerTextTheme(base.textTheme);
+    final head = GoogleFonts.kantumruyProTextTheme(base.textTheme);
+    final text = body.copyWith(
+      displayLarge: head.displayLarge,
+      displayMedium: head.displayMedium,
+      displaySmall: head.displaySmall,
+      headlineLarge: head.headlineLarge,
+      headlineMedium: head.headlineMedium,
+      headlineSmall: head.headlineSmall,
+      titleLarge: head.titleLarge,
+      titleMedium: head.titleMedium,
+      titleSmall: head.titleSmall,
     );
 
     return base.copyWith(
-      textTheme: merged,
-      inputDecorationTheme: _inputDecorationTheme(scheme),
-      filledButtonTheme: _filledButtonTheme(scheme),
-      outlinedButtonTheme: _outlinedButtonTheme(scheme),
-      elevatedButtonTheme: _elevatedButtonTheme(scheme),
-      chipTheme: base.chipTheme.copyWith(
-        labelStyle: merged.labelLarge,
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      ),
-      cardTheme: const CardThemeData(clipBehavior: Clip.antiAlias, surfaceTintColor: Colors.transparent),
-      appBarTheme: AppBarTheme(
-        centerTitle: false,
-        titleTextStyle: merged.titleLarge?.copyWith(color: scheme.onSurface),
-      ),
-      navigationBarTheme: NavigationBarThemeData(
-        indicatorColor: scheme.secondaryContainer,
-        labelTextStyle: WidgetStateProperty.all(merged.labelMedium),
-      ),
+      textTheme: text,
     );
   }
-
-  static ThemeData darkFrom(ColorScheme scheme) {
-    final base = ThemeData(colorScheme: scheme, useMaterial3: true, brightness: Brightness.dark);
-    final bodyText = GoogleFonts.notoSansKhmerTextTheme(base.textTheme);
-    final heading = GoogleFonts.kantumruyProTextTheme(base.textTheme);
-    final merged = bodyText.copyWith(
-      displayLarge: heading.displayLarge,
-      displayMedium: heading.displayMedium,
-      displaySmall: heading.displaySmall,
-      headlineLarge: heading.headlineLarge,
-      headlineMedium: heading.headlineMedium,
-      headlineSmall: heading.headlineSmall,
-      titleLarge: heading.titleLarge,
-      titleMedium: heading.titleMedium,
-      titleSmall: heading.titleSmall,
-    );
-    return base.copyWith(
-      textTheme: merged,
-      inputDecorationTheme: _inputDecorationTheme(scheme),
-      filledButtonTheme: _filledButtonTheme(scheme),
-      outlinedButtonTheme: _outlinedButtonTheme(scheme),
-      elevatedButtonTheme: _elevatedButtonTheme(scheme),
-      chipTheme: base.chipTheme.copyWith(
-        labelStyle: merged.labelLarge,
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      ),
-      cardTheme: const CardThemeData(clipBehavior: Clip.antiAlias, surfaceTintColor: Colors.transparent),
-      appBarTheme: AppBarTheme(
-        centerTitle: false,
-        titleTextStyle: merged.titleLarge?.copyWith(color: scheme.onSurface),
-      ),
-      navigationBarTheme: NavigationBarThemeData(
-        indicatorColor: scheme.secondaryContainer,
-        labelTextStyle: WidgetStateProperty.all(merged.labelMedium),
-      ),
-    );
-  }
-
-  static InputDecorationTheme _inputDecorationTheme(ColorScheme scheme) => InputDecorationTheme(
-        isDense: true,
-        filled: true,
-        fillColor: scheme.surfaceContainerHighest,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: scheme.primary, width: 1.5)),
-      );
-
-  static FilledButtonThemeData _filledButtonTheme(ColorScheme scheme) => FilledButtonThemeData(
-        style: FilledButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          textStyle: const TextStyle(fontWeight: FontWeight.w600),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        ),
-      );
-
-  static OutlinedButtonThemeData _outlinedButtonTheme(ColorScheme scheme) => OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        ),
-      );
-
-  static ElevatedButtonThemeData _elevatedButtonTheme(ColorScheme scheme) => ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        ),
-      );
 }

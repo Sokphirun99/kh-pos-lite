@@ -5,6 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:cashier_app/features/products/presentation/products_screen.dart';
 import 'package:cashier_app/features/products/presentation/stock_adjustments_screen.dart';
+import 'package:cashier_app/features/products/presentation/product_form_page.dart';
+import 'package:cashier_app/features/customers/presentation/customers_screen.dart';
+import 'package:cashier_app/features/customers/presentation/customer_form_page.dart';
 import 'package:cashier_app/features/sales/presentation/sales_screen.dart';
 import 'package:cashier_app/features/sales/presentation/sale_detail_screen.dart';
 import 'package:cashier_app/features/receipts/receipt_preview_screen.dart';
@@ -21,9 +24,9 @@ import 'package:cashier_app/features/settings/presentation/about_page.dart';
 GoRouter buildRouter(BuildContext context) {
   final key = GlobalKey<NavigatorState>();
 
-  bool isLoggedIn() => context.read<AuthBloc>().state.when(
-        unauthenticated: () => false,
+  bool isLoggedIn() => context.read<AuthBloc>().state.maybeWhen(
         authenticated: (_) => true,
+        orElse: () => false,
       );
 
   return GoRouter(
@@ -45,6 +48,31 @@ GoRouter buildRouter(BuildContext context) {
             path: '/',
             name: 'products',
             builder: (context, state) => const ProductsScreen(),
+          ),
+          GoRoute(
+            path: '/products/new',
+            name: 'product_new',
+            builder: (context, state) => const ProductFormPage(),
+          ),
+          GoRoute(
+            path: '/products/:id/edit',
+            name: 'product_edit',
+            builder: (context, state) => ProductFormPage(existing: state.extra as dynamic /* Product? */),
+          ),
+          GoRoute(
+            path: '/customers',
+            name: 'customers',
+            builder: (context, state) => const CustomersScreen(),
+          ),
+          GoRoute(
+            path: '/customers/new',
+            name: 'customer_new',
+            builder: (context, state) => const CustomerFormPage(),
+          ),
+          GoRoute(
+            path: '/customers/:id/edit',
+            name: 'customer_edit',
+            builder: (context, state) => CustomerFormPage(existing: state.extra as dynamic /* CustomerDraft? */),
           ),
           GoRoute(
             path: '/stock',

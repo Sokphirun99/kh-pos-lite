@@ -12,25 +12,195 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'KH POS Lite';
 
   @override
-  String get tabProducts => 'Products';
+  String get loginSubtitle =>
+      'Track sales, print receipts, and sync automatically.';
+
+  @override
+  String get loginEmailLabel => 'Email or username';
+
+  @override
+  String get loginPasswordLabel => 'Password';
+
+  @override
+  String get loginSignIn => 'Sign in';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get show => 'Show';
+
+  @override
+  String get hide => 'Hide';
+
+  @override
+  String get tabItems => 'Items';
+
+  @override
+  String get tabCustomers => 'Customers';
+
+  @override
+  String get tabInvoices => 'Invoices';
 
   @override
   String get tabSales => 'Sales';
 
   @override
-  String get tabPayments => 'Payments';
-
-  @override
-  String get tabReports => 'Reports';
-
-  @override
   String get tabSettings => 'Settings';
+
+  @override
+  String get itemsSearchHint => 'Item Name';
+
+  @override
+  String get itemsEmptyTitle => 'Item Not Found';
+
+  @override
+  String get itemsEmptySubtitle => 'Item might be not in your list';
+
+  @override
+  String get itemsCreateButton => 'Create New Item';
+
+  @override
+  String get itemsSkuOnlyFilter => 'Search SKU only';
+
+  @override
+  String get itemsAdjustStockTooltip => 'Adjust Stock';
+
+  @override
+  String get itemsCreateTooltip => 'Create Item';
+
+  @override
+  String itemsStockChip(Object count) {
+    return 'Stock: $count';
+  }
+
+  @override
+  String get itemsFormTitleCreate => 'Create Item';
+
+  @override
+  String get itemsFormTitleEdit => 'Edit Item';
+
+  @override
+  String get itemsFormSectionBasicInfo => 'Basic Info';
+
+  @override
+  String get itemsFormSectionNote => 'Note';
+
+  @override
+  String get itemsFormSectionImage => 'Image';
+
+  @override
+  String get itemsFieldName => 'Item Name';
+
+  @override
+  String get itemsFieldCode => 'Item Code';
+
+  @override
+  String get itemsFieldUnitCost => 'Unit Cost (៛)';
+
+  @override
+  String get itemsFieldPrice => 'Price (៛)';
+
+  @override
+  String get itemsFieldStock => 'Stock';
+
+  @override
+  String get itemsFieldNoteHint => 'Write your note';
+
+  @override
+  String get itemsAddImage => 'Add Image';
+
+  @override
+  String get itemsPriceValidation =>
+      'Price must be greater than or equal to the unit cost';
+
+  @override
+  String get itemsSkuExists => 'SKU already exists';
+
+  @override
+  String get itemsSkuFormat => 'Use 3-32 characters: letters, digits, _ or -';
+
+  @override
+  String get customersSearchHint => 'Name, Phone';
+
+  @override
+  String get customersEmptyTitle => 'Customer Not Found';
+
+  @override
+  String get customersEmptySubtitle => 'Customer might be not in your list';
+
+  @override
+  String get customersCreateButton => 'Create New Customer';
+
+  @override
+  String get customersCreateTooltip => 'Create Customer';
+
+  @override
+  String get customersFormTitleCreate => 'Create Customer';
+
+  @override
+  String get customersFormTitleEdit => 'Edit Customer';
+
+  @override
+  String get customersSectionBasicInfo => 'Basic Info';
+
+  @override
+  String get customersSectionAddress => 'Address';
+
+  @override
+  String get customersSectionNote => 'Note';
+
+  @override
+  String get customersFieldFullName => 'Full Name';
+
+  @override
+  String get customersFieldPhone => 'Phone';
+
+  @override
+  String get customersFieldAltPhone => 'Alternative Phone';
+
+  @override
+  String get customersFieldVatTin => 'VAT TIN';
+
+  @override
+  String get customersFieldAddressHint => 'Address';
+
+  @override
+  String get customersFieldNoteHint => 'Write your note';
+
+  @override
+  String get customersVatLabel => 'VAT';
+
+  @override
+  String get customersPrivacyHint =>
+      'We respect your customers\' privacy and never share their details.';
+
+  @override
+  String get customersDeleted => 'Customer deleted';
+
+  @override
+  String get commonDone => 'Done';
+
+  @override
+  String get formRequired => 'Required';
+
+  @override
+  String get formNonNegative => 'Must be zero or greater';
 
   @override
   String get loginTitle => 'Sign in';
 
   @override
-  String get loginSignIn => 'Sign in';
+  String get loginFeatureOffline =>
+      'Works offline and syncs when you\'re back online.';
+
+  @override
+  String get loginFeatureReceipts =>
+      'Print beautiful receipts or share invoices instantly.';
+
+  @override
+  String get loginFeatureKhqr =>
+      'Collect cashless payments with KHQR and Telegram alerts.';
 
   @override
   String get settingsLanguage => 'Language';
@@ -43,6 +213,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsDarkMode => 'Dark Mode';
+
+  @override
+  String get settingsGeneralSection => 'Workspace';
+
+  @override
+  String get settingsGeneralSectionSubtitle =>
+      'Manage your profile and sync status.';
 
   @override
   String get settingsSyncNow => 'Sync now';
@@ -71,7 +248,49 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noSales => 'No sales';
 
   @override
+  String get salesEmptyDescription =>
+      'Create a sale to start tracking payments.';
+
+  @override
   String get noPayments => 'No payments';
+
+  @override
+  String get paymentsTitle => 'Payments';
+
+  @override
+  String get paymentsSubtitle =>
+      'Review collections across cash and transfer channels.';
+
+  @override
+  String get paymentsSummaryCollected => 'Collected';
+
+  @override
+  String get paymentsSummaryCount => 'Payments recorded';
+
+  @override
+  String get paymentsFilterAll => 'All';
+
+  @override
+  String get paymentsFilterCash => 'Cash';
+
+  @override
+  String get paymentsFilterTransfer => 'Transfer';
+
+  @override
+  String get paymentsSearchHint => 'Search by sale, method, or reference';
+
+  @override
+  String get paymentsEmptyDescription =>
+      'Add payments as you collect cash or receive transfers.';
+
+  @override
+  String get paymentsMethodLabel => 'Payment method';
+
+  @override
+  String get paymentsFormSaleId => 'Sale ID';
+
+  @override
+  String get paymentsFormSubmit => 'Save payment';
 
   @override
   String lastSyncAt(Object time) {
@@ -86,6 +305,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsBatchSize => 'Batch size';
+
+  @override
+  String settingsBatchSizeHint(Object size) {
+    return 'Process $size invoices per batch';
+  }
+
+  @override
+  String get settingsPreferencesSection => 'Preferences';
+
+  @override
+  String get settingsPreferencesSectionSubtitle =>
+      'Personalize how the app looks and feels.';
+
+  @override
+  String get settingsSyncSection => 'Automation';
+
+  @override
+  String get settingsSyncSectionSubtitle =>
+      'Fine tune batch sync and inventory safeguards.';
 
   @override
   String get aboutTitle => 'About';
@@ -164,7 +402,34 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get salesAppBarSubtitle => 'Monitor customer payments and balances';
+
+  @override
   String get receivePayment => 'Receive Payment';
+
+  @override
+  String get salesSummaryTotal => 'Total sales';
+
+  @override
+  String get salesSummaryOutstanding => 'Outstanding balance';
+
+  @override
+  String get salesSummaryCompleted => 'Paid in full';
+
+  @override
+  String get salesCardTotal => 'Sale total';
+
+  @override
+  String get salesStatusOutstanding => 'Outstanding';
+
+  @override
+  String get salesViewDetails => 'View details';
+
+  @override
+  String get salesDeleteTooltip => 'Delete sale';
+
+  @override
+  String get salesNewSale => 'New sale';
 
   @override
   String get balance => 'Balance';
@@ -205,6 +470,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsLowStockThreshold => 'Low stock threshold';
 
   @override
+  String settingsLowStockThresholdDescription(Object threshold) {
+    return 'Alert when stock falls below $threshold';
+  }
+
+  @override
   String get adjustStockTitle => 'Adjust Stock';
 
   @override
@@ -235,6 +505,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsAllowOversell => 'Allow oversell (warn only)';
+
+  @override
+  String get settingsReceiptSection => 'Receipt branding';
+
+  @override
+  String get settingsReceiptSectionSubtitle =>
+      'Customize how your shop appears on printed receipts.';
+
+  @override
+  String get settingsPaymentSection => 'Payment integrations';
+
+  @override
+  String get settingsPaymentSectionSubtitle =>
+      'Share KHQR codes and connect Telegram bots.';
+
+  @override
+  String get settingsDangerZone => 'Danger zone';
+
+  @override
+  String get settingsDangerZoneSubtitle => 'Sign out of this device.';
 
   @override
   String get exceedsStock => 'Exceeds stock';
