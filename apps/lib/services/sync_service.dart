@@ -81,7 +81,7 @@ class SyncService {
 
     // Pull sales
     final resSales = await api.get<List<dynamic>>('/sales');
-    final listSales = (resSales.data ?? []);
+    final listSales = resSales.data ?? <dynamic>[];
     await isar.writeTxn(() async {
       for (final j in listSales) {
         final dto = SaleDto.fromJson(j as Map<String, dynamic>);
