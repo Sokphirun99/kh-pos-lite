@@ -108,7 +108,7 @@ class SyncService {
 
     // Pull payments
     final resPayments = await api.get<List<dynamic>>('/payments');
-    final listPayments = (resPayments.data ?? []);
+    final listPayments = resPayments.data ?? <dynamic>[];
     await isar.writeTxn(() async {
       for (final j in listPayments) {
         final dto = PaymentDto.fromJson(j as Map<String, dynamic>);
