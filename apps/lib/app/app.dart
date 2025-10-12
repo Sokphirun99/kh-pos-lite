@@ -17,6 +17,7 @@ import '../data/remote/api_client.dart';
 import '../domain/repositories/sale_repository.dart';
 import '../domain/repositories/payment_repository.dart';
 import '../features/settings/bloc/feature_flags_cubit.dart';
+import '../core/env/config.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -34,7 +35,7 @@ class App extends StatelessWidget {
         BlocProvider(create: (_) => FeatureFlagsCubit()),
         BlocProvider(create: (ctx) {
           final token = ctx.read<AuthBloc>().state.whenOrNull(authenticated: (t) => t);
-          final api = buildApiClient(token: token);
+          final api = buildApiClient(token: token, baseUrl: EnvConfig.dev.apiBaseUrl);
           return SyncBloc(SyncService(api));
         }),
       ],

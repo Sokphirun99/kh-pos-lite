@@ -1,0 +1,115 @@
+// Prisma schema (reference only) matching Laravel Postgres tables
+// Not used by Laravel runtime; useful for TypeScript services.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Category {
+  id        Int        @id @default(autoincrement())
+  name      String
+  parentId  Int?       @map("parent_id")
+  parent    Category?  @relation("CategoryToCategory", fields: [parentId], references: [id])
+  children  Category[] @relation("CategoryToCategory")
+  products  Product[]
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @default(now()) @updatedAt @map("updated_at")
+
+  @@map("categories")
+}
+
+model Product {
+  id          Int        @id @default(autoincrement())
+  name        String
+  sku         String?    @unique
+  barcode     String?    @unique
+  price       Decimal    @db.Decimal(10, 2)
+  cost        Decimal?   @db.Decimal(10, 2)
+  stock       Int        @default(0)
+  categoryId  Int?       @map("category_id")
+  category    Category?  @relation(fields: [categoryId], references: [id])
+  isActive    Boolean    @default(true) @map("is_active")
+  orderItems  OrderItem[]
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @default(now()) @updatedAt @map("updated_at")
+
+  @@map("products")
+}
+
+model Customer {
+  id        Int      @id @default(autoincrement())
+  name      String
+  phone     String?
+  email     String?  @unique
+  address   String?
+  orders    Order[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("customers")
+}
+
+model Order {
+  id        Int         @id @default(autoincrement())
+  number    String      @unique
+  customerId Int?       @map("customer_id")
+  customer  Customer?   @relation(fields: [customerId], references: [id])
+  status    String      @default("draft")
+  subtotal  Decimal     @default(0) @db.Decimal(10, 2)
+  tax       Decimal     @default(0) @db.Decimal(10, 2)
+  discount  Decimal     @default(0) @db.Decimal(10, 2)
+  total     Decimal     @default(0) @db.Decimal(10, 2)
+  paidAt    DateTime?   @map("paid_at")
+  items     OrderItem[]
+  payments  Payment[]
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @default(now()) @updatedAt @map("updated_at")
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id         Int      @id @default(autoincrement())
+  orderId    Int      @map("order_id")
+  productId  Int      @map("product_id")
+  order      Order    @relation(fields: [orderId], references: [id])
+  product    Product  @relation(fields: [productId], references: [id])
+  quantity   Int
+  unitPrice  Decimal  @map("unit_price") @db.Decimal(10, 2)
+  lineTotal  Decimal  @map("line_total") @db.Decimal(10, 2)
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("order_items")
+}
+
+model Payment {
+  id        Int      @id @default(autoincrement())
+  orderId   Int      @map("order_id")
+  order     Order    @relation(fields: [orderId], references: [id])
+  amount    Decimal  @db.Decimal(10, 2)
+  method    String
+  reference String?
+  paidAt    DateTime? @map("paid_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("payments")
+}
+

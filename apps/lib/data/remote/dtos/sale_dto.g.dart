@@ -10,7 +10,7 @@ _$SaleDtoImpl _$$SaleDtoImplFromJson(Map<String, dynamic> json) =>
     _$SaleDtoImpl(
       id: json['id'] as String,
       createdAt: json['createdAt'] as String,
-      total: json['total'] as int,
+      total: (json['total'] as num).toInt(),
       updatedAt: json['updatedAt'] as String,
     );
 

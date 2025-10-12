@@ -1,0 +1,54 @@
+services:
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    container_name: kh-pos-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: kh_pos_lite
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_USER: pos_user
+      MYSQL_PASSWORD: pos_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql-init:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    networks:
+      - pos-network
+
+  # Redis for caching
+  redis:
+    image: redis:7-alpine
+    container_name: kh-pos-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - pos-network
+
+  # PhpMyAdmin for database management
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: kh-pos-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root_password
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    networks:
+      - pos-network
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  pos-network:
+    driver: bridge

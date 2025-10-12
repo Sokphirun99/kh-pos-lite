@@ -11,10 +11,11 @@ import 'package:cashier_app/domain/repositories/sale_repository.dart';
 import 'package:cashier_app/features/sales/bloc/sales_bloc.dart';
 import 'package:cashier_app/domain/entities/sale.dart';
 import 'package:uuid/uuid.dart';
-import 'package:cashier_app/features/sales/presentation/checkout_dialog.dart';
+import 'package:cashier_app/features/sales/presentation/checkout_screen.dart';
 import 'package:cashier_app/domain/entities/payment.dart';
 import 'package:cashier_app/features/payments/bloc/payments_bloc.dart';
 import 'package:cashier_app/l10n/app_localizations.dart';
+import 'package:cashier_app/features/common/widgets/skeleton_loader.dart';
 import 'package:cashier_app/services/key_value_service.dart';
 
 class SellScreen extends StatefulWidget {
@@ -83,7 +84,7 @@ class _SellScreenState extends State<SellScreen> {
             Expanded(
               child: BlocBuilder<ProductsBloc, ProductsState>(
                 builder: (context, state) {
-                  if (state.isLoading) return const Center(child: CircularProgressIndicator());
+                  if (state.isLoading) return const ProductGridSkeleton();
                   if (state.error != null) return Center(child: Text(state.error!));
                   final items = state.items.where((p) {
                     if (query.isEmpty) return true;
@@ -93,12 +94,12 @@ class _SellScreenState extends State<SellScreen> {
                   }).toList();
                   if (items.isEmpty) return const Center(child: Text('No products'));
                   return GridView.builder(
-                    padding: const EdgeInsets.all(8),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 1.9,
-                      mainAxisSpacing: 8,
-                      crossAxisSpacing: 8,
+                    padding: const EdgeInsets.all(12),
+                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 200.0,
+                      childAspectRatio: 1.4,
+                      mainAxisSpacing: 12,
+                      crossAxisSpacing: 12,
                     ),
                     itemCount: items.length,
                     itemBuilder: (_, i) => _ProductTile(p: items[i]),
@@ -142,39 +143,83 @@ class _ProductTile extends StatelessWidget {
         context.read<CartBloc>().add(CartItemAdded(p));
       },
       child: Card(
+        elevation: 2,
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
                   Expanded(
-                    child: Text(p.name, style: Theme.of(context).textTheme.titleMedium, maxLines: 1, overflow: TextOverflow.ellipsis),
+                    child: Text(
+                      p.name, 
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ), 
+                      maxLines: 2, 
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   Builder(builder: (context) {
                     final threshold = KeyValueService.get<int>('low_stock_threshold') ?? 5;
                     final low = p.stock <= threshold;
                     if (!low) return const SizedBox.shrink();
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Chip(
-                        visualDensity: VisualDensity.compact,
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        label: Text(AppLocalizations.of(context).lowStock),
-                        backgroundColor: Theme.of(context).colorScheme.errorContainer,
-                        labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    return Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.errorContainer,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context).lowStock,
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
                           color: Theme.of(context).colorScheme.onErrorContainer,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     );
                   })
                 ],
               ),
-              const SizedBox(height: 4),
-              Text('SKU: ${p.sku}', style: Theme.of(context).textTheme.bodySmall),
+              const SizedBox(height: 8),
+              Text(
+                'SKU: ${p.sku}', 
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+              ),
               const Spacer(),
-              Text('៛${p.price.amount}', style: Theme.of(context).textTheme.titleLarge),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '៛${p.price.amount}', 
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: p.stock > 0 
+                        ? Theme.of(context).colorScheme.surfaceContainerHigh
+                        : Theme.of(context).colorScheme.errorContainer,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      'Stock: ${p.stock}',
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: p.stock > 0
+                          ? Theme.of(context).colorScheme.onSurfaceVariant
+                          : Theme.of(context).colorScheme.onErrorContainer,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -400,10 +445,7 @@ class _CartPanelState extends State<_CartPanel> {
                                   if (proceed != true) return;
                                 }
 
-                                final result = await showDialog<CheckoutResult>(
-                                  context: context,
-                                  builder: (_) => CheckoutDialog(total: cart.total),
-                                );
+                                final result = await CheckoutScreen.show(context, cart.total);
                                 if (result == null) return;
 
                                 final sale = Sale(
