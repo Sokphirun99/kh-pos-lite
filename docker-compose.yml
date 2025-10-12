@@ -33,7 +33,7 @@ services:
       DB_PASSWORD: pos_password
       APP_ENV: production
       APP_DEBUG: false
-      APP_KEY: base64:your-app-key-here
+      APP_KEY: ${APP_KEY}
     volumes:
       - ./services/api/storage:/var/www/html/storage
       - ./services/api/.env:/var/www/html/.env
