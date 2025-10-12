@@ -63,11 +63,19 @@ fi
 # Update .env for Docker database
 if [ -f .env ]; then
     # Update database configuration for Docker
-    sed -i '' 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
-    sed -i '' 's/DB_DATABASE=.*/DB_DATABASE=kh_pos_lite/' .env
-    sed -i '' 's/DB_USERNAME=.*/DB_USERNAME=pos_user/' .env
-    sed -i '' 's/DB_PASSWORD=.*/DB_PASSWORD=pos_password/' .env
-    sed -i '' 's/REDIS_HOST=.*/REDIS_HOST=127.0.0.1/' .env
+    # Cross-platform sed-in-place function
+    sed_inplace() {
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            sed -i '' "$@"
+        else
+            sed -i "$@"
+        fi
+    }
+    sed_inplace 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
+    sed_inplace 's/DB_DATABASE=.*/DB_DATABASE=kh_pos_lite/' .env
+    sed_inplace 's/DB_USERNAME=.*/DB_USERNAME=pos_user/' .env
+    sed_inplace 's/DB_PASSWORD=.*/DB_PASSWORD=pos_password/' .env
+    sed_inplace 's/REDIS_HOST=.*/REDIS_HOST=127.0.0.1/' .env
 else
     echo -e "${YELLOW}📝 Creating .env file...${NC}"
     cat > .env << EOF
