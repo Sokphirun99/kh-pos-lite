@@ -53,7 +53,7 @@ class SyncService extends SyncServiceBase {
 
     // Pull products
     final resProducts = await api.get<List<dynamic>>('/products');
-    final listProducts = (resProducts.data ?? []);
+    final listProducts = resProducts.data ?? <dynamic>[];
     await isar.writeTxn(() async {
       for (final j in listProducts) {
         final dto = ProductDto.fromJson(j as Map<String, dynamic>);
@@ -69,7 +69,7 @@ class SyncService extends SyncServiceBase {
     // Tombstones for products
     try {
       final deletedProducts = await api.get<List<dynamic>>('/products/deleted');
-      final delList = (deletedProducts.data ?? []);
+      final delList = deletedProducts.data ?? <String>[];
       await isar.writeTxn(() async {
         for (final id in delList.cast<String>()) {
           final existing = await isar.productModels.filter().uidEqualTo(id).findFirst();
@@ -80,7 +80,7 @@ class SyncService extends SyncServiceBase {
 
     // Pull sales
     final resSales = await api.get<List<dynamic>>('/sales');
-    final listSales = (resSales.data ?? []);
+    final listSales = resSales.data ?? <dynamic>[];
     await isar.writeTxn(() async {
       for (final j in listSales) {
         final dto = SaleDto.fromJson(j as Map<String, dynamic>);
@@ -96,7 +96,7 @@ class SyncService extends SyncServiceBase {
     // Tombstones for sales
     try {
       final deletedSales = await api.get<List<dynamic>>('/sales/deleted');
-      final delList = (deletedSales.data ?? []);
+      final delList = deletedSales.data ?? <String>[];
       await isar.writeTxn(() async {
         for (final id in delList.cast<String>()) {
           final existing = await isar.saleModels.filter().uidEqualTo(id).findFirst();
@@ -107,7 +107,7 @@ class SyncService extends SyncServiceBase {
 
     // Pull payments
     final resPayments = await api.get<List<dynamic>>('/payments');
-    final listPayments = (resPayments.data ?? []);
+    final listPayments = resPayments.data ?? <dynamic>[];
     await isar.writeTxn(() async {
       for (final j in listPayments) {
         final dto = PaymentDto.fromJson(j as Map<String, dynamic>);
@@ -123,9 +123,9 @@ class SyncService extends SyncServiceBase {
     // Tombstones for payments
     try {
       final deletedPayments = await api.get<List<dynamic>>('/payments/deleted');
-      final delList = (deletedPayments.data ?? []);
+      final List<String> delList = (deletedPayments.data as List<dynamic>? ?? <dynamic>[]).cast<String>();
       await isar.writeTxn(() async {
-        for (final id in delList.cast<String>()) {
+        for (final id in delList) {
           final existing = await isar.paymentModels.filter().uidEqualTo(id).findFirst();
           if (existing != null) await isar.paymentModels.delete(existing.id);
         }
