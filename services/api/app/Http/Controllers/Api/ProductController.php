@@ -21,9 +21,9 @@ class ProductController extends Controller
         $query = Product::query()->with('category');
         if ($q) {
             $query->where(fn($w) => $w
-                ->where('name', 'ilike', "%$q%")
-                ->orWhere('sku', 'ilike', "%$q%")
-                ->orWhere('barcode', 'ilike', "%$q%")
+                ->where('name', 'ilike', '%' . $q . '%')
+                ->orWhere('sku', 'ilike', '%' . $q . '%')
+                ->orWhere('barcode', 'ilike', '%' . $q . '%')
             );
         }
 
