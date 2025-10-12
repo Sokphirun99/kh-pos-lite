@@ -102,7 +102,7 @@ class ReceiptService {
       // Alignment: ESC a n (0 left, 1 center, 2 right)
       bytes.addAll([0x1B, 0x40]);
       bytes.addAll([0x1B, 0x61, center ? 1 : 0]);
-      final data = ('$text\n').codeUnits;
+      final data = (text + '\n').codeUnits;
       bytes.addAll(data);
     }
 
