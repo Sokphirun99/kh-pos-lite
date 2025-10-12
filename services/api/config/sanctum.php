@@ -19,6 +19,8 @@ return [
         '%s%s',
         'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1',
         Sanctum::currentApplicationUrlWithPort(),
+        // The following is intentionally disabled to avoid dynamically trusting the request host,
+        // which could introduce security risks if the host header is spoofed.
         // Sanctum::currentRequestHost(),
     ))),
 
