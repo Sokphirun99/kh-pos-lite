@@ -1,0 +1,92 @@
+services:
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    container_name: kh-pos-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: kh_pos_lite
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_USER: pos_user
+      MYSQL_PASSWORD: pos_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql-init:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    networks:
+      - pos-network
+
+  # Laravel API
+  api:
+    build:
+      context: .
+      dockerfile: services/api/Dockerfile
+    container_name: kh-pos-api
+    restart: unless-stopped
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: kh_pos_lite
+      DB_USERNAME: pos_user
+      DB_PASSWORD: pos_password
+      APP_ENV: production
+      APP_DEBUG: false
+      APP_KEY: base64:your-app-key-here
+    volumes:
+      - ./services/api/storage:/var/www/html/storage
+      - ./services/api/.env:/var/www/html/.env
+    depends_on:
+      - db
+    networks:
+      - pos-network
+
+  # Nginx for API
+  api-nginx:
+    image: nginx:alpine
+    container_name: kh-pos-api-nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./services/api/public:/var/www/html/public
+      - ./docker/api-nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - api
+    networks:
+      - pos-network
+
+  # Flutter Web App
+  app:
+    build:
+      context: .
+      dockerfile: apps/Dockerfile
+    container_name: kh-pos-app
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    environment:
+      API_URL: http://localhost:8080
+    networks:
+      - pos-network
+
+  # Redis for caching (optional)
+  redis:
+    image: redis:7-alpine
+    container_name: kh-pos-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - pos-network
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  pos-network:
+    driver: bridge

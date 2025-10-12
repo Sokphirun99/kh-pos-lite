@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:cashier_app/data/remote/api_client.dart';
 import 'package:cashier_app/data/local/mappers/entity_mappers.dart';
 import 'package:cashier_app/core/isar_db.dart';
 import 'package:cashier_app/data/local/outbox_repository.dart';
@@ -9,11 +8,11 @@ import 'package:cashier_app/data/remote/dtos/sale_dto.dart';
 import 'package:cashier_app/data/remote/dtos/payment_dto.dart';
 import 'package:cashier_app/data/local/isar_collections.dart';
 import 'package:cashier_app/services/key_value_service.dart';
+import 'sync_service_base.dart';
 
 // Handles push/pull queue and conflict resolution policy.
-class SyncService {
-  final ApiClient api;
-  SyncService(this.api);
+class SyncService extends SyncServiceBase {
+  SyncService(super.api);
 
   Future<void> push() async {
     final Isar isar = await openIsarDb();

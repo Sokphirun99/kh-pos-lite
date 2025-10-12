@@ -7,6 +7,7 @@ import 'package:cashier_app/l10n/app_localizations.dart';
 import 'package:cashier_app/features/common/widgets/empty_placeholder.dart';
 import 'package:cashier_app/features/common/widgets/sync_banner.dart';
 import 'package:cashier_app/services/key_value_service.dart';
+import 'package:cashier_app/features/common/widgets/skeleton_loader.dart';
 import 'package:go_router/go_router.dart';
 
 class ProductsScreen extends StatefulWidget {
@@ -160,7 +161,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
             Expanded(
               child: BlocBuilder<ProductsBloc, ProductsState>(
                 builder: (context, state) {
-                  if (state.isLoading) return const Center(child: CircularProgressIndicator());
+                  if (state.isLoading) return const ListSkeleton();
                   if (state.error != null) return Center(child: Text(state.error!));
                   final items = state.items
                       .where((p) {

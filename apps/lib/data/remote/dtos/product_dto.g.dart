@@ -11,9 +11,9 @@ _$ProductDtoImpl _$$ProductDtoImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       name: json['name'] as String,
       sku: json['sku'] as String,
-      unitCost: json['unitCost'] as int,
-      price: json['price'] as int,
-      stock: json['stock'] as int,
+      unitCost: (json['unitCost'] as num).toInt(),
+      price: (json['price'] as num).toInt(),
+      stock: (json['stock'] as num).toInt(),
       updatedAt: json['updatedAt'] as String,
     );
 

@@ -4,17 +4,20 @@ class EmptyPlaceholder extends StatelessWidget {
   final IconData icon;
   final String title;
   final String message;
-  final String actionLabel;
-  final VoidCallback onActionPressed;
+  final String? actionLabel;
+  final VoidCallback? onActionPressed;
+  final List<Widget>? actions;
 
   const EmptyPlaceholder({
     super.key,
     required this.icon,
     required this.title,
     required this.message,
-    required this.actionLabel,
-    required this.onActionPressed,
-  });
+    this.actionLabel,
+    this.onActionPressed,
+    this.actions,
+  }) : assert((actionLabel != null && onActionPressed != null) || actions != null,
+         'Either provide actionLabel and onActionPressed, or provide actions');
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,9 @@ class EmptyPlaceholder extends StatelessWidget {
             const SizedBox(height: 24),
             Text(
               title,
-              style: theme.textTheme.titleMedium,
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
@@ -49,13 +54,16 @@ class EmptyPlaceholder extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: onActionPressed,
-                child: Text(actionLabel),
+            if (actions != null) ...actions!
+            else if (actionLabel != null && onActionPressed != null)
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton.icon(
+                  onPressed: onActionPressed,
+                  icon: const Icon(Icons.add),
+                  label: Text(actionLabel!),
+                ),
               ),
-            ),
           ],
         ),
       ),

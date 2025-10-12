@@ -11,7 +11,7 @@ _$PaymentDtoImpl _$$PaymentDtoImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       saleId: json['saleId'] as String,
       method: json['method'] as String,
-      amount: json['amount'] as int,
+      amount: (json['amount'] as num).toInt(),
       updatedAt: json['updatedAt'] as String,
     );
 

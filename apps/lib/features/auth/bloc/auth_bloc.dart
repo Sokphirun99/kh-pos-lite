@@ -4,6 +4,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:cashier_app/services/token_storage.dart';
 import 'package:cashier_app/features/auth/application/auth_service.dart';
 import 'package:cashier_app/data/remote/api_client.dart';
+import 'package:cashier_app/core/env/config.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -14,7 +15,7 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
 
   AuthBloc({TokenStorage? tokenStorage, AuthService? authService})
       : _tokenStorage = tokenStorage ?? const TokenStorage(),
-        _authService = authService ?? AuthService(buildApiClient()),
+        _authService = authService ?? AuthService(buildApiClient(baseUrl: EnvConfig.dev.apiBaseUrl)),
         super(const AuthState.unauthenticated()) {
     on<AuthSignedIn>(_onSignedIn);
     on<AuthSignedOut>(_onSignedOut);
