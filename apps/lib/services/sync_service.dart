@@ -124,9 +124,9 @@ class SyncService {
     // Tombstones for payments
     try {
       final deletedPayments = await api.get<List<dynamic>>('/payments/deleted');
-      final delList = (deletedPayments.data ?? []);
+      final List<String> delList = (deletedPayments.data as List<dynamic>? ?? <dynamic>[]).cast<String>();
       await isar.writeTxn(() async {
-        for (final id in delList.cast<String>()) {
+        for (final id in delList) {
           final existing = await isar.paymentModels.filter().uidEqualTo(id).findFirst();
           if (existing != null) await isar.paymentModels.delete(existing.id);
         }
