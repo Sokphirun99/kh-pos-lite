@@ -42,11 +42,7 @@ class App extends StatelessWidget {
             
             if (isOffline || EnvConfig.current.isOfflineOnly) {
               // Use a no-op sync service for offline mode
-              final api = buildApiClient(
-                token: null,
-                baseUrl: '', // No API needed
-              );
-              return SyncBloc(SyncService(api));
+              return SyncBloc(NoOpSyncService());
             } else {
               // Normal online mode
               final token = ctx.read<AuthBloc>().state.whenOrNull(

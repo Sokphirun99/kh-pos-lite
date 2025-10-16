@@ -14,7 +14,6 @@ import 'data/repositories_impl/payment_repository_impl.dart';
 import 'core/isar_db.dart';
 import 'services/key_value_service.dart';
 import 'core/env/config.dart';
-import 'features/products/bloc/products_bloc.dart';
 import 'domain/entities/product.dart';
 import 'domain/value_objects/money_riel.dart';
 

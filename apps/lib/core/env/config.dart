@@ -26,7 +26,7 @@ class EnvConfig {
 
   /// Get current environment based on build flavor or dart-define
   static EnvConfig get current {
-    const String? mode = String.fromEnvironment('BUILD_MODE', defaultValue: 'dev');
+    const String mode = String.fromEnvironment('BUILD_MODE', defaultValue: 'dev');
     switch (mode) {
       case 'prod':
       case 'offline':
