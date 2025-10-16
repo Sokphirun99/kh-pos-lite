@@ -83,7 +83,7 @@ else
 fi
 
 # Optional: Build for other platforms
-read -p "$(echo -e ${YELLOW}🍎 Do you want to build for iOS as well? (y/N): ${NC})" -n 1 -r
+read -p "$(printf '%b' "${YELLOW}🍎 Do you want to build for iOS as well? (y/N): ${NC}")" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo -e "${BLUE}🍎 Building iOS app...${NC}"
