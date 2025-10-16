@@ -20,7 +20,7 @@ class AppTheme {
   // Build a Material 3 theme using FlexColorScheme.
   static ThemeData lightFrom(ColorScheme? dynamicScheme) {
     final theme = FlexThemeData.light(
-      // Use the orange seed color directly for consistent orange theming
+      // Use the light blue seed color directly for consistent blue theming
       colorScheme: dynamicScheme ?? ColorScheme.fromSeed(seedColor: seed),
       useMaterial3: true,
       visualDensity: VisualDensity.standard,
