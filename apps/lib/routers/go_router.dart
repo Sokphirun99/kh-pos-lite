@@ -26,6 +26,7 @@ GoRouter buildRouter(BuildContext context) {
 
   bool isLoggedIn() => context.read<AuthBloc>().state.maybeWhen(
     authenticated: (_) => true,
+    offlineMode: () => true,
     orElse: () => false,
   );
 

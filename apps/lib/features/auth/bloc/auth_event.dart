@@ -24,3 +24,7 @@ class AuthLoginRequested extends AuthEvent {
   @override
   List<Object?> get props => [email, password];
 }
+
+class AuthOfflineModeRequested extends AuthEvent {
+  const AuthOfflineModeRequested();
+}
