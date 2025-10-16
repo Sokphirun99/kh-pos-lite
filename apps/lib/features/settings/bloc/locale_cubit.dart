@@ -15,4 +15,3 @@ class LocaleCubit extends HydratedCubit<Locale?> {
   @override
   Map<String, dynamic>? toJson(Locale? state) => {'code': state?.languageCode};
 }
-

@@ -4,4 +4,3 @@ class SalesService {
   Future<void> updateSale(String id) async {}
   Future<List<String>> listSales() async => const [];
 }
-

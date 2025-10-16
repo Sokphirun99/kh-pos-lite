@@ -3,40 +3,47 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  static const Color seed = Colors.teal;
+  // Light blue colors for a fresh, modern look
+  static const Color seed = Color(0xFF4FC3F7); // Light blue
+  static const Color primaryBlue = Color(0xFF4FC3F7);
+  static const Color secondaryBlue = Color(0xFF81D4FA);
+  static const Color gradientStart = Color(0xFF4FC3F7);
+  static const Color gradientEnd = Color(0xFF81D4FA);
 
-  static ThemeData get light => lightFrom(ColorScheme.fromSeed(seedColor: seed));
+  static ThemeData get light =>
+      lightFrom(ColorScheme.fromSeed(seedColor: seed));
 
-  static ThemeData get dark => darkFrom(ColorScheme.fromSeed(seedColor: seed, brightness: Brightness.dark));
+  static ThemeData get dark => darkFrom(
+    ColorScheme.fromSeed(seedColor: seed, brightness: Brightness.dark),
+  );
 
   // Build a Material 3 theme using FlexColorScheme.
   static ThemeData lightFrom(ColorScheme? dynamicScheme) {
     final theme = FlexThemeData.light(
-      // Prefer dynamic scheme when available (Android 12+), otherwise seed.
-      colorScheme: dynamicScheme,
-      scheme: dynamicScheme == null ? FlexScheme.tealM3 : null,
+      // Use the orange seed color directly for consistent orange theming
+      colorScheme: dynamicScheme ?? ColorScheme.fromSeed(seedColor: seed),
       useMaterial3: true,
       visualDensity: VisualDensity.standard,
       keyColors: const FlexKeyColors(useSecondary: true, useTertiary: true),
       subThemesData: const FlexSubThemesData(
-        defaultRadius: 16,
+        defaultRadius: 20,
         inputDecoratorIsFilled: true,
         inputDecoratorBorderType: FlexInputBorderType.outline,
-        inputDecoratorRadius: 12,
-        chipRadius: 10,
+        inputDecoratorRadius: 16,
+        chipRadius: 16,
         navigationBarHeight: 72,
         navigationBarMutedUnselectedIcon: true,
         navigationBarMutedUnselectedLabel: true,
         navigationBarIndicatorOpacity: 0.65,
-        elevatedButtonRadius: 12,
-        filledButtonRadius: 12,
-        outlinedButtonRadius: 12,
-        segmentedButtonRadius: 12,
-        textButtonRadius: 12,
-        popupMenuRadius: 12,
-        dialogRadius: 20,
-        bottomSheetRadius: 20,
-        cardRadius: 20,
+        elevatedButtonRadius: 16,
+        filledButtonRadius: 16,
+        outlinedButtonRadius: 16,
+        segmentedButtonRadius: 16,
+        textButtonRadius: 16,
+        popupMenuRadius: 16,
+        dialogRadius: 24,
+        bottomSheetRadius: 24,
+        cardRadius: 24,
       ),
       // Make surfaces slightly more elevated on light theme for depth.
       surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
@@ -48,30 +55,32 @@ class AppTheme {
 
   static ThemeData darkFrom(ColorScheme? dynamicScheme) {
     final theme = FlexThemeData.dark(
-      colorScheme: dynamicScheme,
-      scheme: dynamicScheme == null ? FlexScheme.tealM3 : null,
+      colorScheme: dynamicScheme ?? ColorScheme.fromSeed(
+        seedColor: seed, 
+        brightness: Brightness.dark,
+      ),
       useMaterial3: true,
       visualDensity: VisualDensity.standard,
       keyColors: const FlexKeyColors(useSecondary: true, useTertiary: true),
       subThemesData: const FlexSubThemesData(
-        defaultRadius: 16,
+        defaultRadius: 20,
         inputDecoratorIsFilled: true,
         inputDecoratorBorderType: FlexInputBorderType.outline,
-        inputDecoratorRadius: 12,
-        chipRadius: 10,
+        inputDecoratorRadius: 16,
+        chipRadius: 16,
         navigationBarHeight: 72,
         navigationBarMutedUnselectedIcon: true,
         navigationBarMutedUnselectedLabel: true,
         navigationBarIndicatorOpacity: 0.65,
-        elevatedButtonRadius: 12,
-        filledButtonRadius: 12,
-        outlinedButtonRadius: 12,
-        segmentedButtonRadius: 12,
-        textButtonRadius: 12,
-        popupMenuRadius: 12,
-        dialogRadius: 20,
-        bottomSheetRadius: 20,
-        cardRadius: 20,
+        elevatedButtonRadius: 16,
+        filledButtonRadius: 16,
+        outlinedButtonRadius: 16,
+        segmentedButtonRadius: 16,
+        textButtonRadius: 16,
+        popupMenuRadius: 16,
+        dialogRadius: 24,
+        bottomSheetRadius: 24,
+        cardRadius: 24,
       ),
       surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
       blendLevel: 12,
@@ -96,8 +105,6 @@ class AppTheme {
       titleSmall: head.titleSmall,
     );
 
-    return base.copyWith(
-      textTheme: text,
-    );
+    return base.copyWith(textTheme: text);
   }
 }

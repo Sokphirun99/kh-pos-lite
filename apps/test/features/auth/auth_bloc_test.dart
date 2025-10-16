@@ -11,18 +11,27 @@ void main() {
 
   group('AuthBloc', () {
     test('initial state unauthenticated', () {
-      final bloc = AuthBloc(tokenStorage: MemoryTokenStorage(), authService: TestAuthService());
-      expect(bloc.state.when(
-        unauthenticated: () => true,
-        authenticating: () => false,
-        error: (_) => false,
-        authenticated: (_) => false,
-      ), true);
+      final bloc = AuthBloc(
+        tokenStorage: MemoryTokenStorage(),
+        authService: TestAuthService(),
+      );
+      expect(
+        bloc.state.when(
+          unauthenticated: () => true,
+          authenticating: () => false,
+          error: (_) => false,
+          authenticated: (_) => false,
+        ),
+        true,
+      );
       bloc.close();
     });
 
     test('emits authenticating -> authenticated on success', () async {
-      final bloc = AuthBloc(tokenStorage: MemoryTokenStorage(), authService: TestAuthService());
+      final bloc = AuthBloc(
+        tokenStorage: MemoryTokenStorage(),
+        authService: TestAuthService(),
+      );
       addTearDown(bloc.close);
       final expected = expectLater(
         bloc.stream,
@@ -41,7 +50,10 @@ void main() {
 
     test('emits authenticating -> error on 401', () async {
       final svc = TestAuthService()..fail401 = true;
-      final bloc = AuthBloc(tokenStorage: MemoryTokenStorage(), authService: svc);
+      final bloc = AuthBloc(
+        tokenStorage: MemoryTokenStorage(),
+        authService: svc,
+      );
       addTearDown(bloc.close);
       final expected = expectLater(
         bloc.stream,
@@ -56,7 +68,10 @@ void main() {
 
     test('emits authenticating -> error on network error', () async {
       final svc = TestAuthService()..failNetwork = true;
-      final bloc = AuthBloc(tokenStorage: MemoryTokenStorage(), authService: svc);
+      final bloc = AuthBloc(
+        tokenStorage: MemoryTokenStorage(),
+        authService: svc,
+      );
       addTearDown(bloc.close);
       final expected = expectLater(
         bloc.stream,

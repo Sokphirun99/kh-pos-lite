@@ -64,6 +64,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
     final l10n = _l10n(context);
     return (v == null || v.trim().isEmpty) ? l10n.formRequired : null;
   }
+
   String? _nonNegativeInt(String? v) {
     final l10n = _l10n(context);
     if (v == null || v.trim().isEmpty) return l10n.formRequired;
@@ -89,9 +90,9 @@ class _ProductFormPageState extends State<ProductFormPage> {
     final price = int.parse(_price.text.trim());
     if (price < unit) {
       final l10n = _l10n(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.itemsPriceValidation)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.itemsPriceValidation)));
       return;
     }
 
@@ -102,9 +103,9 @@ class _ProductFormPageState extends State<ProductFormPage> {
     final editingId = widget.existing?.id;
     if (existing != null && existing.id != editingId) {
       final l10n = _l10n(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.itemsSkuExists)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.itemsSkuExists)));
       return;
     }
 
@@ -130,12 +131,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
         title: Text(
           _isEditing ? l10n.itemsFormTitleEdit : l10n.itemsFormTitleCreate,
         ),
-        actions: [
-          TextButton(
-            onPressed: _save,
-            child: Text(l10n.commonDone),
-          ),
-        ],
+        actions: [TextButton(onPressed: _save, child: Text(l10n.commonDone))],
       ),
       body: SafeArea(
         child: LayoutBuilder(
@@ -147,7 +143,10 @@ class _ProductFormPageState extends State<ProductFormPage> {
                 child: Form(
                   key: _formKey,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 16,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -219,11 +218,15 @@ class _ProductFormPageState extends State<ProductFormPage> {
                           width: double.infinity,
                           child: OutlinedButton.icon(
                             onPressed: () {},
-                            icon: const Icon(Icons.add_photo_alternate_outlined),
+                            icon: const Icon(
+                              Icons.add_photo_alternate_outlined,
+                            ),
                             label: Text(l10n.itemsAddImage),
                             style: OutlinedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 18),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14),
+                              ),
                               foregroundColor: theme.colorScheme.primary,
                             ),
                           ),

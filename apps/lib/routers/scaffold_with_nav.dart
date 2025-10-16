@@ -40,10 +40,26 @@ class ScaffoldWithNavBar extends StatelessWidget {
           }
         },
         destinations: [
-          NavigationDestination(icon: const Icon(Icons.inventory_2_outlined), label: l10n.tabItems),
-          NavigationDestination(icon: const Icon(Icons.people_alt_outlined), label: l10n.tabCustomers),
-          NavigationDestination(icon: const Icon(Icons.receipt_long_outlined), label: l10n.tabInvoices),
-          NavigationDestination(icon: const Icon(Icons.settings_outlined), label: l10n.tabSettings),
+          NavigationDestination(
+            icon: const Icon(Icons.inventory_2_outlined),
+            selectedIcon: const Icon(Icons.inventory_2),
+            label: l10n.tabItems,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.people_alt_outlined),
+            selectedIcon: const Icon(Icons.people_alt),
+            label: l10n.tabCustomers,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.receipt_long_outlined),
+            selectedIcon: const Icon(Icons.receipt_long),
+            label: l10n.tabInvoices,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.settings_outlined),
+            selectedIcon: const Icon(Icons.settings),
+            label: l10n.tabSettings,
+          ),
         ],
       ),
     );

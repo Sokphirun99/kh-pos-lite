@@ -19,7 +19,10 @@ class SalesBloc extends Bloc<SalesEvent, SalesState> {
     on<_SalesEmit>((event, emit) => emit(SalesState.data(event.items)));
   }
 
-  Future<void> _onSubscribed(SalesSubscribed event, Emitter<SalesState> emit) async {
+  Future<void> _onSubscribed(
+    SalesSubscribed event,
+    Emitter<SalesState> emit,
+  ) async {
     await _sub?.cancel();
     emit(const SalesState.loading());
     _sub = repo.watchAll().listen((items) => add(_SalesEmit(items)));

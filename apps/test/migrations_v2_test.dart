@@ -50,9 +50,15 @@ void main() {
     // Reopen, run migrations (v1 -> v2)
     isar = await openIsarDb(directory: tmp.path);
 
-    final pLoaded = await isar.productModels.filter().uidEqualTo('p1').findFirst();
+    final pLoaded = await isar.productModels
+        .filter()
+        .uidEqualTo('p1')
+        .findFirst();
     final sLoaded = await isar.saleModels.filter().uidEqualTo('s1').findFirst();
-    final pmLoaded = await isar.paymentModels.filter().uidEqualTo('pm1').findFirst();
+    final pmLoaded = await isar.paymentModels
+        .filter()
+        .uidEqualTo('pm1')
+        .findFirst();
     final ver = await isar.metaKVs.filter().keyEqualTo('dbVersion').findFirst();
 
     expect(ver?.value, '2');
@@ -69,4 +75,3 @@ void main() {
     await tmp.delete(recursive: true);
   });
 }
-

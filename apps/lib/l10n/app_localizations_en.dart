@@ -12,8 +12,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'KH POS Lite';
 
   @override
-  String get loginSubtitle =>
-      'Track sales, print receipts, and sync automatically.';
+  String get loginSubtitle => 'Track sales, print receipts, and sync automatically.';
 
   @override
   String get loginEmailLabel => 'Email or username';
@@ -111,8 +110,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get itemsAddImage => 'Add Image';
 
   @override
-  String get itemsPriceValidation =>
-      'Price must be greater than or equal to the unit cost';
+  String get itemsPriceValidation => 'Price must be greater than or equal to the unit cost';
 
   @override
   String get itemsSkuExists => 'SKU already exists';
@@ -172,8 +170,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get customersVatLabel => 'VAT';
 
   @override
-  String get customersPrivacyHint =>
-      'We respect your customers\' privacy and never share their details.';
+  String get customersPrivacyHint => 'We respect your customers\' privacy and never share their details.';
 
   @override
   String get customersDeleted => 'Customer deleted';
@@ -191,16 +188,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginTitle => 'Sign in';
 
   @override
-  String get loginFeatureOffline =>
-      'Works offline and syncs when you\'re back online.';
+  String get loginFeatureOffline => 'Works offline and syncs when you\'re back online.';
 
   @override
-  String get loginFeatureReceipts =>
-      'Print beautiful receipts or share invoices instantly.';
+  String get loginFeatureReceipts => 'Print beautiful receipts or share invoices instantly.';
 
   @override
-  String get loginFeatureKhqr =>
-      'Collect cashless payments with KHQR and Telegram alerts.';
+  String get loginFeatureKhqr => 'Collect cashless payments with KHQR and Telegram alerts.';
 
   @override
   String get settingsLanguage => 'Language';
@@ -218,8 +212,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsGeneralSection => 'Workspace';
 
   @override
-  String get settingsGeneralSectionSubtitle =>
-      'Manage your profile and sync status.';
+  String get settingsGeneralSectionSubtitle => 'Manage your profile and sync status.';
 
   @override
   String get settingsSyncNow => 'Sync now';
@@ -248,8 +241,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noSales => 'No sales';
 
   @override
-  String get salesEmptyDescription =>
-      'Create a sale to start tracking payments.';
+  String get salesEmptyDescription => 'Create a sale to start tracking payments.';
 
   @override
   String get noPayments => 'No payments';
@@ -258,8 +250,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paymentsTitle => 'Payments';
 
   @override
-  String get paymentsSubtitle =>
-      'Review collections across cash and transfer channels.';
+  String get paymentsSubtitle => 'Review collections across cash and transfer channels.';
 
   @override
   String get paymentsSummaryCollected => 'Collected';
@@ -280,8 +271,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paymentsSearchHint => 'Search by sale, method, or reference';
 
   @override
-  String get paymentsEmptyDescription =>
-      'Add payments as you collect cash or receive transfers.';
+  String get paymentsEmptyDescription => 'Add payments as you collect cash or receive transfers.';
 
   @override
   String get paymentsMethodLabel => 'Payment method';
@@ -315,15 +305,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsPreferencesSection => 'Preferences';
 
   @override
-  String get settingsPreferencesSectionSubtitle =>
-      'Personalize how the app looks and feels.';
+  String get settingsPreferencesSectionSubtitle => 'Personalize how the app looks and feels.';
 
   @override
   String get settingsSyncSection => 'Automation';
 
   @override
-  String get settingsSyncSectionSubtitle =>
-      'Fine tune batch sync and inventory safeguards.';
+  String get settingsSyncSectionSubtitle => 'Fine tune batch sync and inventory safeguards.';
 
   @override
   String get aboutTitle => 'About';
@@ -510,15 +498,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsReceiptSection => 'Receipt branding';
 
   @override
-  String get settingsReceiptSectionSubtitle =>
-      'Customize how your shop appears on printed receipts.';
+  String get settingsReceiptSectionSubtitle => 'Customize how your shop appears on printed receipts.';
 
   @override
   String get settingsPaymentSection => 'Payment integrations';
 
   @override
-  String get settingsPaymentSectionSubtitle =>
-      'Share KHQR codes and connect Telegram bots.';
+  String get settingsPaymentSectionSubtitle => 'Share KHQR codes and connect Telegram bots.';
 
   @override
   String get settingsDangerZone => 'Danger zone';

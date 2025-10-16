@@ -57,7 +57,11 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
     }
   }
 
-  void _deletePayment(BuildContext context, Payment payment, String? reference) {
+  void _deletePayment(
+    BuildContext context,
+    Payment payment,
+    String? reference,
+  ) {
     final bloc = context.read<PaymentsBloc>();
     bloc.add(PaymentDeleted(payment.id));
     if (reference != null && reference.isNotEmpty) {
@@ -111,7 +115,9 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (ctx) => PaymentsBloc(ctx.read<PaymentRepository>())..add(const PaymentsSubscribed()),
+      create: (ctx) =>
+          PaymentsBloc(ctx.read<PaymentRepository>())
+            ..add(const PaymentsSubscribed()),
       child: Scaffold(
         appBar: _buildAppBar(context),
         body: Column(
@@ -127,7 +133,9 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
 
                   final references = <String, String>{};
                   for (final payment in state.items) {
-                    final ref = KeyValueService.get<String>('payment_ref_${payment.id}');
+                    final ref = KeyValueService.get<String>(
+                      'payment_ref_${payment.id}',
+                    );
                     if (ref != null && ref.isNotEmpty) {
                       references[payment.id] = ref;
                     }
@@ -135,7 +143,9 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
 
                   final filtered = state.items.where((payment) {
                     if (_filter != _PaymentFilter.all) {
-                      final target = _filter == _PaymentFilter.cash ? 'cash' : 'transfer';
+                      final target = _filter == _PaymentFilter.cash
+                          ? 'cash'
+                          : 'transfer';
                       if (payment.method.toLowerCase() != target) return false;
                     }
                     if (_query.isEmpty) return true;
@@ -143,11 +153,17 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                     final saleId = payment.saleId.toLowerCase();
                     final method = payment.method.toLowerCase();
                     final id = payment.id.toLowerCase();
-                    return saleId.contains(_query) || ref.contains(_query) || method.contains(_query) || id.contains(_query);
+                    return saleId.contains(_query) ||
+                        ref.contains(_query) ||
+                        method.contains(_query) ||
+                        id.contains(_query);
                   }).toList();
 
                   final format = NumberFormat.decimalPattern(l10n.localeName);
-                  final total = filtered.fold<int>(0, (sum, p) => sum + p.amount.amount);
+                  final total = filtered.fold<int>(
+                    0,
+                    (sum, p) => sum + p.amount.amount,
+                  );
                   final cashAmount = filtered
                       .where((p) => p.method.toLowerCase() == 'cash')
                       .fold<int>(0, (sum, p) => sum + p.amount.amount);
@@ -183,19 +199,28 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                       Expanded(
                         child: filtered.isEmpty
                             ? Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 24),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 24,
+                                ),
                                 child: EmptyPlaceholder(
                                   icon: Icons.payments_outlined,
                                   title: l10n.noPayments,
                                   message: l10n.paymentsEmptyDescription,
                                   actionLabel: l10n.receivePayment,
-                                  onActionPressed: () => _openAddPaymentSheet(context),
+                                  onActionPressed: () =>
+                                      _openAddPaymentSheet(context),
                                 ),
                               )
                             : ListView.separated(
-                                padding: const EdgeInsets.fromLTRB(16, 0, 16, 104),
+                                padding: const EdgeInsets.fromLTRB(
+                                  16,
+                                  0,
+                                  16,
+                                  104,
+                                ),
                                 itemCount: filtered.length,
-                                separatorBuilder: (_, __) => const SizedBox(height: 12),
+                                separatorBuilder: (_, __) =>
+                                    const SizedBox(height: 12),
                                 itemBuilder: (_, index) {
                                   final payment = filtered[index];
                                   final reference = references[payment.id];
@@ -204,7 +229,11 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                                     direction: DismissDirection.endToStart,
                                     background: const _DismissibleBackground(),
                                     confirmDismiss: (_) async {
-                                      _deletePayment(context, payment, reference);
+                                      _deletePayment(
+                                        context,
+                                        payment,
+                                        reference,
+                                      );
                                       return true;
                                     },
                                     child: _PaymentCard(
@@ -213,8 +242,15 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                                       currencyFormat: format,
                                       onCopyReference: reference == null
                                           ? null
-                                          : () => _copyReference(context, reference),
-                                      onDelete: () => _deletePayment(context, payment, reference),
+                                          : () => _copyReference(
+                                              context,
+                                              reference,
+                                            ),
+                                      onDelete: () => _deletePayment(
+                                        context,
+                                        payment,
+                                        reference,
+                                      ),
                                     ),
                                   );
                                 },
@@ -261,7 +297,9 @@ class _PaymentsSummaryCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        gradient: LinearGradient(colors: [scheme.primaryContainer, scheme.secondaryContainer]),
+        gradient: LinearGradient(
+          colors: [scheme.primaryContainer, scheme.secondaryContainer],
+        ),
       ),
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -269,7 +307,9 @@ class _PaymentsSummaryCard extends StatelessWidget {
         children: [
           Text(
             l10n.paymentsSummaryCollected,
-            style: theme.textTheme.labelLarge?.copyWith(color: scheme.onPrimaryContainer),
+            style: theme.textTheme.labelLarge?.copyWith(
+              color: scheme.onPrimaryContainer,
+            ),
           ),
           const SizedBox(height: 6),
           Text(
@@ -332,7 +372,9 @@ class _SummaryTile extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               value,
-              style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ],
         ),
@@ -361,8 +403,16 @@ class _PaymentsFilterBar extends StatelessWidget {
       children: [
         SegmentedButton<_PaymentFilter>(
           segments: [
-            ButtonSegment(value: _PaymentFilter.all, label: Text(l10n.paymentsFilterAll), icon: const Icon(Icons.all_inbox)),
-            ButtonSegment(value: _PaymentFilter.cash, label: Text(l10n.paymentsFilterCash), icon: const Icon(Icons.payments)),
+            ButtonSegment(
+              value: _PaymentFilter.all,
+              label: Text(l10n.paymentsFilterAll),
+              icon: const Icon(Icons.all_inbox),
+            ),
+            ButtonSegment(
+              value: _PaymentFilter.cash,
+              label: Text(l10n.paymentsFilterCash),
+              icon: const Icon(Icons.payments),
+            ),
             ButtonSegment(
               value: _PaymentFilter.transfer,
               label: Text(l10n.paymentsFilterTransfer),
@@ -402,8 +452,12 @@ class _PaymentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
-    final method = payment.method.toLowerCase() == 'transfer' ? l10n.checkoutTransfer : l10n.checkoutCash;
-    final methodIcon = payment.method.toLowerCase() == 'transfer' ? Icons.account_balance : Icons.payments_outlined;
+    final method = payment.method.toLowerCase() == 'transfer'
+        ? l10n.checkoutTransfer
+        : l10n.checkoutCash;
+    final methodIcon = payment.method.toLowerCase() == 'transfer'
+        ? Icons.account_balance
+        : Icons.payments_outlined;
 
     return Card(
       elevation: 0,
@@ -422,7 +476,10 @@ class _PaymentCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     color: theme.colorScheme.primaryContainer,
                   ),
-                  child: Icon(methodIcon, color: theme.colorScheme.onPrimaryContainer),
+                  child: Icon(
+                    methodIcon,
+                    color: theme.colorScheme.onPrimaryContainer,
+                  ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
@@ -431,12 +488,16 @@ class _PaymentCard extends StatelessWidget {
                     children: [
                       Text(
                         '៛${currencyFormat.format(payment.amount.amount)}',
-                        style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         '#${payment.id.substring(0, 6).toUpperCase()}',
-                        style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
                       ),
                     ],
                   ),
@@ -454,7 +515,10 @@ class _PaymentCard extends StatelessWidget {
               runSpacing: 8,
               children: [
                 _InfoChip(icon: methodIcon, label: method),
-                _InfoChip(icon: Icons.sell_outlined, label: '${l10n.paymentsFormSaleId}: ${payment.saleId}'),
+                _InfoChip(
+                  icon: Icons.sell_outlined,
+                  label: '${l10n.paymentsFormSaleId}: ${payment.saleId}',
+                ),
                 if (reference != null && reference!.isNotEmpty)
                   GestureDetector(
                     onTap: onCopyReference,
@@ -579,7 +643,9 @@ class _PaymentEntrySheetState extends State<_PaymentEntrySheet> {
         saleId: _saleIdCtrl.text.trim(),
         method: _method == _EntryMethod.cash ? 'cash' : 'transfer',
         amount: amount,
-        reference: _referenceCtrl.text.trim().isEmpty ? null : _referenceCtrl.text.trim(),
+        reference: _referenceCtrl.text.trim().isEmpty
+            ? null
+            : _referenceCtrl.text.trim(),
       ),
     );
   }
@@ -602,12 +668,16 @@ class _PaymentEntrySheetState extends State<_PaymentEntrySheet> {
             children: [
               Text(
                 l10n.receivePayment,
-                style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               const SizedBox(height: 8),
               Text(
                 l10n.paymentsMethodLabel,
-                style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
               ),
               const SizedBox(height: 12),
               SegmentedButton<_EntryMethod>(
@@ -624,7 +694,8 @@ class _PaymentEntrySheetState extends State<_PaymentEntrySheet> {
                   ),
                 ],
                 selected: {_method},
-                onSelectionChanged: (value) => setState(() => _method = value.first),
+                onSelectionChanged: (value) =>
+                    setState(() => _method = value.first),
               ),
               const SizedBox(height: 20),
               TextFormField(
@@ -634,7 +705,9 @@ class _PaymentEntrySheetState extends State<_PaymentEntrySheet> {
                   border: const OutlineInputBorder(),
                 ),
                 textInputAction: TextInputAction.next,
-                validator: (value) => value == null || value.trim().isEmpty ? l10n.formRequired : null,
+                validator: (value) => value == null || value.trim().isEmpty
+                    ? l10n.formRequired
+                    : null,
               ),
               const SizedBox(height: 12),
               TextFormField(
@@ -649,7 +722,8 @@ class _PaymentEntrySheetState extends State<_PaymentEntrySheet> {
                   final text = value?.trim() ?? '';
                   if (text.isEmpty) return l10n.formRequired;
                   final parsed = int.tryParse(text);
-                  if (parsed == null || parsed <= 0) return l10n.formNonNegative;
+                  if (parsed == null || parsed <= 0)
+                    return l10n.formNonNegative;
                   return null;
                 },
               ),
@@ -667,7 +741,9 @@ class _PaymentEntrySheetState extends State<_PaymentEntrySheet> {
                 onPressed: _submit,
                 icon: const Icon(Icons.save_outlined),
                 label: Text(l10n.paymentsFormSubmit),
-                style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(48)),
+                style: FilledButton.styleFrom(
+                  minimumSize: const Size.fromHeight(48),
+                ),
               ),
             ],
           ),

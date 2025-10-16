@@ -12,5 +12,6 @@ class SaleDto with _$SaleDto {
     required String updatedAt,
   }) = _SaleDto;
 
-  factory SaleDto.fromJson(Map<String, dynamic> json) => _$SaleDtoFromJson(json);
+  factory SaleDto.fromJson(Map<String, dynamic> json) =>
+      _$SaleDtoFromJson(json);
 }

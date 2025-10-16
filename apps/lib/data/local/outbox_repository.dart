@@ -6,7 +6,11 @@ class OutboxRepository {
   final Isar isar;
   OutboxRepository(this.isar);
 
-  Future<void> enqueue({required String entity, required String op, required Map<String, dynamic> payload}) async {
+  Future<void> enqueue({
+    required String entity,
+    required String op,
+    required Map<String, dynamic> payload,
+  }) async {
     final item = OutboxOp()
       ..createdAt = DateTime.now().toUtc()
       ..entity = entity
@@ -35,4 +39,3 @@ class OutboxRepository {
     });
   }
 }
-

@@ -16,4 +16,3 @@ String formatRiel(num? amount) {
   }
   return '${buf.toString()} ${AppConstants.currencySymbol}';
 }
-

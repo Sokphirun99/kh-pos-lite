@@ -25,9 +25,9 @@ GoRouter buildRouter(BuildContext context) {
   final key = GlobalKey<NavigatorState>();
 
   bool isLoggedIn() => context.read<AuthBloc>().state.maybeWhen(
-        authenticated: (_) => true,
-        orElse: () => false,
-      );
+    authenticated: (_) => true,
+    orElse: () => false,
+  );
 
   return GoRouter(
     navigatorKey: key,
@@ -57,7 +57,9 @@ GoRouter buildRouter(BuildContext context) {
           GoRoute(
             path: '/products/:id/edit',
             name: 'product_edit',
-            builder: (context, state) => ProductFormPage(existing: state.extra as dynamic /* Product? */),
+            builder: (context, state) => ProductFormPage(
+              existing: state.extra as dynamic /* Product? */,
+            ),
           ),
           GoRoute(
             path: '/customers',
@@ -72,7 +74,9 @@ GoRouter buildRouter(BuildContext context) {
           GoRoute(
             path: '/customers/:id/edit',
             name: 'customer_edit',
-            builder: (context, state) => CustomerFormPage(existing: state.extra as dynamic /* CustomerDraft? */),
+            builder: (context, state) => CustomerFormPage(
+              existing: state.extra as dynamic /* CustomerDraft? */,
+            ),
           ),
           GoRoute(
             path: '/stock',
@@ -87,12 +91,14 @@ GoRouter buildRouter(BuildContext context) {
           GoRoute(
             path: '/sales/:id',
             name: 'sale_detail',
-            builder: (context, state) => SaleDetailScreen(saleId: state.pathParameters['id']!),
+            builder: (context, state) =>
+                SaleDetailScreen(saleId: state.pathParameters['id']!),
           ),
           GoRoute(
             path: '/sales/:id/receipt',
             name: 'receipt_preview',
-            builder: (context, state) => ReceiptPreviewScreen(saleId: state.pathParameters['id']!),
+            builder: (context, state) =>
+                ReceiptPreviewScreen(saleId: state.pathParameters['id']!),
           ),
           GoRoute(
             path: '/printers',

@@ -20,7 +20,8 @@ class SalesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (ctx) => SalesBloc(ctx.read<SaleRepository>())..add(const SalesSubscribed()),
+      create: (ctx) =>
+          SalesBloc(ctx.read<SaleRepository>())..add(const SalesSubscribed()),
       child: Builder(
         builder: (context) {
           final l10n = AppLocalizations.of(context);
@@ -35,8 +36,8 @@ class SalesScreen extends StatelessWidget {
                   Text(
                     l10n.salesAppBarSubtitle,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        ),
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
                   ),
                 ],
               ),
@@ -62,11 +63,16 @@ class SalesScreen extends StatelessWidget {
                         return BlocBuilder<SalesBloc, SalesState>(
                           builder: (context, state) {
                             if (state.isLoading) {
-                              return const Center(child: CircularProgressIndicator());
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
                             }
 
                             if (state.items.isEmpty) {
-                              return _SalesEmptyState(message: l10n.noSales, description: l10n.salesEmptyDescription);
+                              return _SalesEmptyState(
+                                message: l10n.noSales,
+                                description: l10n.salesEmptyDescription,
+                              );
                             }
 
                             final totalAmount = state.items.fold<int>(
@@ -76,18 +82,33 @@ class SalesScreen extends StatelessWidget {
                             final outstandingAmount = state.items.fold<int>(
                               0,
                               (sum, sale) =>
-                                  sum + (sale.total.amount - (paymentTotals[sale.id] ?? 0)).clamp(0, 1 << 31),
+                                  sum +
+                                  (sale.total.amount -
+                                          (paymentTotals[sale.id] ?? 0))
+                                      .clamp(0, 1 << 31),
                             );
                             final paidCount = state.items
-                                .where((sale) => (sale.total.amount - (paymentTotals[sale.id] ?? 0)) <= 0)
+                                .where(
+                                  (sale) =>
+                                      (sale.total.amount -
+                                          (paymentTotals[sale.id] ?? 0)) <=
+                                      0,
+                                )
                                 .length;
 
-                            final currencyFormat = NumberFormat.decimalPattern(l10n.localeName);
+                            final currencyFormat = NumberFormat.decimalPattern(
+                              l10n.localeName,
+                            );
 
                             return Column(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                                  padding: const EdgeInsets.fromLTRB(
+                                    16,
+                                    16,
+                                    16,
+                                    8,
+                                  ),
                                   child: _SalesSummaryCard(
                                     l10n: l10n,
                                     currencyFormat: currencyFormat,
@@ -99,22 +120,40 @@ class SalesScreen extends StatelessWidget {
                                 ),
                                 Expanded(
                                   child: ListView.separated(
-                                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 104),
+                                    padding: const EdgeInsets.fromLTRB(
+                                      16,
+                                      0,
+                                      16,
+                                      104,
+                                    ),
                                     itemCount: state.items.length,
-                                    separatorBuilder: (_, __) => const SizedBox(height: 12),
+                                    separatorBuilder: (_, __) =>
+                                        const SizedBox(height: 12),
                                     itemBuilder: (_, i) {
                                       final sale = state.items[i];
                                       final paid = paymentTotals[sale.id] ?? 0;
-                                      final remaining = (sale.total.amount - paid).clamp(0, 1 << 31);
+                                      final remaining =
+                                          (sale.total.amount - paid).clamp(
+                                            0,
+                                            1 << 31,
+                                          );
                                       void deleteSale() {
-                                        context.read<SalesBloc>().add(SaleDeleted(sale.id));
-                                        ScaffoldMessenger.of(context).showSnackBar(
+                                        context.read<SalesBloc>().add(
+                                          SaleDeleted(sale.id),
+                                        );
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
                                           SnackBar(
-                                            content: Text(l10n.settingsSyncDeleted),
+                                            content: Text(
+                                              l10n.settingsSyncDeleted,
+                                            ),
                                             action: SnackBarAction(
                                               label: l10n.undo,
                                               onPressed: () {
-                                                context.read<SalesBloc>().add(SaleAdded(sale));
+                                                context.read<SalesBloc>().add(
+                                                  SaleAdded(sale),
+                                                );
                                               },
                                             ),
                                           ),
@@ -124,7 +163,9 @@ class SalesScreen extends StatelessWidget {
                                       return Dismissible(
                                         key: ValueKey(sale.id),
                                         direction: DismissDirection.endToStart,
-                                        background: _DismissibleBackground(label: l10n.settingsSyncDeleted),
+                                        background: _DismissibleBackground(
+                                          label: l10n.settingsSyncDeleted,
+                                        ),
                                         confirmDismiss: (_) async {
                                           deleteSale();
                                           return true;
@@ -135,30 +176,51 @@ class SalesScreen extends StatelessWidget {
                                           remaining: remaining,
                                           currencyFormat: currencyFormat,
                                           l10n: l10n,
-                                          onTap: () =>
-                                              context.pushNamed('sale_detail', pathParameters: {'id': sale.id}),
+                                          onTap: () => context.pushNamed(
+                                            'sale_detail',
+                                            pathParameters: {'id': sale.id},
+                                          ),
                                           onReceivePayment: remaining > 0
                                               ? () async {
-                                                  final result = await showDialog<CheckoutResult>(
-                                                    context: context,
-                                                    builder: (_) => CheckoutDialog(total: remaining),
-                                                  );
+                                                  final result =
+                                                      await showDialog<
+                                                        CheckoutResult
+                                                      >(
+                                                        context: context,
+                                                        builder: (_) =>
+                                                            CheckoutDialog(
+                                                              total: remaining,
+                                                            ),
+                                                      );
                                                   if (result == null) return;
                                                   final payment = Payment(
                                                     id: const Uuid().v4(),
                                                     saleId: sale.id,
                                                     method:
-                                                        result.method == PaymentMethod.cash ? 'cash' : 'transfer',
-                                                    amount: MoneyRiel(result.tendered),
+                                                        result.method ==
+                                                            PaymentMethod.cash
+                                                        ? 'cash'
+                                                        : 'transfer',
+                                                    amount: MoneyRiel(
+                                                      result.tendered,
+                                                    ),
                                                   );
-                                                  await context.read<PaymentRepository>().add(payment);
-                                                  if (result.reference != null && result.reference!.isNotEmpty) {
+                                                  await context
+                                                      .read<PaymentRepository>()
+                                                      .add(payment);
+                                                  if (result.reference !=
+                                                          null &&
+                                                      result
+                                                          .reference!
+                                                          .isNotEmpty) {
                                                     await KeyValueService.set(
                                                       'payment_ref_${payment.id}',
                                                       result.reference!,
                                                     );
                                                   }
-                                                  final change = result.tendered - remaining;
+                                                  final change =
+                                                      result.tendered -
+                                                      remaining;
                                                   final msg = change >= 0
                                                       ? l10n.saleCompletedChange(
                                                           '៛${currencyFormat.format(change)}',
@@ -166,8 +228,13 @@ class SalesScreen extends StatelessWidget {
                                                       : l10n.saleCompletedRemaining(
                                                           '៛${currencyFormat.format(-change)}',
                                                         );
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(SnackBar(content: Text(msg)));
+                                                  ScaffoldMessenger.of(
+                                                    context,
+                                                  ).showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(msg),
+                                                    ),
+                                                  );
                                                 }
                                               : null,
                                           onDelete: deleteSale,
@@ -336,13 +403,17 @@ class _SaleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final createdAt = DateFormat.yMMMd(l10n.localeName).add_jm().format(sale.createdAt);
+    final createdAt = DateFormat.yMMMd(
+      l10n.localeName,
+    ).add_jm().format(sale.createdAt);
     final totalLabel = '៛${currencyFormat.format(sale.total.amount)}';
     final paidLabel = '៛${currencyFormat.format(paid)}';
     final remainingLabel = '៛${currencyFormat.format(remaining)}';
     final isPaid = remaining <= 0;
     final statusLabel = isPaid ? l10n.paid : l10n.salesStatusOutstanding;
-    final statusColor = isPaid ? theme.colorScheme.primaryContainer : theme.colorScheme.errorContainer;
+    final statusColor = isPaid
+        ? theme.colorScheme.primaryContainer
+        : theme.colorScheme.errorContainer;
     final statusTextColor = isPaid
         ? theme.colorScheme.onPrimaryContainer
         : theme.colorScheme.error;
@@ -380,7 +451,9 @@ class _SaleCard extends StatelessWidget {
                       children: [
                         Text(
                           '#${sale.id.substring(0, 6).toUpperCase()}',
-                          style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                         const SizedBox(height: 4),
                         Text(
@@ -393,7 +466,10 @@ class _SaleCard extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       color: statusColor,
                       borderRadius: BorderRadius.circular(30),
@@ -424,7 +500,9 @@ class _SaleCard extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           totalLabel,
-                          style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ],
                     ),
@@ -442,7 +520,9 @@ class _SaleCard extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           paidLabel,
-                          style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ],
                     ),
@@ -459,14 +539,13 @@ class _SaleCard extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      '${l10n.balance}:',
-                      style: theme.textTheme.labelLarge,
-                    ),
+                    Text('${l10n.balance}:', style: theme.textTheme.labelLarge),
                     Text(
                       remainingLabel,
                       style: theme.textTheme.titleMedium?.copyWith(
-                        color: isPaid ? theme.colorScheme.primary : theme.colorScheme.error,
+                        color: isPaid
+                            ? theme.colorScheme.primary
+                            : theme.colorScheme.error,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -523,7 +602,11 @@ class _SalesEmptyState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.receipt_long_outlined, size: 72, color: theme.colorScheme.outline),
+            Icon(
+              Icons.receipt_long_outlined,
+              size: 72,
+              color: theme.colorScheme.outline,
+            ),
             const SizedBox(height: 24),
             Text(
               message,

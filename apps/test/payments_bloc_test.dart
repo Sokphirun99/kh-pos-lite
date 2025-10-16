@@ -1,4 +1,3 @@
-
 import 'dart:async';
 // Using plain flutter_test without bloc_test to avoid version conflicts
 import 'package:flutter_test/flutter_test.dart';
@@ -25,12 +24,14 @@ void main() {
     });
 
     setUpAll(() {
-      registerFallbackValue(Payment(
-        id: 'fallback',
-        saleId: 's',
-        method: 'cash',
-        amount: const MoneyRiel(0),
-      ));
+      registerFallbackValue(
+        Payment(
+          id: 'fallback',
+          saleId: 's',
+          method: 'cash',
+          amount: const MoneyRiel(0),
+        ),
+      );
     });
 
     tearDown(() async {
@@ -44,7 +45,14 @@ void main() {
 
       bloc.add(const PaymentsSubscribed());
       await testerRun();
-      ctrl.add([Payment(id: '1', saleId: 's', method: 'cash', amount: const MoneyRiel(500))]);
+      ctrl.add([
+        Payment(
+          id: '1',
+          saleId: 's',
+          method: 'cash',
+          amount: const MoneyRiel(500),
+        ),
+      ]);
       await testerRun();
 
       expect(states.first, const PaymentsState.loading());

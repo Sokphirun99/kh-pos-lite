@@ -11,4 +11,3 @@ class ReportsCubit extends HydratedCubit<String> {
   @override
   Map<String, dynamic>? toJson(String state) => {'summary': state};
 }
-

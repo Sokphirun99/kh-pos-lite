@@ -23,9 +23,7 @@ void main() {
     Widget wrap(Widget child) {
       return RepositoryProvider<ProductRepository>.value(
         value: repo,
-        child: MaterialApp(
-          home: Scaffold(body: child),
-        ),
+        child: MaterialApp(home: Scaffold(body: child)),
       );
     }
 
@@ -41,21 +39,32 @@ void main() {
 
     testWidgets('blocks save on duplicate SKU', (tester) async {
       // Mock repo to return an existing product for given SKU
-      when(() => repo.getBySku('DUP-SKU')).thenAnswer((_) async => Product(
-            id: 'x',
-            name: 'Existing',
-            sku: 'DUP-SKU',
-            unitCost: const MoneyRiel(100),
-            price: const MoneyRiel(200),
-            stock: 5,
-          ));
+      when(() => repo.getBySku('DUP-SKU')).thenAnswer(
+        (_) async => Product(
+          id: 'x',
+          name: 'Existing',
+          sku: 'DUP-SKU',
+          unitCost: const MoneyRiel(100),
+          price: const MoneyRiel(200),
+          stock: 5,
+        ),
+      );
 
       await tester.pumpWidget(wrap(const ProductFormPage()));
 
       await tester.enterText(find.widgetWithText(TextFormField, 'Name'), 'New');
-      await tester.enterText(find.widgetWithText(TextFormField, 'SKU'), 'DUP-SKU');
-      await tester.enterText(find.widgetWithText(TextFormField, 'Unit cost (៛)'), '100');
-      await tester.enterText(find.widgetWithText(TextFormField, 'Price (៛)'), '200');
+      await tester.enterText(
+        find.widgetWithText(TextFormField, 'SKU'),
+        'DUP-SKU',
+      );
+      await tester.enterText(
+        find.widgetWithText(TextFormField, 'Unit cost (៛)'),
+        '100',
+      );
+      await tester.enterText(
+        find.widgetWithText(TextFormField, 'Price (៛)'),
+        '200',
+      );
       await tester.enterText(find.widgetWithText(TextFormField, 'Stock'), '1');
 
       await tester.tap(find.widgetWithText(ElevatedButton, 'Save'));
@@ -67,4 +76,3 @@ void main() {
     });
   });
 }
-

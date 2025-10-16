@@ -18,14 +18,12 @@ class _CustomersScreenState extends State<CustomersScreen> {
   List<CustomerDraft> get _filteredCustomers {
     final q = _query.trim().toLowerCase();
     if (q.isEmpty) return List.unmodifiable(_customers);
-    return _customers
-        .where((c) {
-          final name = c.name.toLowerCase();
-          final phone = c.phone.toLowerCase();
-          final alt = c.altPhone.toLowerCase();
-          return name.contains(q) || phone.contains(q) || alt.contains(q);
-        })
-        .toList();
+    return _customers.where((c) {
+      final name = c.name.toLowerCase();
+      final phone = c.phone.toLowerCase();
+      final alt = c.altPhone.toLowerCase();
+      return name.contains(q) || phone.contains(q) || alt.contains(q);
+    }).toList();
   }
 
   // Using Material 3 SearchBar; no custom decoration needed.
@@ -37,7 +35,11 @@ class _CustomersScreenState extends State<CustomersScreen> {
   }
 
   Future<void> _editCustomer(CustomerDraft customer) async {
-    final result = await context.pushNamed<CustomerDraft>('customer_edit', pathParameters: {'id': customer.id}, extra: customer);
+    final result = await context.pushNamed<CustomerDraft>(
+      'customer_edit',
+      pathParameters: {'id': customer.id},
+      extra: customer,
+    );
     if (result == null) return;
     setState(() {
       final index = _customers.indexWhere((element) => element.id == result.id);
@@ -86,7 +88,13 @@ class _CustomersScreenState extends State<CustomersScreen> {
       chips.add(_infoChip(context, customer.altPhone, Icons.phone_iphone));
     }
     if (customer.vatTin.isNotEmpty) {
-      chips.add(_infoChip(context, '${l10n.customersVatLabel}: ${customer.vatTin}', Icons.badge_outlined));
+      chips.add(
+        _infoChip(
+          context,
+          '${l10n.customersVatLabel}: ${customer.vatTin}',
+          Icons.badge_outlined,
+        ),
+      );
     }
 
     return Card(
@@ -110,11 +118,7 @@ class _CustomersScreenState extends State<CustomersScreen> {
                         Text(customer.name, style: theme.textTheme.titleMedium),
                         if (chips.isNotEmpty) ...[
                           const SizedBox(height: 8),
-                          Wrap(
-                            spacing: 12,
-                            runSpacing: 8,
-                            children: chips,
-                          ),
+                          Wrap(spacing: 12, runSpacing: 8, children: chips),
                         ],
                       ],
                     ),
@@ -127,11 +131,17 @@ class _CustomersScreenState extends State<CustomersScreen> {
               ),
               if (customer.address.isNotEmpty) ...[
                 const SizedBox(height: 12),
-                Text(customer.address, style: theme.textTheme.bodyMedium?.copyWith(color: muted)),
+                Text(
+                  customer.address,
+                  style: theme.textTheme.bodyMedium?.copyWith(color: muted),
+                ),
               ],
               if (customer.note.isNotEmpty) ...[
                 const SizedBox(height: 8),
-                Text(customer.note, style: theme.textTheme.bodySmall?.copyWith(color: muted)),
+                Text(
+                  customer.note,
+                  style: theme.textTheme.bodySmall?.copyWith(color: muted),
+                ),
               ],
             ],
           ),
@@ -153,9 +163,7 @@ class _CustomersScreenState extends State<CustomersScreen> {
     final l10n = AppLocalizations.of(context);
     final filtered = _filteredCustomers;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.tabCustomers),
-      ),
+      appBar: AppBar(title: Text(l10n.tabCustomers)),
       body: Column(
         children: [
           Padding(

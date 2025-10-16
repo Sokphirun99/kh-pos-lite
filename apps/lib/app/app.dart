@@ -30,39 +30,58 @@ class App extends StatelessWidget {
         BlocProvider(create: (_) => LocaleCubit()),
         BlocProvider(create: (_) => AuthBloc()),
         BlocProvider(create: (ctx) => SalesBloc(ctx.read<SaleRepository>())),
-        BlocProvider(create: (ctx) => PaymentsBloc(ctx.read<PaymentRepository>())),
+        BlocProvider(
+          create: (ctx) => PaymentsBloc(ctx.read<PaymentRepository>()),
+        ),
         BlocProvider(create: (_) => ReportsCubit()),
         BlocProvider(create: (_) => FeatureFlagsCubit()),
-        BlocProvider(create: (ctx) {
-          final token = ctx.read<AuthBloc>().state.whenOrNull(authenticated: (t) => t);
-          final api = buildApiClient(token: token, baseUrl: EnvConfig.dev.apiBaseUrl);
-          return SyncBloc(SyncService(api));
-        }),
+        BlocProvider(
+          create: (ctx) {
+            final token = ctx.read<AuthBloc>().state.whenOrNull(
+              authenticated: (t) => t,
+            );
+            final api = buildApiClient(
+              token: token,
+              baseUrl: EnvConfig.dev.apiBaseUrl,
+            );
+            return SyncBloc(SyncService(api));
+          },
+        ),
       ],
-      child: Builder(builder: (context) {
-        final router = buildRouter(context);
-        final isDark = context.watch<ThemeCubit>().state;
-        final locale = context.watch<LocaleCubit>().state;
-        return ConnectivitySyncListener(
-          child: DynamicColorBuilder(
-            builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-              final lightScheme = lightDynamic ?? ColorScheme.fromSeed(seedColor: AppTheme.seed);
-              final darkScheme = darkDynamic ?? ColorScheme.fromSeed(seedColor: AppTheme.seed, brightness: Brightness.dark);
+      child: Builder(
+        builder: (context) {
+          final router = buildRouter(context);
+          final isDark = context.watch<ThemeCubit>().state;
+          final locale = context.watch<LocaleCubit>().state;
+          return ConnectivitySyncListener(
+            child: DynamicColorBuilder(
+              builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+                final lightScheme =
+                    lightDynamic ??
+                    ColorScheme.fromSeed(seedColor: AppTheme.seed);
+                final darkScheme =
+                    darkDynamic ??
+                    ColorScheme.fromSeed(
+                      seedColor: AppTheme.seed,
+                      brightness: Brightness.dark,
+                    );
 
-              return MaterialApp.router(
-                title: 'KH POS Lite',
-                theme: AppTheme.lightFrom(lightScheme),
-                darkTheme: AppTheme.darkFrom(darkScheme),
-                themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
-                localizationsDelegates: AppLocalizations.localizationsDelegates,
-                supportedLocales: AppLocalizations.supportedLocales,
-                locale: locale,
-                routerConfig: router,
-              );
-            },
-          ),
-        );
-      }),
+                return MaterialApp.router(
+                  title: 'KH POS Lite',
+                  theme: AppTheme.lightFrom(lightScheme),
+                  darkTheme: AppTheme.darkFrom(darkScheme),
+                  themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+                  localizationsDelegates:
+                      AppLocalizations.localizationsDelegates,
+                  supportedLocales: AppLocalizations.supportedLocales,
+                  locale: locale,
+                  routerConfig: router,
+                );
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }

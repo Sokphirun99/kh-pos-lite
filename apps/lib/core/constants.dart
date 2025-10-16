@@ -4,4 +4,3 @@ class AppConstants {
   static const String appName = 'KH POS Lite';
   static const String currencySymbol = '៛';
 }
-

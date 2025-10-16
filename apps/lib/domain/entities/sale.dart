@@ -11,4 +11,3 @@ class Sale with _$Sale {
     required MoneyRiel total,
   }) = _Sale;
 }
-

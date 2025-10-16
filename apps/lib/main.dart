@@ -12,41 +12,34 @@ import 'data/repositories_impl/product_repository_impl.dart';
 import 'data/repositories_impl/sale_repository_impl.dart';
 import 'data/repositories_impl/payment_repository_impl.dart';
 import 'core/isar_db.dart';
-// import 'background/sync_task.dart';
-// import 'package:workmanager/workmanager.dart';
 import 'services/key_value_service.dart';
 
+/// Main entry point for the KH POS Lite application
+///
+/// This function initializes all required services and dependencies:
+/// - Flutter framework and widgets binding
+/// - BLoC pattern with HydratedBloc for state persistence
+/// - Local database (Isar) for offline-first data storage
+/// - Repository pattern for data access abstraction
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize state persistence for BLoC
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getApplicationDocumentsDirectory(),
   );
   Bloc.observer = AppBlocObserver();
 
-  // Initialize lightweight key-value storage (Hive)
+  // Initialize lightweight key-value storage for app settings
   await KeyValueService.init();
 
-  // Initialize Isar database for mobile/desktop platforms
+  // Initialize local database and create repository instances
   final isar = await openIsarDb();
   final ProductRepository productsRepo = ProductRepositoryImpl(isar);
   final SaleRepository salesRepo = SaleRepositoryImpl(isar);
   final PaymentRepository paymentsRepo = PaymentRepositoryImpl(isar);
 
-  // TODO: Initialize workmanager for background sync (mobile only)
-  // await Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
-  // await Workmanager().registerPeriodicTask(
-  //   'syncPeriodic',
-  //   syncTaskName,
-  //   frequency: const Duration(minutes: 15),
-  //   existingWorkPolicy: ExistingPeriodicWorkPolicy.keep,
-  //   constraints: Constraints(
-  //     networkType: NetworkType.connected,
-  //     requiresBatteryNotLow: true,
-  //   ),
-  //   backoffPolicy: BackoffPolicy.exponential,
-  //   backoffPolicyDelay: const Duration(minutes: 5),
-  // );
-
+  // Start the application with dependency injection
   runApp(
     MultiRepositoryProvider(
       providers: [

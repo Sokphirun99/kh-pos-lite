@@ -19,7 +19,10 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     on<_ProductsEmit>((event, emit) => emit(ProductsState.data(event.items)));
   }
 
-  Future<void> _onSubscribed(ProductsSubscribed event, Emitter<ProductsState> emit) async {
+  Future<void> _onSubscribed(
+    ProductsSubscribed event,
+    Emitter<ProductsState> emit,
+  ) async {
     await _sub?.cancel();
     emit(const ProductsState.loading());
     _sub = repo.watchAll().listen((items) {
@@ -31,11 +34,17 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     await repo.add(event.product);
   }
 
-  Future<void> _onUpdated(ProductUpdated event, Emitter<ProductsState> emit) async {
+  Future<void> _onUpdated(
+    ProductUpdated event,
+    Emitter<ProductsState> emit,
+  ) async {
     await repo.update(event.product);
   }
 
-  Future<void> _onDeleted(ProductDeleted event, Emitter<ProductsState> emit) async {
+  Future<void> _onDeleted(
+    ProductDeleted event,
+    Emitter<ProductsState> emit,
+  ) async {
     await repo.delete(event.id);
   }
 

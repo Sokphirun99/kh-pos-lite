@@ -12,4 +12,3 @@ class Payment with _$Payment {
     required MoneyRiel amount,
   }) = _Payment;
 }
-

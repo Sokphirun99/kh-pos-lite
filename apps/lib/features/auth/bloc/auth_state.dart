@@ -6,7 +6,8 @@ sealed class AuthState extends Equatable {
   const factory AuthState.unauthenticated() = _Unauthenticated;
   const factory AuthState.authenticating() = _Authenticating;
   const factory AuthState.error({required String message}) = _AuthError;
-  const factory AuthState.authenticated({required String token}) = _Authenticated;
+  const factory AuthState.authenticated({required String token}) =
+      _Authenticated;
 
   T when<T>({
     required T Function() unauthenticated,
@@ -39,10 +40,14 @@ sealed class AuthState extends Equatable {
     T Function(String message)? error,
     T Function(String token)? authenticated,
   }) {
-    if (this is _Unauthenticated && unauthenticated != null) return unauthenticated();
-    if (this is _Authenticating && authenticating != null) return authenticating();
-    if (this is _AuthError && error != null) return error((this as _AuthError).message);
-    if (this is _Authenticated && authenticated != null) return authenticated((this as _Authenticated).token);
+    if (this is _Unauthenticated && unauthenticated != null)
+      return unauthenticated();
+    if (this is _Authenticating && authenticating != null)
+      return authenticating();
+    if (this is _AuthError && error != null)
+      return error((this as _AuthError).message);
+    if (this is _Authenticated && authenticated != null)
+      return authenticated((this as _Authenticated).token);
     return orElse != null ? orElse() : null as T;
   }
 

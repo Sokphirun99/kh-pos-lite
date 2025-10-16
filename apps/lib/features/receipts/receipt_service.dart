@@ -22,7 +22,9 @@ class ReceiptService {
     try {
       final customPath = KeyValueService.get<String>('khmer_font_ttf_path');
       if (customPath != null && File(customPath).existsSync()) {
-        khFont = pw.Font.ttf(File(customPath).readAsBytesSync().buffer.asByteData());
+        khFont = pw.Font.ttf(
+          File(customPath).readAsBytesSync().buffer.asByteData(),
+        );
       }
     } catch (_) {
       // ignore font loading errors; fallback to default
@@ -40,36 +42,78 @@ class ReceiptService {
 
     doc.addPage(
       pw.Page(
-        pageFormat: PdfPageFormat(pageWidth.toDouble(), double.infinity, marginAll: 8),
+        pageFormat: PdfPageFormat(
+          pageWidth.toDouble(),
+          double.infinity,
+          marginAll: 8,
+        ),
         build: (ctx) => pw.Theme(
           data: theme,
           child: pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.stretch,
             children: [
               if (shop.name != null && shop.name!.isNotEmpty)
-                pw.Text(shop.name!, style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold), textAlign: pw.TextAlign.center),
+                pw.Text(
+                  shop.name!,
+                  style: pw.TextStyle(
+                    fontSize: 14,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                  textAlign: pw.TextAlign.center,
+                ),
               if ((shop.address ?? '').isNotEmpty)
-                pw.Text(shop.address!, style: const pw.TextStyle(fontSize: 9), textAlign: pw.TextAlign.center),
+                pw.Text(
+                  shop.address!,
+                  style: const pw.TextStyle(fontSize: 9),
+                  textAlign: pw.TextAlign.center,
+                ),
               if ((shop.phone ?? '').isNotEmpty)
-                pw.Text(shop.phone!, style: const pw.TextStyle(fontSize: 9), textAlign: pw.TextAlign.center),
+                pw.Text(
+                  shop.phone!,
+                  style: const pw.TextStyle(fontSize: 9),
+                  textAlign: pw.TextAlign.center,
+                ),
               if ((shop.name ?? '').isEmpty)
-                pw.Text('Receipt', style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold), textAlign: pw.TextAlign.center),
+                pw.Text(
+                  'Receipt',
+                  style: pw.TextStyle(
+                    fontSize: 14,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                  textAlign: pw.TextAlign.center,
+                ),
               pw.SizedBox(height: 6),
-              pw.Text('Sale: ${sale.id}', style: const pw.TextStyle(fontSize: 9)),
-              pw.Text('Date: ${df.format(sale.createdAt.toLocal())}', style: const pw.TextStyle(fontSize: 9)),
+              pw.Text(
+                'Sale: ${sale.id}',
+                style: const pw.TextStyle(fontSize: 9),
+              ),
+              pw.Text(
+                'Date: ${df.format(sale.createdAt.toLocal())}',
+                style: const pw.TextStyle(fontSize: 9),
+              ),
               pw.Divider(),
               _kv('Total', formatRiel(sale.total.amount)),
               _kv('Paid', formatRiel(paid)),
               _kv('Balance', formatRiel(remaining)),
               pw.SizedBox(height: 8),
-              pw.Text('Payments', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+              pw.Text(
+                'Payments',
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+              ),
               pw.SizedBox(height: 4),
-              ...payments.map((p) => pw.Column(children: [
+              ...payments.map(
+                (p) => pw.Column(
+                  children: [
                     _kv(p.method, formatRiel(p.amount.amount)),
                     pw.SizedBox(height: 2),
-                  ])),
+                  ],
+                ),
+              ),
               pw.SizedBox(height: 8),
-              pw.Text(shop.footer?.isNotEmpty == true ? shop.footer! : 'Thank you!', textAlign: pw.TextAlign.center),
+              pw.Text(
+                shop.footer?.isNotEmpty == true ? shop.footer! : 'Thank you!',
+                textAlign: pw.TextAlign.center,
+              ),
             ],
           ),
         ),
@@ -126,7 +170,10 @@ class ReceiptService {
       writeText('- ${p.method}: ${formatRiel(p.amount.amount)}');
     }
     writeText('');
-    writeText((shop.footer?.isNotEmpty == true) ? shop.footer! : 'Thank you!', center: true);
+    writeText(
+      (shop.footer?.isNotEmpty == true) ? shop.footer! : 'Thank you!',
+      center: true,
+    );
 
     // Feed and cut (if supported)
     bytes.addAll([0x1B, 0x64, 0x03]); // print and feed 3 lines

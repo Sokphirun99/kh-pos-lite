@@ -65,7 +65,9 @@ class _CustomerFormPageState extends State<CustomerFormPage> {
     super.dispose();
   }
 
-  String? _required(String? value) => value == null || value.trim().isEmpty ? AppLocalizations.of(context).formRequired : null;
+  String? _required(String? value) => value == null || value.trim().isEmpty
+      ? AppLocalizations.of(context).formRequired
+      : null;
 
   void _save() {
     if (!_formKey.currentState!.validate()) return;
@@ -90,13 +92,12 @@ class _CustomerFormPageState extends State<CustomerFormPage> {
     return Scaffold(
       appBar: AppBar(
         leading: const CloseButton(),
-        title: Text(_isEditing ? l10n.customersFormTitleEdit : l10n.customersFormTitleCreate),
-        actions: [
-          TextButton(
-            onPressed: _save,
-            child: Text(l10n.commonDone),
-          ),
-        ],
+        title: Text(
+          _isEditing
+              ? l10n.customersFormTitleEdit
+              : l10n.customersFormTitleCreate,
+        ),
+        actions: [TextButton(onPressed: _save, child: Text(l10n.commonDone))],
       ),
       body: SafeArea(
         child: LayoutBuilder(
@@ -108,7 +109,10 @@ class _CustomerFormPageState extends State<CustomerFormPage> {
                 child: Form(
                   key: _formKey,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 16,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -175,7 +179,8 @@ class _CustomerFormPageState extends State<CustomerFormPage> {
                         Text(
                           l10n.customersPrivacyHint,
                           style: theme.textTheme.bodySmall?.copyWith(
-                            color: theme.colorScheme.onSurfaceVariant.withOpacity(0.7),
+                            color: theme.colorScheme.onSurfaceVariant
+                                .withOpacity(0.7),
                           ),
                         ),
                       ],

@@ -18,7 +18,10 @@ class SaleRepositoryImpl implements SaleRepository {
   @override
   Future<void> add(Sale sale) async {
     await isar.writeTxn(() async {
-      final existing = await isar.saleModels.filter().uidEqualTo(sale.id).findFirst();
+      final existing = await isar.saleModels
+          .filter()
+          .uidEqualTo(sale.id)
+          .findFirst();
       final model = sale.toIsar();
       if (existing != null) model.id = existing.id;
       await isar.saleModels.put(model);
@@ -45,7 +48,10 @@ class SaleRepositoryImpl implements SaleRepository {
   @override
   Future<void> update(Sale sale) async {
     await isar.writeTxn(() async {
-      final existing = await isar.saleModels.filter().uidEqualTo(sale.id).findFirst();
+      final existing = await isar.saleModels
+          .filter()
+          .uidEqualTo(sale.id)
+          .findFirst();
       final model = sale.toIsar();
       if (existing != null) model.id = existing.id;
       await isar.saleModels.put(model);
@@ -85,25 +91,26 @@ class SaleRepositoryImpl implements SaleRepository {
         .sortByCreatedAt()
         .watch(fireImmediately: true)
         .listen((models) {
-      final data = models.map((e) => e.toDomain()).toList(growable: false);
-      _watchAllCache = data;
-      controller.add(data);
-    });
+          final data = models.map((e) => e.toDomain()).toList(growable: false);
+          _watchAllCache = data;
+          controller.add(data);
+        });
     return controller.stream;
   }
 
   @override
   Future<void> delete(String id) async {
     await isar.writeTxn(() async {
-      final existing = await isar.saleModels.filter().uidEqualTo(id).findFirst();
+      final existing = await isar.saleModels
+          .filter()
+          .uidEqualTo(id)
+          .findFirst();
       if (existing != null) {
         await isar.saleModels.delete(existing.id);
       }
     });
-    await OutboxRepository(isar).enqueue(
-      entity: ApiPaths.sales,
-      op: ApiPaths.delete,
-      payload: {'id': id},
-    );
+    await OutboxRepository(
+      isar,
+    ).enqueue(entity: ApiPaths.sales, op: ApiPaths.delete, payload: {'id': id});
   }
 }

@@ -8,4 +8,3 @@ class KhqrService {
     return {'raw': data};
   }
 }
-

@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Flutter
-ENV FLUTTER_VERSION=3.27.2
+ENV FLUTTER_VERSION=3.35.1
 RUN git clone --depth 1 --branch ${FLUTTER_VERSION} https://github.com/flutter/flutter.git /flutter
 ENV PATH="/flutter/bin:${PATH}"
 
@@ -22,17 +22,19 @@ RUN flutter doctor
 
 WORKDIR /app
 
-# Copy pubspec files
+# Copy pubspec files first for better caching
 COPY apps/pubspec.yaml apps/pubspec.lock ./
 
-# Get dependencies
+# Set pub cache to a container-local path and get dependencies
+ENV PUB_CACHE=/flutter/.pub-cache
 RUN flutter pub get
 
 # Copy source code
 COPY apps/ ./
 
-# Build web app
-RUN flutter build web --release
+# Build web app with proper environment
+ENV FLUTTER_WEB=true
+RUN flutter build web --release --dart-define=FLUTTER_WEB=true
 
 # Production stage with nginx
 FROM nginx:alpine as production-stage
