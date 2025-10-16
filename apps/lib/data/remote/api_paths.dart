@@ -9,4 +9,3 @@ class ApiPaths {
 
   static String op(String entity, String operation) => '/$entity/$operation';
 }
-

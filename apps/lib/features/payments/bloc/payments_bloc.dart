@@ -19,7 +19,10 @@ class PaymentsBloc extends Bloc<PaymentsEvent, PaymentsState> {
     on<_PaymentsEmit>((event, emit) => emit(PaymentsState.data(event.items)));
   }
 
-  Future<void> _onSubscribed(PaymentsSubscribed event, Emitter<PaymentsState> emit) async {
+  Future<void> _onSubscribed(
+    PaymentsSubscribed event,
+    Emitter<PaymentsState> emit,
+  ) async {
     await _sub?.cancel();
     emit(const PaymentsState.loading());
     _sub = repo.watchAll().listen((items) => add(_PaymentsEmit(items)));
@@ -29,11 +32,17 @@ class PaymentsBloc extends Bloc<PaymentsEvent, PaymentsState> {
     await repo.add(event.payment);
   }
 
-  Future<void> _onUpdated(PaymentUpdated event, Emitter<PaymentsState> emit) async {
+  Future<void> _onUpdated(
+    PaymentUpdated event,
+    Emitter<PaymentsState> emit,
+  ) async {
     await repo.update(event.payment);
   }
 
-  Future<void> _onDeleted(PaymentDeleted event, Emitter<PaymentsState> emit) async {
+  Future<void> _onDeleted(
+    PaymentDeleted event,
+    Emitter<PaymentsState> emit,
+  ) async {
     await repo.delete(event.id);
   }
 

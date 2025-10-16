@@ -14,9 +14,11 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
   final AuthService _authService;
 
   AuthBloc({TokenStorage? tokenStorage, AuthService? authService})
-      : _tokenStorage = tokenStorage ?? const TokenStorage(),
-        _authService = authService ?? AuthService(buildApiClient(baseUrl: EnvConfig.dev.apiBaseUrl)),
-        super(const AuthState.unauthenticated()) {
+    : _tokenStorage = tokenStorage ?? const TokenStorage(),
+      _authService =
+          authService ??
+          AuthService(buildApiClient(baseUrl: EnvConfig.dev.apiBaseUrl)),
+      super(const AuthState.unauthenticated()) {
     on<AuthSignedIn>(_onSignedIn);
     on<AuthSignedOut>(_onSignedOut);
     on<AuthLoginRequested>(_onLoginRequested);
@@ -24,7 +26,10 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     add(const _AuthLoaded());
   }
 
-  FutureOr<void> _onSignedIn(AuthSignedIn event, Emitter<AuthState> emit) async {
+  FutureOr<void> _onSignedIn(
+    AuthSignedIn event,
+    Emitter<AuthState> emit,
+  ) async {
     emit(const AuthState.authenticating());
     try {
       // Simulate a small delay; replace with real API validation if needed
@@ -36,10 +41,16 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     }
   }
 
-  FutureOr<void> _onLoginRequested(AuthLoginRequested event, Emitter<AuthState> emit) async {
+  FutureOr<void> _onLoginRequested(
+    AuthLoginRequested event,
+    Emitter<AuthState> emit,
+  ) async {
     emit(const AuthState.authenticating());
     try {
-      final token = await _authService.signIn(email: event.email, password: event.password);
+      final token = await _authService.signIn(
+        email: event.email,
+        password: event.password,
+      );
       await _tokenStorage.write(token);
       emit(AuthState.authenticated(token: token));
     } catch (e) {
@@ -47,7 +58,10 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     }
   }
 
-  FutureOr<void> _onSignedOut(AuthSignedOut event, Emitter<AuthState> emit) async {
+  FutureOr<void> _onSignedOut(
+    AuthSignedOut event,
+    Emitter<AuthState> emit,
+  ) async {
     await _tokenStorage.clear();
     emit(const AuthState.unauthenticated());
   }
@@ -70,14 +84,16 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
   @override
   AuthState? fromJson(Map<String, dynamic> json) {
     final token = json['token'] as String?;
-    return token == null ? const AuthState.unauthenticated() : AuthState.authenticated(token: token);
+    return token == null
+        ? const AuthState.unauthenticated()
+        : AuthState.authenticated(token: token);
   }
 
   @override
   Map<String, dynamic>? toJson(AuthState state) => state.maybeWhen(
-        authenticated: (token) => {'token': token},
-        orElse: () => {'token': null},
-      );
+    authenticated: (token) => {'token': token},
+    orElse: () => {'token': null},
+  );
 }
 
 class _AuthLoaded extends AuthEvent {

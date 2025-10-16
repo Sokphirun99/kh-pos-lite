@@ -5,4 +5,3 @@ class Money {
   @override
   String toString() => '៛$riel';
 }
-

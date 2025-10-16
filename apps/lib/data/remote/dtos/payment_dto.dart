@@ -13,5 +13,6 @@ class PaymentDto with _$PaymentDto {
     required String updatedAt,
   }) = _PaymentDto;
 
-  factory PaymentDto.fromJson(Map<String, dynamic> json) => _$PaymentDtoFromJson(json);
+  factory PaymentDto.fromJson(Map<String, dynamic> json) =>
+      _$PaymentDtoFromJson(json);
 }

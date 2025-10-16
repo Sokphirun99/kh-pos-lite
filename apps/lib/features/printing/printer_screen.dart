@@ -29,7 +29,9 @@ class _PrinterScreenState extends State<PrinterScreen> {
   Future<void> _load() async {
     setState(() => scanning = true);
     try {
-      final found = await BluetoothService().listDevices().timeout(const Duration(seconds: 10));
+      final found = await BluetoothService().listDevices().timeout(
+        const Duration(seconds: 10),
+      );
       if (!mounted) return;
       setState(() {
         devices = found;
@@ -38,11 +40,15 @@ class _PrinterScreenState extends State<PrinterScreen> {
     } on TimeoutException {
       if (!mounted) return;
       setState(() => scanning = false);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context).printingFailed)));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context).printingFailed)),
+      );
     } catch (e) {
       if (!mounted) return;
       setState(() => scanning = false);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context).printingFailed)));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context).printingFailed)),
+      );
     }
   }
 
@@ -52,16 +58,26 @@ class _PrinterScreenState extends State<PrinterScreen> {
     for (final e in list) {
       if (e is String) {
         final parts = e.split('||');
-        if (parts.length >= 2) sp.add(_SavedPrinter(addr: parts[0], name: parts[1]));
+        if (parts.length >= 2)
+          sp.add(_SavedPrinter(addr: parts[0], name: parts[1]));
       }
     }
     setState(() => saved = sp);
   }
 
-  Future<void> _savePrinter(String addr, String name, {bool setDefault = true}) async {
+  Future<void> _savePrinter(
+    String addr,
+    String name, {
+    bool setDefault = true,
+  }) async {
     // Add to saved list if not present
     final key = '$addr||$name';
-    final list = List<String>.from(KeyValueService.get<List<dynamic>>('bt_printers')?.map((e) => e.toString()) ?? const []);
+    final list = List<String>.from(
+      KeyValueService.get<List<dynamic>>(
+            'bt_printers',
+          )?.map((e) => e.toString()) ??
+          const [],
+    );
     if (!list.contains(key)) list.add(key);
     await KeyValueService.set('bt_printers', list);
     if (setDefault) {
@@ -79,7 +95,12 @@ class _PrinterScreenState extends State<PrinterScreen> {
   }
 
   Future<void> _removeSaved(_SavedPrinter sp) async {
-    final list = List<String>.from(KeyValueService.get<List<dynamic>>('bt_printers')?.map((e) => e.toString()) ?? const []);
+    final list = List<String>.from(
+      KeyValueService.get<List<dynamic>>(
+            'bt_printers',
+          )?.map((e) => e.toString()) ??
+          const [],
+    );
     list.removeWhere((e) => e.startsWith('${sp.addr}||'));
     await KeyValueService.set('bt_printers', list);
     // If current default, clear it
@@ -123,17 +144,23 @@ class _PrinterScreenState extends State<PrinterScreen> {
                             setState(() => testing = true);
                             try {
                               // Connect
-                              await BluetoothService().connectTo(selAddr).timeout(const Duration(seconds: 8));
+                              await BluetoothService()
+                                  .connectTo(selAddr)
+                                  .timeout(const Duration(seconds: 8));
                               // Build simple test ticket
                               final data = <int>[];
                               data.addAll([0x1B, 0x40]); // init
                               data.addAll([0x1B, 0x61, 1]); // center
                               data.addAll(('TEST PRINT\n').codeUnits);
                               data.addAll([0x1B, 0x61, 0]); // left
-                              data.addAll(('Hello from KH POS Lite\n').codeUnits);
+                              data.addAll(
+                                ('Hello from KH POS Lite\n').codeUnits,
+                              );
                               data.addAll([0x1B, 0x64, 0x02]); // feed 2
                               data.addAll([0x1D, 0x56, 0x01]); // cut
-                              await BluetoothService().sendBytes(data).timeout(const Duration(seconds: 8));
+                              await BluetoothService()
+                                  .sendBytes(data)
+                                  .timeout(const Duration(seconds: 8));
                               if (mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text(l10n.printingDone)),
@@ -156,7 +183,11 @@ class _PrinterScreenState extends State<PrinterScreen> {
                             }
                           },
                     child: testing
-                        ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
+                        ? const SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
                         : Text(l10n.testPrint),
                   ),
                   const SizedBox(width: 8),
@@ -173,34 +204,46 @@ class _PrinterScreenState extends State<PrinterScreen> {
             ),
           ListTile(
             title: Text(l10n.printBluetooth),
-            subtitle: Text(scanning
-                ? l10n.scanning
-                : (devices.isEmpty ? l10n.noDevicesFound : l10n.tapToSelect)),
+            subtitle: Text(
+              scanning
+                  ? l10n.scanning
+                  : (devices.isEmpty ? l10n.noDevicesFound : l10n.tapToSelect),
+            ),
             trailing: IconButton(
               icon: const Icon(Icons.refresh),
               onPressed: _load,
             ),
           ),
           if (devices.isNotEmpty)
-            ...devices.map((d) => ListTile(
-                  leading: const Icon(Icons.bluetooth_searching),
-                  title: Text(d.name),
-                  subtitle: Text(d.address),
-                  trailing: TextButton(
-                    onPressed: () async => _savePrinter(d.address, d.name, setDefault: true),
-                    child: Text(l10n.ok),
-                  ),
-                )),
+            ...devices.map(
+              (d) => ListTile(
+                leading: const Icon(Icons.bluetooth_searching),
+                title: Text(d.name),
+                subtitle: Text(d.address),
+                trailing: TextButton(
+                  onPressed: () async =>
+                      _savePrinter(d.address, d.name, setDefault: true),
+                  child: Text(l10n.ok),
+                ),
+              ),
+            ),
           const Divider(),
           if (saved.isNotEmpty)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-              child: Text('Saved printers', style: Theme.of(context).textTheme.titleMedium),
+              child: Text(
+                'Saved printers',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ),
           ...saved.map((sp) {
-            final isDefault = (KeyValueService.get<String>('bt_printer_addr') ?? '') == sp.addr;
+            final isDefault =
+                (KeyValueService.get<String>('bt_printer_addr') ?? '') ==
+                sp.addr;
             return ListTile(
-              leading: Icon(isDefault ? Icons.radio_button_checked : Icons.radio_button_off),
+              leading: Icon(
+                isDefault ? Icons.radio_button_checked : Icons.radio_button_off,
+              ),
               title: Text(sp.name),
               subtitle: Text(sp.addr),
               onTap: () => _setDefault(sp),
@@ -228,9 +271,23 @@ class _PrinterScreenState extends State<PrinterScreen> {
               children: [
                 Text('Manual add (address + name)'),
                 const SizedBox(height: 8),
-                TextField(controller: _manualAddr, decoration: const InputDecoration(labelText: 'MAC/address', border: OutlineInputBorder(), isDense: true)),
+                TextField(
+                  controller: _manualAddr,
+                  decoration: const InputDecoration(
+                    labelText: 'MAC/address',
+                    border: OutlineInputBorder(),
+                    isDense: true,
+                  ),
+                ),
                 const SizedBox(height: 8),
-                TextField(controller: _manualName, decoration: const InputDecoration(labelText: 'Name', border: OutlineInputBorder(), isDense: true)),
+                TextField(
+                  controller: _manualName,
+                  decoration: const InputDecoration(
+                    labelText: 'Name',
+                    border: OutlineInputBorder(),
+                    isDense: true,
+                  ),
+                ),
                 const SizedBox(height: 8),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -239,7 +296,10 @@ class _PrinterScreenState extends State<PrinterScreen> {
                       final addr = _manualAddr.text.trim();
                       final name = _manualName.text.trim();
                       if (addr.isEmpty) return;
-                      await KeyValueService.set('bt_printer_name', name.isEmpty ? addr : name);
+                      await KeyValueService.set(
+                        'bt_printer_name',
+                        name.isEmpty ? addr : name,
+                      );
                       await KeyValueService.set('bt_printer_addr', addr);
                       if (mounted) Navigator.pop(context);
                     },
@@ -248,7 +308,7 @@ class _PrinterScreenState extends State<PrinterScreen> {
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

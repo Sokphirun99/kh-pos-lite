@@ -97,10 +97,12 @@ class _LoginCardState extends State<_LoginCard> {
     } else {
       KeyValueService.remove(_kvRememberEmailKey);
     }
-    context.read<AuthBloc>().add(AuthLoginRequested(
-          email: _emailCtrl.text.trim(),
-          password: _passwordCtrl.text,
-        ));
+    context.read<AuthBloc>().add(
+      AuthLoginRequested(
+        email: _emailCtrl.text.trim(),
+        password: _passwordCtrl.text,
+      ),
+    );
   }
 
   @override
@@ -118,7 +120,10 @@ class _LoginCardState extends State<_LoginCard> {
           error: (_) {},
           authenticated: (_) async {
             if (_rememberMe) {
-              await KeyValueService.set<String>(_kvRememberEmailKey, _emailCtrl.text.trim());
+              await KeyValueService.set<String>(
+                _kvRememberEmailKey,
+                _emailCtrl.text.trim(),
+              );
             } else {
               await KeyValueService.remove(_kvRememberEmailKey);
             }
@@ -128,12 +133,20 @@ class _LoginCardState extends State<_LoginCard> {
         );
       },
       builder: (context, state) {
-        final isLoading = state.maybeWhen(authenticating: () => true, orElse: () => false);
-        final String? errorText = state.maybeWhen(error: (msg) => msg, orElse: () => null);
+        final isLoading = state.maybeWhen(
+          authenticating: () => true,
+          orElse: () => false,
+        );
+        final String? errorText = state.maybeWhen(
+          error: (msg) => msg,
+          orElse: () => null,
+        );
 
         return Card(
           elevation: 0,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(32),
+          ),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(28, 32, 28, 32),
             child: Column(
@@ -146,17 +159,25 @@ class _LoginCardState extends State<_LoginCard> {
                     color: scheme.primaryContainer.withOpacity(0.35),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Icon(Icons.storefront_outlined, size: 36, color: scheme.primary),
+                  child: Icon(
+                    Icons.storefront_outlined,
+                    size: 36,
+                    color: scheme.primary,
+                  ),
                 ),
                 const SizedBox(height: 24),
                 Text(
                   l10n.appTitle,
-                  style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w700),
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Text(
                   l10n.loginSubtitle,
-                  style: theme.textTheme.bodyLarge?.copyWith(color: scheme.onSurfaceVariant),
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: scheme.onSurfaceVariant,
+                  ),
                 ),
                 if (errorText != null) ...[
                   const SizedBox(height: 16),
@@ -169,12 +190,17 @@ class _LoginCardState extends State<_LoginCard> {
                       padding: const EdgeInsets.all(12),
                       child: Row(
                         children: [
-                          Icon(Icons.error_outline, color: scheme.onErrorContainer),
+                          Icon(
+                            Icons.error_outline,
+                            color: scheme.onErrorContainer,
+                          ),
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
                               errorText,
-                              style: theme.textTheme.bodyMedium?.copyWith(color: scheme.onErrorContainer),
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: scheme.onErrorContainer,
+                              ),
                             ),
                           ),
                         ],
@@ -190,7 +216,10 @@ class _LoginCardState extends State<_LoginCard> {
                       TextFormField(
                         controller: _emailCtrl,
                         enabled: !isLoading,
-                        autofillHints: const [AutofillHints.username, AutofillHints.email],
+                        autofillHints: const [
+                          AutofillHints.username,
+                          AutofillHints.email,
+                        ],
                         decoration: InputDecoration(
                           labelText: l10n.loginEmailLabel,
                           prefixIcon: const Icon(Icons.alternate_email),
@@ -212,11 +241,18 @@ class _LoginCardState extends State<_LoginCard> {
                           prefixIcon: const Icon(Icons.lock_outline),
                           suffixIcon: IconButton(
                             tooltip: _obscure ? l10n.show : l10n.hide,
-                            onPressed: () => setState(() => _obscure = !_obscure),
-                            icon: Icon(_obscure ? Icons.visibility : Icons.visibility_off),
+                            onPressed: () =>
+                                setState(() => _obscure = !_obscure),
+                            icon: Icon(
+                              _obscure
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
                           ),
                         ),
-                        validator: (v) => (v == null || v.isEmpty) ? l10n.fieldRequired : null,
+                        validator: (v) => (v == null || v.isEmpty)
+                            ? l10n.fieldRequired
+                            : null,
                         onFieldSubmitted: (_) => _submit(),
                       ),
                       const SizedBox(height: 8),
@@ -224,7 +260,10 @@ class _LoginCardState extends State<_LoginCard> {
                         children: [
                           Checkbox(
                             value: _rememberMe,
-                            onChanged: isLoading ? null : (v) => setState(() => _rememberMe = v ?? false),
+                            onChanged: isLoading
+                                ? null
+                                : (v) =>
+                                      setState(() => _rememberMe = v ?? false),
                           ),
                           const SizedBox(width: 4),
                           Text('Remember me'),
@@ -233,20 +272,34 @@ class _LoginCardState extends State<_LoginCard> {
                             onPressed: isLoading
                                 ? null
                                 : () async {
-                                    const urlStr = 'https://example.com/forgot'; // TODO: replace with real URL
+                                    const urlStr =
+                                        'https://example.com/forgot'; // TODO: replace with real URL
                                     final uri = Uri.parse(urlStr);
-                                    final messenger = ScaffoldMessenger.of(context);
+                                    final messenger = ScaffoldMessenger.of(
+                                      context,
+                                    );
                                     try {
                                       if (await canLaunchUrl(uri)) {
-                                        await launchUrl(uri, mode: LaunchMode.externalApplication);
+                                        await launchUrl(
+                                          uri,
+                                          mode: LaunchMode.externalApplication,
+                                        );
                                       } else {
                                         messenger.showSnackBar(
-                                          const SnackBar(content: Text('Forgot password page unavailable')),
+                                          const SnackBar(
+                                            content: Text(
+                                              'Forgot password page unavailable',
+                                            ),
+                                          ),
                                         );
                                       }
                                     } catch (_) {
                                       messenger.showSnackBar(
-                                        const SnackBar(content: Text('Forgot password page unavailable')),
+                                        const SnackBar(
+                                          content: Text(
+                                            'Forgot password page unavailable',
+                                          ),
+                                        ),
                                       );
                                     }
                                   },
@@ -267,7 +320,10 @@ class _LoginCardState extends State<_LoginCard> {
                         ? SizedBox(
                             width: 18,
                             height: 18,
-                            child: CircularProgressIndicator(strokeWidth: 2, color: scheme.onPrimary),
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: scheme.onPrimary,
+                            ),
                           )
                         : const Icon(Icons.login),
                     label: Text(l10n.loginSignIn),

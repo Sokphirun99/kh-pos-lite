@@ -2,3 +2,5 @@ arb-dir: lib/l10n
 template-arb-file: app_en.arb
 output-class: AppLocalizations
 nullable-getter: false
+use-deferred-loading: false
+format: false

@@ -22,13 +22,20 @@ class ReceiptPreviewScreen extends StatelessWidget {
         future: saleRepo.getById(saleId),
         builder: (context, saleSnap) {
           final sale = saleSnap.data;
-          if (sale == null) return const Center(child: CircularProgressIndicator());
+          if (sale == null)
+            return const Center(child: CircularProgressIndicator());
           return StreamBuilder<List<Payment>>(
             stream: payRepo.watchAll(),
             builder: (context, paySnap) {
-              final pays = (paySnap.data ?? const <Payment>[]).where((p) => p.saleId == sale.id).toList();
+              final pays = (paySnap.data ?? const <Payment>[])
+                  .where((p) => p.saleId == sale.id)
+                  .toList();
               return PdfPreview(
-                build: (format) => ReceiptService.buildPdf(sale: sale, payments: pays, pageWidth: 165),
+                build: (format) => ReceiptService.buildPdf(
+                  sale: sale,
+                  payments: pays,
+                  pageWidth: 165,
+                ),
                 canChangeOrientation: false,
                 canChangePageFormat: false,
                 pdfFileName: 'receipt_${sale.id}.pdf',
@@ -40,4 +47,3 @@ class ReceiptPreviewScreen extends StatelessWidget {
     );
   }
 }
-

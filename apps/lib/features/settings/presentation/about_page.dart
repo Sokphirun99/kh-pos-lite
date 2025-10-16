@@ -18,7 +18,11 @@ class AboutPage extends StatelessWidget {
   Future<Map<String, String>> _loadInfo() async {
     final pkg = await PackageInfo.fromPlatform();
     final isar = await openIsarDb();
-    final ver = await isar.collection<MetaKV>().filter().keyEqualTo('dbVersion').findFirst();
+    final ver = await isar
+        .collection<MetaKV>()
+        .filter()
+        .keyEqualTo('dbVersion')
+        .findFirst();
     return {
       'appVersion': '${pkg.version}+${pkg.buildNumber}',
       'dbVersion': ver?.value ?? 'unknown',
@@ -29,7 +33,9 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final last = context.watch<SyncBloc>().state.lastSynced;
-    final lastSyncText = last != null ? l10n.lastSyncAt(DateFormat.Hm().format(last.toLocal())) : '-';
+    final lastSyncText = last != null
+        ? l10n.lastSyncAt(DateFormat.Hm().format(last.toLocal()))
+        : '-';
     return Scaffold(
       appBar: AppBar(title: Text(l10n.aboutTitle)),
       body: FutureBuilder<Map<String, String>>(
@@ -46,9 +52,9 @@ class AboutPage extends StatelessWidget {
                   final text = data?['appVersion'] ?? '';
                   await Clipboard.setData(ClipboardData(text: text));
                   if (!context.mounted) return;
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(l10n.aboutCopied)),
-                  );
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(l10n.aboutCopied)));
                 },
               ),
               ListTile(
@@ -60,27 +66,31 @@ class AboutPage extends StatelessWidget {
                 subtitle: Text(lastSyncText),
               ),
               const Divider(),
-              Builder(builder: (context) {
-                final flags = context.watch<FeatureFlagsCubit>().state;
-                final params = Uri(queryParameters: {
-                  'showSyncBanner': flags.showSyncBanner ? '1' : '0',
-                  'enableBatchSync': flags.enableBatchSync ? '1' : '0',
-                  'batchSize': flags.batchSize.toString(),
-                }).query;
-                return ListTile(
-                  leading: const Icon(Icons.bug_report_outlined),
-                  title: Text(l10n.aboutQaParams),
-                  subtitle: Text(params),
-                  trailing: const Icon(Icons.copy),
-                  onTap: () async {
-                    await Clipboard.setData(ClipboardData(text: params));
-                    if (!context.mounted) return;
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(l10n.aboutCopied)),
-                    );
-                  },
-                );
-              }),
+              Builder(
+                builder: (context) {
+                  final flags = context.watch<FeatureFlagsCubit>().state;
+                  final params = Uri(
+                    queryParameters: {
+                      'showSyncBanner': flags.showSyncBanner ? '1' : '0',
+                      'enableBatchSync': flags.enableBatchSync ? '1' : '0',
+                      'batchSize': flags.batchSize.toString(),
+                    },
+                  ).query;
+                  return ListTile(
+                    leading: const Icon(Icons.bug_report_outlined),
+                    title: Text(l10n.aboutQaParams),
+                    subtitle: Text(params),
+                    trailing: const Icon(Icons.copy),
+                    onTap: () async {
+                      await Clipboard.setData(ClipboardData(text: params));
+                      if (!context.mounted) return;
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text(l10n.aboutCopied)));
+                    },
+                  );
+                },
+              ),
               const Divider(),
               ListTile(
                 leading: const Icon(Icons.delete_forever, color: Colors.red),
@@ -93,8 +103,14 @@ class AboutPage extends StatelessWidget {
                       title: Text(l10n.aboutConfirmTitle),
                       content: Text(l10n.aboutConfirmMessage),
                       actions: [
-                        TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text(l10n.cancel)),
-                        ElevatedButton(onPressed: () => Navigator.of(ctx).pop(true), child: Text(l10n.ok)),
+                        TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(false),
+                          child: Text(l10n.cancel),
+                        ),
+                        ElevatedButton(
+                          onPressed: () => Navigator.of(ctx).pop(true),
+                          child: Text(l10n.ok),
+                        ),
                       ],
                     ),
                   );

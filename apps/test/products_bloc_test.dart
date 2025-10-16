@@ -1,4 +1,3 @@
-
 import 'dart:async';
 // Using plain flutter_test without bloc_test to avoid version conflicts
 import 'package:flutter_test/flutter_test.dart';
@@ -25,14 +24,16 @@ void main() {
     });
 
     setUpAll(() {
-      registerFallbackValue(Product(
-        id: 'fallback',
-        name: 'F',
-        sku: 'FALL',
-        unitCost: const MoneyRiel(0),
-        price: const MoneyRiel(0),
-        stock: 0,
-      ));
+      registerFallbackValue(
+        Product(
+          id: 'fallback',
+          name: 'F',
+          sku: 'FALL',
+          unitCost: const MoneyRiel(0),
+          price: const MoneyRiel(0),
+          stock: 0,
+        ),
+      );
     });
 
     tearDown(() async {
@@ -56,7 +57,7 @@ void main() {
           unitCost: const MoneyRiel(800),
           price: const MoneyRiel(1000),
           stock: 10,
-        )
+        ),
       ]);
       await testerRun();
 
@@ -79,7 +80,9 @@ void main() {
       );
       bloc.add(ProductAdded(p));
       await testerRun();
-      verify(() => repo.add(any(that: predicate<Product>((p) => p.sku == 'S-A')))).called(1);
+      verify(
+        () => repo.add(any(that: predicate<Product>((p) => p.sku == 'S-A'))),
+      ).called(1);
       await bloc.close();
     });
 
@@ -95,7 +98,9 @@ void main() {
       );
       bloc.add(ProductUpdated(p));
       await testerRun();
-      verify(() => repo.update(any(that: predicate<Product>((p) => p.id == 'b')))).called(1);
+      verify(
+        () => repo.update(any(that: predicate<Product>((p) => p.id == 'b'))),
+      ).called(1);
       await bloc.close();
     });
   });

@@ -18,7 +18,8 @@ class SyncService extends SyncServiceBase {
     final Isar isar = await openIsarDb();
     final outbox = OutboxRepository(isar);
     final items = await outbox.pending(limit: 100);
-    final enableBatch = KeyValueService.get<bool>('flag_enableBatchSync') ?? true;
+    final enableBatch =
+        KeyValueService.get<bool>('flag_enableBatchSync') ?? true;
     if (!enableBatch) {
       for (final op in items) {
         try {
@@ -31,9 +32,15 @@ class SyncService extends SyncServiceBase {
       }
       return;
     }
-    final batchSize = (KeyValueService.get<int>('sync_batch_size') ?? 20).clamp(5, 50);
+    final batchSize = (KeyValueService.get<int>('sync_batch_size') ?? 20).clamp(
+      5,
+      50,
+    );
     for (var i = 0; i < items.length; i += batchSize) {
-      final batch = items.sublist(i, i + batchSize > items.length ? items.length : i + batchSize);
+      final batch = items.sublist(
+        i,
+        i + batchSize > items.length ? items.length : i + batchSize,
+      );
       for (final op in batch) {
         try {
           final body = jsonDecode(op.payloadJson);
@@ -58,8 +65,12 @@ class SyncService extends SyncServiceBase {
       for (final j in listProducts) {
         final dto = ProductDto.fromJson(j as Map<String, dynamic>);
         final incomingUpdatedAt = DateTime.parse(dto.updatedAt).toUtc();
-        final existing = await isar.productModels.filter().uidEqualTo(dto.id).findFirst();
-        if (existing == null || existing.updatedAt.isBefore(incomingUpdatedAt)) {
+        final existing = await isar.productModels
+            .filter()
+            .uidEqualTo(dto.id)
+            .findFirst();
+        if (existing == null ||
+            existing.updatedAt.isBefore(incomingUpdatedAt)) {
           final model = dto.toDomain().toIsar()..updatedAt = incomingUpdatedAt;
           if (existing != null) model.id = existing.id;
           await isar.productModels.put(model);
@@ -72,7 +83,10 @@ class SyncService extends SyncServiceBase {
       final delList = deletedProducts.data ?? <String>[];
       await isar.writeTxn(() async {
         for (final id in delList.cast<String>()) {
-          final existing = await isar.productModels.filter().uidEqualTo(id).findFirst();
+          final existing = await isar.productModels
+              .filter()
+              .uidEqualTo(id)
+              .findFirst();
           if (existing != null) await isar.productModels.delete(existing.id);
         }
       });
@@ -85,8 +99,12 @@ class SyncService extends SyncServiceBase {
       for (final j in listSales) {
         final dto = SaleDto.fromJson(j as Map<String, dynamic>);
         final incomingUpdatedAt = DateTime.parse(dto.updatedAt).toUtc();
-        final existing = await isar.saleModels.filter().uidEqualTo(dto.id).findFirst();
-        if (existing == null || existing.updatedAt.isBefore(incomingUpdatedAt)) {
+        final existing = await isar.saleModels
+            .filter()
+            .uidEqualTo(dto.id)
+            .findFirst();
+        if (existing == null ||
+            existing.updatedAt.isBefore(incomingUpdatedAt)) {
           final model = dto.toDomain().toIsar()..updatedAt = incomingUpdatedAt;
           if (existing != null) model.id = existing.id;
           await isar.saleModels.put(model);
@@ -99,7 +117,10 @@ class SyncService extends SyncServiceBase {
       final delList = deletedSales.data ?? <String>[];
       await isar.writeTxn(() async {
         for (final id in delList.cast<String>()) {
-          final existing = await isar.saleModels.filter().uidEqualTo(id).findFirst();
+          final existing = await isar.saleModels
+              .filter()
+              .uidEqualTo(id)
+              .findFirst();
           if (existing != null) await isar.saleModels.delete(existing.id);
         }
       });
@@ -112,8 +133,12 @@ class SyncService extends SyncServiceBase {
       for (final j in listPayments) {
         final dto = PaymentDto.fromJson(j as Map<String, dynamic>);
         final incomingUpdatedAt = DateTime.parse(dto.updatedAt).toUtc();
-        final existing = await isar.paymentModels.filter().uidEqualTo(dto.id).findFirst();
-        if (existing == null || existing.updatedAt.isBefore(incomingUpdatedAt)) {
+        final existing = await isar.paymentModels
+            .filter()
+            .uidEqualTo(dto.id)
+            .findFirst();
+        if (existing == null ||
+            existing.updatedAt.isBefore(incomingUpdatedAt)) {
           final model = dto.toDomain().toIsar()..updatedAt = incomingUpdatedAt;
           if (existing != null) model.id = existing.id;
           await isar.paymentModels.put(model);
@@ -123,10 +148,16 @@ class SyncService extends SyncServiceBase {
     // Tombstones for payments
     try {
       final deletedPayments = await api.get<List<dynamic>>('/payments/deleted');
-      final List<String> delList = (deletedPayments.data as List<dynamic>? ?? <dynamic>[]).cast<String>();
+      final List<String> delList =
+          (deletedPayments.data ?? <dynamic>[])
+              .map((e) => e.toString())
+              .toList();
       await isar.writeTxn(() async {
         for (final id in delList) {
-          final existing = await isar.paymentModels.filter().uidEqualTo(id).findFirst();
+          final existing = await isar.paymentModels
+              .filter()
+              .uidEqualTo(id)
+              .findFirst();
           if (existing != null) await isar.paymentModels.delete(existing.id);
         }
       });

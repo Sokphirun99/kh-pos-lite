@@ -9,7 +9,11 @@ class CheckoutResult {
   final PaymentMethod method;
   final int tendered;
   final String? reference; // optional transfer reference
-  const CheckoutResult({required this.method, required this.tendered, this.reference});
+  const CheckoutResult({
+    required this.method,
+    required this.tendered,
+    this.reference,
+  });
 }
 
 class CheckoutScreen extends StatefulWidget {
@@ -78,7 +82,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               borderRadius: BorderRadius.circular(2),
             ),
           ),
-          
+
           // App bar
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -160,13 +164,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       ),
                     ],
                     selected: {_method},
-                    onSelectionChanged: (s) => setState(() => _method = s.first),
+                    onSelectionChanged: (s) =>
+                        setState(() => _method = s.first),
                   ),
 
                   const SizedBox(height: 24),
 
                   // KHQR Code for transfer
-                  if (_method == PaymentMethod.transfer && khqrPath != null) ...[
+                  if (_method == PaymentMethod.transfer &&
+                      khqrPath != null) ...[
                     Text(
                       l10n.checkoutScanKhqr,
                       style: theme.textTheme.titleMedium?.copyWith(
@@ -401,7 +407,7 @@ class _CheckoutDialogState extends State<CheckoutDialog> {
         }
       });
     });
-    
+
     return const SizedBox.shrink();
   }
 }

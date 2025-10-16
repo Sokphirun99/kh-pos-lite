@@ -16,8 +16,10 @@ class EmptyPlaceholder extends StatelessWidget {
     this.actionLabel,
     this.onActionPressed,
     this.actions,
-  }) : assert((actionLabel != null && onActionPressed != null) || actions != null,
-         'Either provide actionLabel and onActionPressed, or provide actions');
+  }) : assert(
+         (actionLabel != null && onActionPressed != null) || actions != null,
+         'Either provide actionLabel and onActionPressed, or provide actions',
+       );
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,8 @@ class EmptyPlaceholder extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
-            if (actions != null) ...actions!
+            if (actions != null)
+              ...actions!
             else if (actionLabel != null && onActionPressed != null)
               SizedBox(
                 width: double.infinity,

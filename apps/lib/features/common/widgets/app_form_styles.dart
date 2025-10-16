@@ -13,8 +13,9 @@ class AppFormStyles {
     return InputDecoration(
       labelText: label,
       hintText: hint,
-      floatingLabelBehavior:
-          label != null ? FloatingLabelBehavior.never : FloatingLabelBehavior.auto,
+      floatingLabelBehavior: label != null
+          ? FloatingLabelBehavior.never
+          : FloatingLabelBehavior.auto,
       // Let theme subthemes (FlexColorScheme) define fill, radius, and paddings.
       prefixIcon: prefixIcon,
       suffixIcon: suffixIcon,

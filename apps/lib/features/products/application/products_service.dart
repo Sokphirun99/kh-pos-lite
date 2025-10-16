@@ -10,4 +10,3 @@ class ProductsService {
   Future<void> update(Product p) => repo.update(p);
   Future<List<Product>> list() => repo.list();
 }
-

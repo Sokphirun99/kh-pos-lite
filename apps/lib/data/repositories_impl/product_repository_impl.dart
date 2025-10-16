@@ -19,7 +19,10 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   Future<void> add(Product product) async {
     await isar.writeTxn(() async {
-      final existing = await isar.productModels.filter().uidEqualTo(product.id).findFirst();
+      final existing = await isar.productModels
+          .filter()
+          .uidEqualTo(product.id)
+          .findFirst();
       final model = product.toIsar();
       if (existing != null) model.id = existing.id;
       await isar.productModels.put(model);
@@ -53,7 +56,10 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   Future<void> update(Product product) async {
     await isar.writeTxn(() async {
-      final existing = await isar.productModels.filter().uidEqualTo(product.id).findFirst();
+      final existing = await isar.productModels
+          .filter()
+          .uidEqualTo(product.id)
+          .findFirst();
       final model = product.toIsar();
       if (existing != null) model.id = existing.id;
       await isar.productModels.put(model);
@@ -68,7 +74,10 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   Future<void> delete(String id) async {
     await isar.writeTxn(() async {
-      final existing = await isar.productModels.filter().uidEqualTo(id).findFirst();
+      final existing = await isar.productModels
+          .filter()
+          .uidEqualTo(id)
+          .findFirst();
       if (existing != null) {
         await isar.productModels.delete(existing.id);
       }
@@ -108,10 +117,10 @@ class ProductRepositoryImpl implements ProductRepository {
         .sortByName()
         .watch(fireImmediately: true)
         .listen((models) {
-      final data = models.map((e) => e.toDomain()).toList(growable: false);
-      _watchAllCache = data;
-      controller.add(data);
-    });
+          final data = models.map((e) => e.toDomain()).toList(growable: false);
+          _watchAllCache = data;
+          controller.add(data);
+        });
     return controller.stream;
   }
 }

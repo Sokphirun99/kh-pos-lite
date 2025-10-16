@@ -40,9 +40,17 @@ class _SellScreenState extends State<SellScreen> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => ProductsBloc(context.read<ProductRepository>())..add(const ProductsSubscribed())),
+        BlocProvider(
+          create: (_) =>
+              ProductsBloc(context.read<ProductRepository>())
+                ..add(const ProductsSubscribed()),
+        ),
         BlocProvider(create: (_) => CartBloc()),
-        BlocProvider(create: (_) => SalesBloc(context.read<SaleRepository>())..add(const SalesSubscribed())),
+        BlocProvider(
+          create: (_) =>
+              SalesBloc(context.read<SaleRepository>())
+                ..add(const SalesSubscribed()),
+        ),
       ],
       child: Scaffold(
         appBar: AppBar(
@@ -51,8 +59,9 @@ class _SellScreenState extends State<SellScreen> {
             IconButton(
               icon: const Icon(Icons.delete_sweep),
               tooltip: 'Clear Cart',
-              onPressed: () => context.read<CartBloc>().add(const CartCleared()),
-            )
+              onPressed: () =>
+                  context.read<CartBloc>().add(const CartCleared()),
+            ),
           ],
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(92),
@@ -63,7 +72,8 @@ class _SellScreenState extends State<SellScreen> {
                   SearchBar(
                     hintText: 'Search products',
                     leading: const Icon(Icons.search),
-                    onChanged: (v) => setState(() => query = v.trim().toLowerCase()),
+                    onChanged: (v) =>
+                        setState(() => query = v.trim().toLowerCase()),
                   ),
                   const SizedBox(height: 8),
                   Align(
@@ -85,22 +95,27 @@ class _SellScreenState extends State<SellScreen> {
               child: BlocBuilder<ProductsBloc, ProductsState>(
                 builder: (context, state) {
                   if (state.isLoading) return const ProductGridSkeleton();
-                  if (state.error != null) return Center(child: Text(state.error!));
+                  if (state.error != null)
+                    return Center(child: Text(state.error!));
                   final items = state.items.where((p) {
                     if (query.isEmpty) return true;
                     final name = p.name.toLowerCase();
                     final sku = p.sku.toLowerCase();
-                    return skuOnly ? sku.contains(query) : (name.contains(query) || sku.contains(query));
+                    return skuOnly
+                        ? sku.contains(query)
+                        : (name.contains(query) || sku.contains(query));
                   }).toList();
-                  if (items.isEmpty) return const Center(child: Text('No products'));
+                  if (items.isEmpty)
+                    return const Center(child: Text('No products'));
                   return GridView.builder(
                     padding: const EdgeInsets.all(12),
-                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200.0,
-                      childAspectRatio: 1.4,
-                      mainAxisSpacing: 12,
-                      crossAxisSpacing: 12,
-                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 200.0,
+                          childAspectRatio: 1.4,
+                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 12,
+                        ),
                     itemCount: items.length,
                     itemBuilder: (_, i) => _ProductTile(p: items[i]),
                   );
@@ -136,7 +151,9 @@ class _ProductTile extends StatelessWidget {
         );
         if (existing.quantity >= p.stock) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(AppLocalizations.of(context).insufficientStock)),
+            SnackBar(
+              content: Text(AppLocalizations.of(context).insufficientStock),
+            ),
           );
           return;
         }
@@ -153,38 +170,47 @@ class _ProductTile extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      p.name, 
+                      p.name,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
-                      ), 
-                      maxLines: 2, 
+                      ),
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  Builder(builder: (context) {
-                    final threshold = KeyValueService.get<int>('low_stock_threshold') ?? 5;
-                    final low = p.stock <= threshold;
-                    if (!low) return const SizedBox.shrink();
-                    return Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.errorContainer,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        AppLocalizations.of(context).lowStock,
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: Theme.of(context).colorScheme.onErrorContainer,
-                          fontWeight: FontWeight.w600,
+                  Builder(
+                    builder: (context) {
+                      final threshold =
+                          KeyValueService.get<int>('low_stock_threshold') ?? 5;
+                      final low = p.stock <= threshold;
+                      if (!low) return const SizedBox.shrink();
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
                         ),
-                      ),
-                    );
-                  })
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.errorContainer,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          AppLocalizations.of(context).lowStock,
+                          style: Theme.of(context).textTheme.labelSmall
+                              ?.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onErrorContainer,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
               const SizedBox(height: 8),
               Text(
-                'SKU: ${p.sku}', 
+                'SKU: ${p.sku}',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
@@ -194,26 +220,29 @@ class _ProductTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '៛${p.price.amount}', 
+                    '៛${p.price.amount}',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
-                      color: p.stock > 0 
-                        ? Theme.of(context).colorScheme.surfaceContainerHigh
-                        : Theme.of(context).colorScheme.errorContainer,
+                      color: p.stock > 0
+                          ? Theme.of(context).colorScheme.surfaceContainerHigh
+                          : Theme.of(context).colorScheme.errorContainer,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       'Stock: ${p.stock}',
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
                         color: p.stock > 0
-                          ? Theme.of(context).colorScheme.onSurfaceVariant
-                          : Theme.of(context).colorScheme.onErrorContainer,
+                            ? Theme.of(context).colorScheme.onSurfaceVariant
+                            : Theme.of(context).colorScheme.onErrorContainer,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -261,9 +290,14 @@ class _CartPanelState extends State<_CartPanel> {
                   children: [
                     const Icon(Icons.shopping_cart),
                     const SizedBox(width: 8),
-                    Text('Cart', style: Theme.of(context).textTheme.titleMedium),
+                    Text(
+                      'Cart',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                     const Spacer(),
-                    Text('Items: ${rows.fold<int>(0, (s, e) => s + e.quantity)}'),
+                    Text(
+                      'Items: ${rows.fold<int>(0, (s, e) => s + e.quantity)}',
+                    ),
                   ],
                 ),
                 const SizedBox(height: 8),
@@ -283,10 +317,16 @@ class _CartPanelState extends State<_CartPanel> {
                         return ListTile(
                           dense: true,
                           contentPadding: EdgeInsets.zero,
-                          title: Text(it.product.name, maxLines: 1, overflow: TextOverflow.ellipsis),
+                          title: Text(
+                            it.product.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                           subtitle: over
-                              ? Text('${AppLocalizations.of(context).exceedsStock} • SKU: ${it.product.sku}',
-                                  style: const TextStyle(color: Colors.red))
+                              ? Text(
+                                  '${AppLocalizations.of(context).exceedsStock} • SKU: ${it.product.sku}',
+                                  style: const TextStyle(color: Colors.red),
+                                )
                               : Text('SKU: ${it.product.sku}'),
                           trailing: SizedBox(
                             width: 160,
@@ -295,27 +335,40 @@ class _CartPanelState extends State<_CartPanel> {
                               children: [
                                 IconButton(
                                   icon: const Icon(Icons.remove_circle_outline),
-                                  onPressed: () => context.read<CartBloc>().add(CartDecremented(it.product.id)),
+                                  onPressed: () => context.read<CartBloc>().add(
+                                    CartDecremented(it.product.id),
+                                  ),
                                 ),
-                                Text('${it.quantity}')
-                                    ,
+                                Text('${it.quantity}'),
                                 IconButton(
                                   icon: const Icon(Icons.add_circle_outline),
                                   onPressed: () {
                                     if (it.quantity >= it.product.stock) {
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(content: Text(AppLocalizations.of(context).insufficientStock)),
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            AppLocalizations.of(
+                                              context,
+                                            ).insufficientStock,
+                                          ),
+                                        ),
                                       );
                                       return;
                                     }
-                                    context.read<CartBloc>().add(CartIncremented(it.product.id));
+                                    context.read<CartBloc>().add(
+                                      CartIncremented(it.product.id),
+                                    );
                                   },
                                 ),
                                 const SizedBox(width: 8),
                                 Text('៛${it.lineTotal}'),
                                 IconButton(
                                   icon: const Icon(Icons.close),
-                                  onPressed: () => context.read<CartBloc>().add(CartItemRemoved(it.product.id)),
+                                  onPressed: () => context.read<CartBloc>().add(
+                                    CartItemRemoved(it.product.id),
+                                  ),
                                 ),
                               ],
                             ),
@@ -329,7 +382,7 @@ class _CartPanelState extends State<_CartPanel> {
                   children: [
                     const Text('Subtotal'),
                     const Spacer(),
-                    Text('៛${cart.subtotal}')
+                    Text('៛${cart.subtotal}'),
                   ],
                 ),
                 const SizedBox(height: 8),
@@ -337,12 +390,20 @@ class _CartPanelState extends State<_CartPanel> {
                   children: [
                     SegmentedButton<DiscountMode>(
                       segments: const [
-                        ButtonSegment(value: DiscountMode.percent, label: Text('%')),
-                        ButtonSegment(value: DiscountMode.amount, label: Text('KHR')),
+                        ButtonSegment(
+                          value: DiscountMode.percent,
+                          label: Text('%'),
+                        ),
+                        ButtonSegment(
+                          value: DiscountMode.amount,
+                          label: Text('KHR'),
+                        ),
                       ],
                       selected: {cart.discountMode},
                       onSelectionChanged: (s) {
-                        context.read<CartBloc>().add(CartDiscountModeSet(s.first));
+                        context.read<CartBloc>().add(
+                          CartDiscountModeSet(s.first),
+                        );
                         _discount.text = cart.discountValue.toString();
                       },
                     ),
@@ -351,24 +412,35 @@ class _CartPanelState extends State<_CartPanel> {
                       width: 120,
                       child: TextField(
                         controller: _discount,
-                        decoration: InputDecoration(labelText: AppLocalizations.of(context).discount, isDense: true),
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context).discount,
+                          isDense: true,
+                        ),
                         keyboardType: TextInputType.number,
                         onChanged: (v) {
                           final value = int.tryParse(v) ?? 0;
-                          context.read<CartBloc>().add(CartDiscountValueSet(value));
+                          context.read<CartBloc>().add(
+                            CartDiscountValueSet(value),
+                          );
                         },
                       ),
                     ),
                     const Spacer(),
-                    Text('-៛${cart.discountAmount}')
+                    Text('-៛${cart.discountAmount}'),
                   ],
                 ),
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    Text('Total', style: Theme.of(context).textTheme.titleMedium),
+                    Text(
+                      'Total',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                     const Spacer(),
-                    Text('៛${cart.total}', style: Theme.of(context).textTheme.titleLarge),
+                    Text(
+                      '៛${cart.total}',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
                   ],
                 ),
                 const SizedBox(height: 8),
@@ -376,7 +448,8 @@ class _CartPanelState extends State<_CartPanel> {
                   children: [
                     Expanded(
                       child: OutlinedButton(
-                        onPressed: () => context.read<CartBloc>().add(const CartCleared()),
+                        onPressed: () =>
+                            context.read<CartBloc>().add(const CartCleared()),
                         child: Text(AppLocalizations.of(context).voidSale),
                       ),
                     ),
@@ -392,28 +465,51 @@ class _CartPanelState extends State<_CartPanel> {
                                 final repo = context.read<ProductRepository>();
                                 final insufficient = <String>[];
                                 for (final line in cart.items) {
-                                  final latest = await repo.getById(line.product.id) ?? line.product;
+                                  final latest =
+                                      await repo.getById(line.product.id) ??
+                                      line.product;
                                   if (line.quantity > latest.stock) {
-                                    insufficient.add(AppLocalizations.of(context).notEnoughStockFor(latest.name, latest.stock));
+                                    insufficient.add(
+                                      AppLocalizations.of(
+                                        context,
+                                      ).notEnoughStockFor(
+                                        latest.name,
+                                        latest.stock,
+                                      ),
+                                    );
                                   }
                                 }
-                                final allowOversell = (KeyValueService.get<bool>('allow_oversell') ?? false);
+                                final allowOversell =
+                                    (KeyValueService.get<bool>(
+                                      'allow_oversell',
+                                    ) ??
+                                    false);
                                 if (insufficient.isNotEmpty && !allowOversell) {
                                   if (context.mounted) {
                                     await showDialog<void>(
                                       context: context,
                                       builder: (_) => AlertDialog(
-                                        title: Text(AppLocalizations.of(context).insufficientStock),
+                                        title: Text(
+                                          AppLocalizations.of(
+                                            context,
+                                          ).insufficientStock,
+                                        ),
                                         content: Column(
                                           mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: insufficient.map((m) => Text('• $m')).toList(),
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: insufficient
+                                              .map((m) => Text('• $m'))
+                                              .toList(),
                                         ),
                                         actions: [
                                           TextButton(
-                                            onPressed: () => Navigator.of(context).pop(),
-                                            child: Text(AppLocalizations.of(context).ok),
-                                          )
+                                            onPressed: () =>
+                                                Navigator.of(context).pop(),
+                                            child: Text(
+                                              AppLocalizations.of(context).ok,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     );
@@ -424,20 +520,33 @@ class _CartPanelState extends State<_CartPanel> {
                                   final proceed = await showDialog<bool>(
                                     context: context,
                                     builder: (_) => AlertDialog(
-                                      title: Text(AppLocalizations.of(context).insufficientStock),
+                                      title: Text(
+                                        AppLocalizations.of(
+                                          context,
+                                        ).insufficientStock,
+                                      ),
                                       content: Column(
                                         mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: insufficient.map((m) => Text('• $m')).toList(),
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: insufficient
+                                            .map((m) => Text('• $m'))
+                                            .toList(),
                                       ),
                                       actions: [
                                         TextButton(
-                                          onPressed: () => Navigator.of(context).pop(false),
-                                          child: Text(AppLocalizations.of(context).cancel),
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(false),
+                                          child: Text(
+                                            AppLocalizations.of(context).cancel,
+                                          ),
                                         ),
                                         FilledButton(
-                                          onPressed: () => Navigator.of(context).pop(true),
-                                          child: Text(AppLocalizations.of(context).ok),
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(true),
+                                          child: Text(
+                                            AppLocalizations.of(context).ok,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -445,7 +554,10 @@ class _CartPanelState extends State<_CartPanel> {
                                   if (proceed != true) return;
                                 }
 
-                                final result = await CheckoutScreen.show(context, cart.total);
+                                final result = await CheckoutScreen.show(
+                                  context,
+                                  cart.total,
+                                );
                                 if (result == null) return;
 
                                 final sale = Sale(
@@ -461,38 +573,53 @@ class _CartPanelState extends State<_CartPanel> {
                                 final pay = Payment(
                                   id: const Uuid().v4(),
                                   saleId: sale.id,
-                                  method: result.method == PaymentMethod.cash ? 'cash' : 'transfer',
+                                  method: result.method == PaymentMethod.cash
+                                      ? 'cash'
+                                      : 'transfer',
                                   amount: MoneyRiel(result.tendered),
                                 );
-                                context.read<PaymentsBloc>().add(PaymentAdded(pay));
-                                if (result.reference != null && result.reference!.isNotEmpty) {
-                                  await KeyValueService.set('payment_ref_${pay.id}', result.reference!);
+                                context.read<PaymentsBloc>().add(
+                                  PaymentAdded(pay),
+                                );
+                                if (result.reference != null &&
+                                    result.reference!.isNotEmpty) {
+                                  await KeyValueService.set(
+                                    'payment_ref_${pay.id}',
+                                    result.reference!,
+                                  );
                                 }
                                 // Deduct stock per cart line
-                                final productRepo = context.read<ProductRepository>();
-                                for (final line in context.read<CartBloc>().state.items) {
+                                final productRepo = context
+                                    .read<ProductRepository>();
+                                for (final line
+                                    in context.read<CartBloc>().state.items) {
                                   final p = line.product;
-                                  final newStock = (p.stock - line.quantity).clamp(0, 1 << 31);
+                                  final newStock = (p.stock - line.quantity)
+                                      .clamp(0, 1 << 31);
                                   final updated = p.copyWith(stock: newStock);
                                   await productRepo.update(updated);
                                 }
-                                
+
                                 if (mounted) {
                                   final change = result.tendered - cart.total;
                                   final l10n = AppLocalizations.of(context);
-                                  context.read<CartBloc>().add(const CartCleared());
+                                  context.read<CartBloc>().add(
+                                    const CartCleared(),
+                                  );
                                   final msg = change >= 0
                                       ? l10n.saleCompletedChange('៛$change')
-                                      : l10n.saleCompletedRemaining('៛${(-change)}');
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(msg)),
-                                  );
+                                      : l10n.saleCompletedRemaining(
+                                          '៛${(-change)}',
+                                        );
+                                  ScaffoldMessenger.of(
+                                    context,
+                                  ).showSnackBar(SnackBar(content: Text(msg)));
                                 }
                               },
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),

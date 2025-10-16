@@ -33,7 +33,8 @@ class WebSaleRepositoryImpl implements SaleRepository {
 
   @override
   Future<List<Sale>> list() async {
-    return _sales.values.toList()..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    return _sales.values.toList()
+      ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
   }
 
   @override

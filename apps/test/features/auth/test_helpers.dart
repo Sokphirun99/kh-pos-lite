@@ -16,7 +16,10 @@ class TestAuthService extends AuthService {
   String tokenToReturn = 'token-123';
 
   @override
-  Future<String> signIn({required String email, required String password}) async {
+  Future<String> signIn({
+    required String email,
+    required String password,
+  }) async {
     await Future<void>.delayed(const Duration(milliseconds: 1));
     if (fail401) throw AuthException('Invalid email or password');
     if (failNetwork) throw AuthException('Network error, please try again');
@@ -92,7 +95,9 @@ Future<void> ensureTestHydratedStorage() async {
   if (_storageInitialized) return;
   TestWidgetsFlutterBinding.ensureInitialized();
   _storageDir = await Directory.systemTemp.createTemp('hydrated_test');
-  HydratedBloc.storage = await HydratedStorage.build(storageDirectory: _storageDir!);
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: _storageDir!,
+  );
   _storageInitialized = true;
 }
 

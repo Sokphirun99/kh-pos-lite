@@ -65,7 +65,8 @@ class KeyValueService {
   static Future<void> init() => _backend.init();
   static bool get isOpen => _backend.isOpen;
   static T? get<T>(String key) => _backend.get<T>(key);
-  static Future<void> set<T>(String key, T value) => _backend.put<T>(key, value);
+  static Future<void> set<T>(String key, T value) =>
+      _backend.put<T>(key, value);
   static Future<void> remove(String key) => _backend.delete(key);
   static Future<void> clear() => _backend.clear();
 }
