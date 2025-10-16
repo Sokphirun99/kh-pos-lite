@@ -22,6 +22,7 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     on<AuthSignedIn>(_onSignedIn);
     on<AuthSignedOut>(_onSignedOut);
     on<AuthLoginRequested>(_onLoginRequested);
+    on<AuthOfflineModeRequested>(_onOfflineModeRequested);
     on<_AuthLoaded>(_onLoaded);
     add(const _AuthLoaded());
   }
@@ -66,7 +67,20 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     emit(const AuthState.unauthenticated());
   }
 
+  FutureOr<void> _onOfflineModeRequested(
+    AuthOfflineModeRequested event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(const AuthState.offlineMode());
+  }
+
   FutureOr<void> _onLoaded(_AuthLoaded event, Emitter<AuthState> emit) async {
+    // Check if we're in offline-only configuration and should skip authentication
+    if (EnvConfig.current.isOfflineOnly) {
+      emit(const AuthState.offlineMode());
+      return;
+    }
+
     // If hydrated has no token, try secure storage
     final current = state;
     final hasToken = current.maybeWhen(

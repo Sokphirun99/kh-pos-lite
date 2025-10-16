@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:cashier_app/features/auth/bloc/auth_bloc.dart';
 import 'package:cashier_app/l10n/app_localizations.dart';
 import 'package:cashier_app/services/key_value_service.dart';
+import 'package:cashier_app/core/env/config.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -105,6 +106,10 @@ class _LoginCardState extends State<_LoginCard> {
     );
   }
 
+  void _useOfflineMode() {
+    context.read<AuthBloc>().add(const AuthOfflineModeRequested());
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -127,6 +132,10 @@ class _LoginCardState extends State<_LoginCard> {
             } else {
               await KeyValueService.remove(_kvRememberEmailKey);
             }
+            if (!context.mounted) return;
+            context.go('/');
+          },
+          offlineMode: () {
             if (!context.mounted) return;
             context.go('/');
           },
@@ -330,6 +339,34 @@ class _LoginCardState extends State<_LoginCard> {
                   ),
                 ),
                 const SizedBox(height: 12),
+                
+                // Show offline option if we're in offline-capable mode
+                if (EnvConfig.current.isOfflineOnly) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    'Or',
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: scheme.onSurfaceVariant.withOpacity(0.6),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 48,
+                    child: OutlinedButton.icon(
+                      onPressed: isLoading ? null : _useOfflineMode,
+                      icon: const Icon(Icons.storage),
+                      label: const Text('Use Offline (No Account Needed)'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: scheme.primary,
+                        side: BorderSide(color: scheme.primary.withOpacity(0.6)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                ],
+                
                 Text(
                   l10n.settingsGeneralSectionSubtitle,
                   style: theme.textTheme.bodySmall?.copyWith(
