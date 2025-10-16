@@ -6,7 +6,8 @@ class AppException implements Exception {
   AppException(this.message, {this.cause});
 
   @override
-  String toString() => 'AppException: $message${cause != null ? ' ($cause)' : ''}';
+  String toString() =>
+      'AppException: $message${cause != null ? ' ($cause)' : ''}';
 }
 
 /// Guards can wrap async operations and translate errors to [AppException].
@@ -17,4 +18,3 @@ Future<T> guard<T>(Future<T> Function() op, {String? label}) async {
     throw AppException(label ?? 'Operation failed', cause: e);
   }
 }
-

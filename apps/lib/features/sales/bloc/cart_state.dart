@@ -8,8 +8,10 @@ class CartLine extends Equatable {
   final int quantity;
   const CartLine({required this.product, required this.quantity});
 
-  CartLine copyWith({Product? product, int? quantity}) =>
-      CartLine(product: product ?? this.product, quantity: quantity ?? this.quantity);
+  CartLine copyWith({Product? product, int? quantity}) => CartLine(
+    product: product ?? this.product,
+    quantity: quantity ?? this.quantity,
+  );
 
   int get lineTotal => product.price.amount * quantity;
 
@@ -29,7 +31,11 @@ class CartState extends Equatable {
   });
 
   const CartState.initial()
-      : this(items: const [], discountMode: DiscountMode.percent, discountValue: 0);
+    : this(
+        items: const [],
+        discountMode: DiscountMode.percent,
+        discountValue: 0,
+      );
 
   int get subtotal => items.fold(0, (sum, it) => sum + it.lineTotal);
   int get discountAmount {
@@ -46,14 +52,12 @@ class CartState extends Equatable {
     List<CartLine>? items,
     DiscountMode? discountMode,
     int? discountValue,
-  }) =>
-      CartState(
-        items: items ?? this.items,
-        discountMode: discountMode ?? this.discountMode,
-        discountValue: discountValue ?? this.discountValue,
-      );
+  }) => CartState(
+    items: items ?? this.items,
+    discountMode: discountMode ?? this.discountMode,
+    discountValue: discountValue ?? this.discountValue,
+  );
 
   @override
   List<Object?> get props => [items, discountMode, discountValue];
 }
-

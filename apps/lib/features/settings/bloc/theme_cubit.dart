@@ -11,4 +11,3 @@ class ThemeCubit extends HydratedCubit<bool> {
   @override
   Map<String, dynamic>? toJson(bool state) => {'dark': state};
 }
-

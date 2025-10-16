@@ -33,6 +33,6 @@ class SyncBloc extends HydratedBloc<SyncEvent, SyncState> {
 
   @override
   Map<String, dynamic>? toJson(SyncState state) => {
-        'lastSynced': state.lastSynced?.toIso8601String(),
-      };
+    'lastSynced': state.lastSynced?.toIso8601String(),
+  };
 }

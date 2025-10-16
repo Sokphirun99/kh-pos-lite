@@ -24,7 +24,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
   Future<void> _openForm(BuildContext context, {Product? existing}) async {
     final result = existing == null
         ? await context.pushNamed<Product>('product_new')
-        : await context.pushNamed<Product>('product_edit', pathParameters: {'id': existing.id}, extra: existing);
+        : await context.pushNamed<Product>(
+            'product_edit',
+            pathParameters: {'id': existing.id},
+            extra: existing,
+          );
     if (result == null) return;
     final bloc = context.read<ProductsBloc>();
     if (existing == null) {
@@ -45,7 +49,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
     );
   }
 
-  Widget _buildProductTile(BuildContext context, Product product, {required bool lowStock}) {
+  Widget _buildProductTile(
+    BuildContext context,
+    Product product, {
+    required bool lowStock,
+  }) {
     final theme = Theme.of(context);
     final subtitleStyle = theme.textTheme.bodyMedium?.copyWith(
       color: theme.colorScheme.onSurfaceVariant.withOpacity(0.8),
@@ -78,7 +86,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   IconButton(
                     icon: const Icon(Icons.delete_outline),
                     onPressed: () {
-                      context.read<ProductsBloc>().add(ProductDeleted(product.id));
+                      context.read<ProductsBloc>().add(
+                        ProductDeleted(product.id),
+                      );
                       final snackL10n = AppLocalizations.of(context);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -86,7 +96,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           action: SnackBarAction(
                             label: snackL10n.undo,
                             onPressed: () {
-                              context.read<ProductsBloc>().add(ProductAdded(product));
+                              context.read<ProductsBloc>().add(
+                                ProductAdded(product),
+                              );
                             },
                           ),
                         ),
@@ -105,8 +117,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   if (lowStock)
                     Chip(
                       label: Text(l10n.lowStock),
-                      backgroundColor: theme.colorScheme.errorContainer.withOpacity(0.3),
-                      labelStyle: theme.textTheme.labelMedium?.copyWith(color: theme.colorScheme.error),
+                      backgroundColor: theme.colorScheme.errorContainer
+                          .withOpacity(0.3),
+                      labelStyle: theme.textTheme.labelMedium?.copyWith(
+                        color: theme.colorScheme.error,
+                      ),
                     ),
                 ],
               ),
@@ -117,13 +132,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
     );
   }
 
-  Widget _infoChip(BuildContext context, String text) => Chip(label: Text(text));
+  Widget _infoChip(BuildContext context, String text) =>
+      Chip(label: Text(text));
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return BlocProvider(
-      create: (ctx) => ProductsBloc(ctx.read<ProductRepository>())..add(const ProductsSubscribed()),
+      create: (ctx) =>
+          ProductsBloc(ctx.read<ProductRepository>())
+            ..add(const ProductsSubscribed()),
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n.tabItems),
@@ -146,7 +164,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   SearchBar(
                     hintText: l10n.itemsSearchHint,
                     leading: const Icon(Icons.search),
-                    onChanged: (v) => setState(() => query = v.trim().toLowerCase()),
+                    onChanged: (v) =>
+                        setState(() => query = v.trim().toLowerCase()),
                   ),
                   const SizedBox(height: 12),
                   FilterChip(
@@ -162,15 +181,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
               child: BlocBuilder<ProductsBloc, ProductsState>(
                 builder: (context, state) {
                   if (state.isLoading) return const ListSkeleton();
-                  if (state.error != null) return Center(child: Text(state.error!));
-                  final items = state.items
-                      .where((p) {
-                        if (query.isEmpty) return true;
-                        final name = p.name.toLowerCase();
-                        final sku = p.sku.toLowerCase();
-                        return skuOnly ? sku.contains(query) : (name.contains(query) || sku.contains(query));
-                      })
-                      .toList();
+                  if (state.error != null)
+                    return Center(child: Text(state.error!));
+                  final items = state.items.where((p) {
+                    if (query.isEmpty) return true;
+                    final name = p.name.toLowerCase();
+                    final sku = p.sku.toLowerCase();
+                    return skuOnly
+                        ? sku.contains(query)
+                        : (name.contains(query) || sku.contains(query));
+                  }).toList();
                   if (items.isEmpty) return _emptyState(context);
                   return ListView.separated(
                     padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
@@ -178,7 +198,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     separatorBuilder: (_, __) => const SizedBox(height: 16),
                     itemBuilder: (_, i) {
                       final p = items[i];
-                      final threshold = KeyValueService.get<int>('low_stock_threshold') ?? 5;
+                      final threshold =
+                          KeyValueService.get<int>('low_stock_threshold') ?? 5;
                       final lowStock = p.stock <= threshold;
                       return Dismissible(
                         key: ValueKey(p.id),
@@ -191,7 +212,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         ),
                         direction: DismissDirection.endToStart,
                         onDismissed: (_) {
-                          context.read<ProductsBloc>().add(ProductDeleted(p.id));
+                          context.read<ProductsBloc>().add(
+                            ProductDeleted(p.id),
+                          );
                           final snackL10n = AppLocalizations.of(context);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -199,13 +222,19 @@ class _ProductsScreenState extends State<ProductsScreen> {
                               action: SnackBarAction(
                                 label: snackL10n.undo,
                                 onPressed: () {
-                                  context.read<ProductsBloc>().add(ProductAdded(p));
+                                  context.read<ProductsBloc>().add(
+                                    ProductAdded(p),
+                                  );
                                 },
                               ),
                             ),
                           );
                         },
-                        child: _buildProductTile(context, p, lowStock: lowStock),
+                        child: _buildProductTile(
+                          context,
+                          p,
+                          lowStock: lowStock,
+                        ),
                       );
                     },
                   );

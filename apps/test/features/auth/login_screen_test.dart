@@ -24,7 +24,10 @@ void main() {
 
   testWidgets('shows error banner when login fails', (tester) async {
     final authService = TestAuthService()..fail401 = true;
-    final bloc = AuthBloc(tokenStorage: MemoryTokenStorage(), authService: authService);
+    final bloc = AuthBloc(
+      tokenStorage: MemoryTokenStorage(),
+      authService: authService,
+    );
     addTearDown(bloc.close);
 
     await tester.pumpWidget(
@@ -38,7 +41,10 @@ void main() {
       ),
     );
 
-    await tester.enterText(find.byType(TextFormField).at(0), 'user@example.com');
+    await tester.enterText(
+      find.byType(TextFormField).at(0),
+      'user@example.com',
+    );
     await tester.enterText(find.byType(TextFormField).at(1), 'password');
     await tester.tap(find.byType(FilledButton));
 
@@ -49,7 +55,10 @@ void main() {
 
   testWidgets('persists remembered email on submit', (tester) async {
     final authService = TestAuthService()..fail401 = true;
-    final bloc = AuthBloc(tokenStorage: MemoryTokenStorage(), authService: authService);
+    final bloc = AuthBloc(
+      tokenStorage: MemoryTokenStorage(),
+      authService: authService,
+    );
     addTearDown(bloc.close);
 
     await tester.pumpWidget(
@@ -63,7 +72,10 @@ void main() {
       ),
     );
 
-    await tester.enterText(find.byType(TextFormField).at(0), 'remember@example.com');
+    await tester.enterText(
+      find.byType(TextFormField).at(0),
+      'remember@example.com',
+    );
     await tester.enterText(find.byType(TextFormField).at(1), 'secret');
     await tester.tap(find.byType(Checkbox));
     await tester.pump();

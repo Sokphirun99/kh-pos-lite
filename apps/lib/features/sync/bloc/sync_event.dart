@@ -9,4 +9,3 @@ abstract class SyncEvent extends Equatable {
 class SyncTriggered extends SyncEvent {
   const SyncTriggered();
 }
-

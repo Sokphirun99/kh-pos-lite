@@ -27,9 +27,10 @@ class _ShimmerEffectState extends State<ShimmerEffect>
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
-    _animation = Tween<double>(begin: -1.0, end: 2.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _animation = Tween<double>(
+      begin: -1.0,
+      end: 2.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
     _controller.repeat();
   }
 
@@ -42,10 +43,11 @@ class _ShimmerEffectState extends State<ShimmerEffect>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final baseColor = widget.baseColor ?? 
+    final baseColor =
+        widget.baseColor ??
         theme.colorScheme.surfaceContainerHighest.withOpacity(0.6);
-    final highlightColor = widget.highlightColor ?? 
-        theme.colorScheme.surface.withOpacity(0.8);
+    final highlightColor =
+        widget.highlightColor ?? theme.colorScheme.surface.withOpacity(0.8);
 
     return AnimatedBuilder(
       animation: _animation,
@@ -55,11 +57,7 @@ class _ShimmerEffectState extends State<ShimmerEffect>
             return LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
-              colors: [
-                baseColor,
-                highlightColor,
-                baseColor,
-              ],
+              colors: [baseColor, highlightColor, baseColor],
               stops: [
                 (_animation.value - 1).clamp(0.0, 1.0),
                 _animation.value.clamp(0.0, 1.0),
@@ -99,7 +97,7 @@ class ProductTileSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     return ShimmerEffect(
       child: Card(
         elevation: 2,
@@ -166,7 +164,7 @@ class ListItemSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     return ShimmerEffect(
       child: Card(
         margin: EdgeInsets.zero,

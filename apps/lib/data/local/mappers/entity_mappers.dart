@@ -21,13 +21,13 @@ extension ProductIsarMapper on Product {
 
 extension ProductModelDomainMapper on ProductModel {
   Product toDomain() => Product(
-        id: uid,
-        name: name,
-        sku: sku,
-        unitCost: MoneyRiel(unitCost),
-        price: MoneyRiel(price),
-        stock: stock,
-      );
+    id: uid,
+    name: name,
+    sku: sku,
+    unitCost: MoneyRiel(unitCost),
+    price: MoneyRiel(price),
+    stock: stock,
+  );
 }
 
 extension SaleIsarMapper on Sale {
@@ -39,7 +39,8 @@ extension SaleIsarMapper on Sale {
 }
 
 extension SaleModelDomainMapper on SaleModel {
-  Sale toDomain() => Sale(id: uid, createdAt: createdAt, total: MoneyRiel(total));
+  Sale toDomain() =>
+      Sale(id: uid, createdAt: createdAt, total: MoneyRiel(total));
 }
 
 extension PaymentIsarMapper on Payment {
@@ -52,59 +53,70 @@ extension PaymentIsarMapper on Payment {
 }
 
 extension PaymentModelDomainMapper on PaymentModel {
-  Payment toDomain() =>
-      Payment(id: uid, saleId: saleUid, method: method, amount: MoneyRiel(amount));
+  Payment toDomain() => Payment(
+    id: uid,
+    saleId: saleUid,
+    method: method,
+    amount: MoneyRiel(amount),
+  );
 }
 
 // Domain <-> DTO
 extension ProductDtoMapper on Product {
   ProductDto toDto() => ProductDto(
-        id: id,
-        name: name,
-        sku: sku,
-        unitCost: unitCost.amount,
-        price: price.amount,
-        stock: stock,
-        updatedAt: DateTime.now().toUtc().toIso8601String(),
-      );
+    id: id,
+    name: name,
+    sku: sku,
+    unitCost: unitCost.amount,
+    price: price.amount,
+    stock: stock,
+    updatedAt: DateTime.now().toUtc().toIso8601String(),
+  );
 }
 
 extension ProductFromDto on ProductDto {
   Product toDomain() => Product(
-        id: id,
-        name: name,
-        sku: sku,
-        unitCost: MoneyRiel(unitCost),
-        price: MoneyRiel(price),
-        stock: stock,
-      );
+    id: id,
+    name: name,
+    sku: sku,
+    unitCost: MoneyRiel(unitCost),
+    price: MoneyRiel(price),
+    stock: stock,
+  );
 }
 
 extension SaleDtoMapper on Sale {
   SaleDto toDto() => SaleDto(
-        id: id,
-        createdAt: createdAt.toIso8601String(),
-        total: total.amount,
-        updatedAt: DateTime.now().toUtc().toIso8601String(),
-      );
+    id: id,
+    createdAt: createdAt.toIso8601String(),
+    total: total.amount,
+    updatedAt: DateTime.now().toUtc().toIso8601String(),
+  );
 }
 
 extension SaleFromDto on SaleDto {
-  Sale toDomain() =>
-      Sale(id: id, createdAt: DateTime.parse(createdAt), total: MoneyRiel(total));
+  Sale toDomain() => Sale(
+    id: id,
+    createdAt: DateTime.parse(createdAt),
+    total: MoneyRiel(total),
+  );
 }
 
 extension PaymentDtoMapper on Payment {
   PaymentDto toDto() => PaymentDto(
-        id: id,
-        saleId: saleId,
-        method: method,
-        amount: amount.amount,
-        updatedAt: DateTime.now().toUtc().toIso8601String(),
-      );
+    id: id,
+    saleId: saleId,
+    method: method,
+    amount: amount.amount,
+    updatedAt: DateTime.now().toUtc().toIso8601String(),
+  );
 }
 
 extension PaymentFromDto on PaymentDto {
-  Payment toDomain() =>
-      Payment(id: id, saleId: saleId, method: method, amount: MoneyRiel(amount));
+  Payment toDomain() => Payment(
+    id: id,
+    saleId: saleId,
+    method: method,
+    amount: MoneyRiel(amount),
+  );
 }

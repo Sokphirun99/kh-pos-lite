@@ -18,7 +18,13 @@ Future<Isar> openIsarDb({String? directory}) async {
     dir = await getApplicationDocumentsDirectory();
   }
   final isar = await Isar.open(
-    [ProductModelSchema, SaleModelSchema, PaymentModelSchema, OutboxOpSchema, MetaKVSchema],
+    [
+      ProductModelSchema,
+      SaleModelSchema,
+      PaymentModelSchema,
+      OutboxOpSchema,
+      MetaKVSchema,
+    ],
     directory: dir.path,
     inspector: false,
   );

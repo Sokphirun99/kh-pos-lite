@@ -2,4 +2,3 @@
 class SettingsService {
   Future<void> saveDarkMode(bool enabled) async {}
 }
-

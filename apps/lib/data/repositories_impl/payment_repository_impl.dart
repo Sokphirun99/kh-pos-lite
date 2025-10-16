@@ -19,7 +19,10 @@ class PaymentRepositoryImpl implements PaymentRepository {
   @override
   Future<void> add(Payment payment) async {
     await isar.writeTxn(() async {
-      final existing = await isar.paymentModels.filter().uidEqualTo(payment.id).findFirst();
+      final existing = await isar.paymentModels
+          .filter()
+          .uidEqualTo(payment.id)
+          .findFirst();
       final model = payment.toIsar();
       if (existing != null) model.id = existing.id;
       await isar.paymentModels.put(model);
@@ -46,7 +49,10 @@ class PaymentRepositoryImpl implements PaymentRepository {
   @override
   Future<void> update(Payment payment) async {
     await isar.writeTxn(() async {
-      final existing = await isar.paymentModels.filter().uidEqualTo(payment.id).findFirst();
+      final existing = await isar.paymentModels
+          .filter()
+          .uidEqualTo(payment.id)
+          .findFirst();
       final model = payment.toIsar();
       if (existing != null) model.id = existing.id;
       await isar.paymentModels.put(model);
@@ -85,17 +91,20 @@ class PaymentRepositoryImpl implements PaymentRepository {
         .where()
         .watch(fireImmediately: true)
         .listen((models) {
-      final data = models.map((e) => e.toDomain()).toList(growable: false);
-      _watchAllCache = data;
-      controller.add(data);
-    });
+          final data = models.map((e) => e.toDomain()).toList(growable: false);
+          _watchAllCache = data;
+          controller.add(data);
+        });
     return controller.stream;
   }
 
   @override
   Future<void> delete(String id) async {
     await isar.writeTxn(() async {
-      final existing = await isar.paymentModels.filter().uidEqualTo(id).findFirst();
+      final existing = await isar.paymentModels
+          .filter()
+          .uidEqualTo(id)
+          .findFirst();
       if (existing != null) {
         await isar.paymentModels.delete(existing.id);
       }

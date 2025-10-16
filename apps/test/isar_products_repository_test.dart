@@ -20,17 +20,21 @@ void main() {
     final stream = repo.watchAll();
     final future = expectLater(
       stream,
-      emitsThrough(predicate<List<Product>>((items) => items.any((p) => p.id == id))),
+      emitsThrough(
+        predicate<List<Product>>((items) => items.any((p) => p.id == id)),
+      ),
     );
 
-    await repo.add(Product(
-      id: id,
-      name: 'Test',
-      sku: 'DUMMY-SKU',
-      unitCost: const MoneyRiel(800),
-      price: const MoneyRiel(1000),
-      stock: 3,
-    ));
+    await repo.add(
+      Product(
+        id: id,
+        name: 'Test',
+        sku: 'DUMMY-SKU',
+        unitCost: const MoneyRiel(800),
+        price: const MoneyRiel(1000),
+        stock: 3,
+      ),
+    );
     await future;
 
     await isar.close();

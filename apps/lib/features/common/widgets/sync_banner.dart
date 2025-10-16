@@ -20,11 +20,15 @@ class _SyncBannerState extends State<SyncBanner> {
   void initState() {
     super.initState();
     _sub = Connectivity().onConnectivityChanged.listen((results) {
-      final online = results.contains(ConnectivityResult.mobile) || results.contains(ConnectivityResult.wifi);
+      final online =
+          results.contains(ConnectivityResult.mobile) ||
+          results.contains(ConnectivityResult.wifi);
       setState(() => _offline = !online);
     });
     Connectivity().checkConnectivity().then((results) {
-      final online = (results.contains(ConnectivityResult.mobile) || results.contains(ConnectivityResult.wifi));
+      final online =
+          (results.contains(ConnectivityResult.mobile) ||
+          results.contains(ConnectivityResult.wifi));
       if (mounted) setState(() => _offline = !online);
     });
   }
@@ -44,18 +48,37 @@ class _SyncBannerState extends State<SyncBanner> {
       builder: (context, sync) {
         Widget? chip;
         if (_offline) {
-          chip = Chip(avatar: const Icon(Icons.wifi_off, size: 18), label: Text(l10n.offline));
+          chip = Chip(
+            avatar: const Icon(Icons.wifi_off, size: 18),
+            label: Text(l10n.offline),
+          );
         } else if (sync.isSyncing) {
           chip = Chip(
-            avatar: const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2)),
+            avatar: const SizedBox(
+              width: 18,
+              height: 18,
+              child: CircularProgressIndicator(strokeWidth: 2),
+            ),
             label: Text(l10n.settingsSyncing),
           );
         } else if (sync.error != null) {
-          chip = Chip(avatar: const Icon(Icons.error, color: Colors.red, size: 18), label: Text(l10n.settingsSyncError(sync.error!)));
+          chip = Chip(
+            avatar: const Icon(Icons.error, color: Colors.red, size: 18),
+            label: Text(l10n.settingsSyncError(sync.error!)),
+          );
         } else {
-          chip = Chip(avatar: const Icon(Icons.check, color: Colors.green, size: 18), label: Text(l10n.allSynced));
+          chip = Chip(
+            avatar: const Icon(Icons.check, color: Colors.green, size: 18),
+            label: Text(l10n.allSynced),
+          );
         }
-        return Align(alignment: Alignment.centerLeft, child: Padding(padding: const EdgeInsets.fromLTRB(16, 8, 16, 0), child: chip));
+        return Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+            child: chip,
+          ),
+        );
       },
     );
   }

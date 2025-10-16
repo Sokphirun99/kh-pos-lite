@@ -2,4 +2,3 @@
 class ReportsService {
   Future<String> dailySummary() async => 'No data';
 }
-

@@ -41,8 +41,8 @@ class SettingsScreen extends StatelessWidget {
                   final text = state.isSyncing
                       ? l10n.settingsSyncing
                       : (state.error != null
-                          ? l10n.settingsSyncError(state.error!)
-                          : l10n.settingsSyncIdle);
+                            ? l10n.settingsSyncError(state.error!)
+                            : l10n.settingsSyncIdle);
                   return _SettingsTile(
                     leading: const Icon(Icons.sync),
                     title: Text(text),
@@ -50,14 +50,17 @@ class SettingsScreen extends StatelessWidget {
                       icon: const Icon(Icons.cloud_upload_outlined),
                       onPressed: state.isSyncing
                           ? null
-                          : () => context.read<SyncBloc>().add(const SyncTriggered()),
+                          : () => context.read<SyncBloc>().add(
+                              const SyncTriggered(),
+                            ),
                       label: Text(l10n.settingsSyncNow),
                     ),
                   );
                 },
               ),
               BlocBuilder<SyncBloc, SyncState>(
-                buildWhen: (previous, current) => previous.lastSynced != current.lastSynced,
+                buildWhen: (previous, current) =>
+                    previous.lastSynced != current.lastSynced,
                 builder: (context, state) {
                   if (state.lastSynced == null) return const SizedBox.shrink();
                   return _SettingsTile(
@@ -96,10 +99,17 @@ class SettingsScreen extends StatelessWidget {
                   child: DropdownButton<Locale>(
                     value: locale ?? const Locale('en'),
                     items: const [
-                      DropdownMenuItem(value: Locale('en'), child: Text('English')),
-                      DropdownMenuItem(value: Locale('km'), child: Text('ខ្មែរ')),
+                      DropdownMenuItem(
+                        value: Locale('en'),
+                        child: Text('English'),
+                      ),
+                      DropdownMenuItem(
+                        value: Locale('km'),
+                        child: Text('ខ្មែរ'),
+                      ),
                     ],
-                    onChanged: (loc) => context.read<LocaleCubit>().setLocale(loc),
+                    onChanged: (loc) =>
+                        context.read<LocaleCubit>().setLocale(loc),
                   ),
                 ),
               ),
@@ -115,14 +125,16 @@ class SettingsScreen extends StatelessWidget {
                 secondary: const Icon(Icons.campaign_outlined),
                 title: Text(l10n.settingsShowSyncBanner),
                 value: flags.showSyncBanner,
-                onChanged: (v) => context.read<FeatureFlagsCubit>().setShowSyncBanner(v),
+                onChanged: (v) =>
+                    context.read<FeatureFlagsCubit>().setShowSyncBanner(v),
               ),
               SwitchListTile.adaptive(
                 contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                 secondary: const Icon(Icons.playlist_add_check_circle_outlined),
                 title: Text(l10n.settingsEnableBatchSync),
                 value: flags.enableBatchSync,
-                onChanged: (v) => context.read<FeatureFlagsCubit>().setEnableBatchSync(v),
+                onChanged: (v) =>
+                    context.read<FeatureFlagsCubit>().setEnableBatchSync(v),
               ),
               SwitchListTile.adaptive(
                 contentPadding: const EdgeInsets.symmetric(horizontal: 20),
@@ -147,38 +159,46 @@ class SettingsScreen extends StatelessWidget {
                   max: 50,
                   divisions: 9,
                   label: flags.batchSize.toString(),
-                  onChanged: (v) => context.read<FeatureFlagsCubit>().setBatchSize(v.round()),
+                  onChanged: (v) =>
+                      context.read<FeatureFlagsCubit>().setBatchSize(v.round()),
                 ),
               ),
-              Builder(builder: (context) {
-                final threshold = KeyValueService.get<int>('low_stock_threshold') ?? 5;
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _SettingsTile(
-                      leading: const Icon(Icons.inventory_outlined),
-                      title: Text(l10n.settingsLowStockThreshold),
-                      subtitle: Text(
-                        l10n.settingsLowStockThresholdDescription(threshold),
+              Builder(
+                builder: (context) {
+                  final threshold =
+                      KeyValueService.get<int>('low_stock_threshold') ?? 5;
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _SettingsTile(
+                        leading: const Icon(Icons.inventory_outlined),
+                        title: Text(l10n.settingsLowStockThreshold),
+                        subtitle: Text(
+                          l10n.settingsLowStockThresholdDescription(threshold),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Slider(
-                        value: threshold.toDouble(),
-                        min: 0,
-                        max: 100,
-                        divisions: 20,
-                        label: threshold.toString(),
-                        onChanged: (v) async {
-                          await KeyValueService.set<int>('low_stock_threshold', v.round());
-                          if (context.mounted) (context as Element).markNeedsBuild();
-                        },
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Slider(
+                          value: threshold.toDouble(),
+                          min: 0,
+                          max: 100,
+                          divisions: 20,
+                          label: threshold.toString(),
+                          onChanged: (v) async {
+                            await KeyValueService.set<int>(
+                              'low_stock_threshold',
+                              v.round(),
+                            );
+                            if (context.mounted)
+                              (context as Element).markNeedsBuild();
+                          },
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              }),
+                    ],
+                  );
+                },
+              ),
             ],
           ),
           const SizedBox(height: 24),
@@ -186,20 +206,11 @@ class SettingsScreen extends StatelessWidget {
             title: l10n.settingsReceiptSection,
             subtitle: l10n.settingsReceiptSectionSubtitle,
             children: const [
-              _SettingTextField(
-                label: 'Shop name',
-                storageKey: 'shop_name',
-              ),
+              _SettingTextField(label: 'Shop name', storageKey: 'shop_name'),
               _SettingsDivider(),
-              _SettingTextField(
-                label: 'Address',
-                storageKey: 'shop_address',
-              ),
+              _SettingTextField(label: 'Address', storageKey: 'shop_address'),
               _SettingsDivider(),
-              _SettingTextField(
-                label: 'Phone',
-                storageKey: 'shop_phone',
-              ),
+              _SettingTextField(label: 'Phone', storageKey: 'shop_phone'),
               _SettingsDivider(),
               _SettingTextField(
                 label: 'Footer note',
@@ -212,67 +223,87 @@ class SettingsScreen extends StatelessWidget {
             title: l10n.settingsPaymentSection,
             subtitle: l10n.settingsPaymentSectionSubtitle,
             children: [
-              Builder(builder: (context) {
-                final khqrPath = KeyValueService.get<String>('khqr_image_path');
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _SettingsTile(
-                      leading: const Icon(Icons.qr_code_2),
-                      title: Text(l10n.settingsKhqrTitle),
-                      subtitle: Text(khqrPath ?? l10n.settingsKhqrNotSet),
-                    ),
-                    if (khqrPath != null)
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 12, 20, 4),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.file(
-                            File(khqrPath),
-                            height: 160,
-                            fit: BoxFit.contain,
+              Builder(
+                builder: (context) {
+                  final khqrPath = KeyValueService.get<String>(
+                    'khqr_image_path',
+                  );
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _SettingsTile(
+                        leading: const Icon(Icons.qr_code_2),
+                        title: Text(l10n.settingsKhqrTitle),
+                        subtitle: Text(khqrPath ?? l10n.settingsKhqrNotSet),
+                      ),
+                      if (khqrPath != null)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 12, 20, 4),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.file(
+                              File(khqrPath),
+                              height: 160,
+                              fit: BoxFit.contain,
+                            ),
                           ),
                         ),
-                      ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: Wrap(
-                        spacing: 12,
-                        runSpacing: 8,
-                        children: [
-                          OutlinedButton.icon(
-                            icon: const Icon(Icons.upload),
-                            label: Text(l10n.settingsUploadKhqr),
-                            onPressed: () async {
-                              final picker = ImagePicker();
-                              final picked = await picker.pickImage(source: ImageSource.gallery);
-                              if (picked == null) return;
-                              final appDir = await getApplicationDocumentsDirectory();
-                              final dst = File('${appDir.path}/khqr.png');
-                              await File(picked.path).copy(dst.path);
-                              await KeyValueService.set<String>('khqr_image_path', dst.path);
-                              if (context.mounted) (context as Element).markNeedsBuild();
-                            },
-                          ),
-                          if (khqrPath != null)
-                            TextButton.icon(
-                              icon: const Icon(Icons.delete_outline),
-                              label: Text(l10n.settingsRemoveKhqr),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Wrap(
+                          spacing: 12,
+                          runSpacing: 8,
+                          children: [
+                            OutlinedButton.icon(
+                              icon: const Icon(Icons.upload),
+                              label: Text(l10n.settingsUploadKhqr),
                               onPressed: () async {
-                                await KeyValueService.remove('khqr_image_path');
-                                if (context.mounted) (context as Element).markNeedsBuild();
+                                final picker = ImagePicker();
+                                final picked = await picker.pickImage(
+                                  source: ImageSource.gallery,
+                                );
+                                if (picked == null) return;
+                                final appDir =
+                                    await getApplicationDocumentsDirectory();
+                                final dst = File('${appDir.path}/khqr.png');
+                                await File(picked.path).copy(dst.path);
+                                await KeyValueService.set<String>(
+                                  'khqr_image_path',
+                                  dst.path,
+                                );
+                                if (context.mounted)
+                                  (context as Element).markNeedsBuild();
                               },
                             ),
-                        ],
+                            if (khqrPath != null)
+                              TextButton.icon(
+                                icon: const Icon(Icons.delete_outline),
+                                label: Text(l10n.settingsRemoveKhqr),
+                                onPressed: () async {
+                                  await KeyValueService.remove(
+                                    'khqr_image_path',
+                                  );
+                                  if (context.mounted)
+                                    (context as Element).markNeedsBuild();
+                                },
+                              ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              }),
+                    ],
+                  );
+                },
+              ),
               const _SettingsDivider(),
-              const _SettingTextField(label: 'Telegram bot token', storageKey: 'tg_bot_token'),
+              const _SettingTextField(
+                label: 'Telegram bot token',
+                storageKey: 'tg_bot_token',
+              ),
               const _SettingsDivider(),
-              const _SettingTextField(label: 'Telegram chat id', storageKey: 'tg_chat_id'),
+              const _SettingTextField(
+                label: 'Telegram chat id',
+                storageKey: 'tg_chat_id',
+              ),
             ],
           ),
           const SizedBox(height: 24),
@@ -284,7 +315,9 @@ class SettingsScreen extends StatelessWidget {
                 leading: const Icon(Icons.logout, color: Colors.red),
                 title: Text(
                   l10n.loginTitle,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.redAccent),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleMedium?.copyWith(color: Colors.redAccent),
                 ),
                 onTap: () async {
                   context.read<AuthBloc>().add(const AuthSignedOut());
@@ -314,7 +347,9 @@ class _SettingTextFieldState extends State<_SettingTextField> {
   @override
   void initState() {
     super.initState();
-    _ctrl = TextEditingController(text: KeyValueService.get<String>(widget.storageKey) ?? '');
+    _ctrl = TextEditingController(
+      text: KeyValueService.get<String>(widget.storageKey) ?? '',
+    );
   }
 
   @override
@@ -335,13 +370,18 @@ class _SettingTextFieldState extends State<_SettingTextField> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: theme.colorScheme.outline.withOpacity(0.4)),
+            borderSide: BorderSide(
+              color: theme.colorScheme.outline.withOpacity(0.4),
+            ),
           ),
           isDense: true,
           filled: true,
-          fillColor: theme.colorScheme.surfaceContainerHighest.withOpacity(theme.brightness == Brightness.dark ? 0.24 : 0.5),
+          fillColor: theme.colorScheme.surfaceContainerHighest.withOpacity(
+            theme.brightness == Brightness.dark ? 0.24 : 0.5,
+          ),
         ),
-        onChanged: (v) => KeyValueService.set<String>(widget.storageKey, v.trim()),
+        onChanged: (v) =>
+            KeyValueService.set<String>(widget.storageKey, v.trim()),
       ),
     );
   }
@@ -351,7 +391,11 @@ class _SettingsSection extends StatelessWidget {
   final String title;
   final String? subtitle;
   final List<Widget> children;
-  const _SettingsSection({required this.title, this.subtitle, required this.children});
+  const _SettingsSection({
+    required this.title,
+    this.subtitle,
+    required this.children,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -378,8 +422,12 @@ class _SettingsSection extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           elevation: 0,
           margin: EdgeInsets.zero,
-          color: theme.colorScheme.surfaceContainerHighest.withOpacity(theme.brightness == Brightness.dark ? 0.3 : 0.8),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          color: theme.colorScheme.surfaceContainerHighest.withOpacity(
+            theme.brightness == Brightness.dark ? 0.3 : 0.8,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
           child: Column(
             children: [
               for (final widget in children) ...[
@@ -402,7 +450,13 @@ class _SettingsTile extends StatelessWidget {
   final Widget? subtitle;
   final Widget? trailing;
   final VoidCallback? onTap;
-  const _SettingsTile({this.leading, required this.title, this.subtitle, this.trailing, this.onTap});
+  const _SettingsTile({
+    this.leading,
+    required this.title,
+    this.subtitle,
+    this.trailing,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -418,10 +472,7 @@ class _SettingsTile extends StatelessWidget {
               child: leading!,
             ),
       minLeadingWidth: 32,
-      title: DefaultTextStyle.merge(
-        style: textTheme.titleMedium,
-        child: title,
-      ),
+      title: DefaultTextStyle.merge(style: textTheme.titleMedium, child: title),
       subtitle: subtitle == null
           ? null
           : DefaultTextStyle.merge(

@@ -16,9 +16,11 @@ class TelegramService {
     final form = FormData.fromMap({
       'chat_id': chatId,
       'caption': caption ?? '',
-      'document': await MultipartFile.fromFile(file.path, filename: file.uri.pathSegments.last),
+      'document': await MultipartFile.fromFile(
+        file.path,
+        filename: file.uri.pathSegments.last,
+      ),
     });
     await _dio.post(url, data: form);
   }
 }
-

@@ -62,88 +62,145 @@ class SaleDetailScreen extends StatelessWidget {
               final payment = Payment(
                 id: const Uuid().v4(),
                 saleId: sale.id,
-                method: result.method == PaymentMethod.cash ? 'cash' : 'transfer',
+                method: result.method == PaymentMethod.cash
+                    ? 'cash'
+                    : 'transfer',
                 amount: MoneyRiel(result.tendered),
               );
-                                      await payRepo.add(payment);
-                                      if (result.reference != null && result.reference!.isNotEmpty) {
-                                        await KeyValueService.set('payment_ref_${payment.id}', result.reference!);
-                                      }
-                                      final change = result.tendered - remaining;
+              await payRepo.add(payment);
+              if (result.reference != null && result.reference!.isNotEmpty) {
+                await KeyValueService.set(
+                  'payment_ref_${payment.id}',
+                  result.reference!,
+                );
+              }
+              final change = result.tendered - remaining;
               final msg = change >= 0
-                  ? (AppLocalizations.of(context).saleCompletedChange('៛$change'))
-                  : (AppLocalizations.of(context).saleCompletedRemaining('៛${(-change)}'));
+                  ? (AppLocalizations.of(
+                      context,
+                    ).saleCompletedChange('៛$change'))
+                  : (AppLocalizations.of(
+                      context,
+                    ).saleCompletedRemaining('៛${(-change)}'));
               if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(msg)));
               }
             }
 
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(l10n.saleDetailsTitle),
-              actions: [
-                PopupMenuButton<String>(
-                  onSelected: (v) async {
-                    if (v == 'print') {
-                      final addr = KeyValueService.get<String>('bt_printer_addr');
-                      if (addr == null || addr.isEmpty) {
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.pairPrinter)));
-                          context.pushNamed('printers');
+            return Scaffold(
+              appBar: AppBar(
+                title: Text(l10n.saleDetailsTitle),
+                actions: [
+                  PopupMenuButton<String>(
+                    onSelected: (v) async {
+                      if (v == 'print') {
+                        final addr = KeyValueService.get<String>(
+                          'bt_printer_addr',
+                        );
+                        if (addr == null || addr.isEmpty) {
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(l10n.pairPrinter)),
+                            );
+                            context.pushNamed('printers');
+                          }
+                          return;
                         }
-                        return;
-                      }
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.printingStarted)));
-                      try {
-                        await BluetoothService().connectTo(addr);
-                        final data = ReceiptService.buildEscPos(sale: sale, payments: pays);
-                        await BluetoothService().sendBytes(data);
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.printingDone)));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(l10n.printingStarted)),
+                        );
+                        try {
+                          await BluetoothService().connectTo(addr);
+                          final data = ReceiptService.buildEscPos(
+                            sale: sale,
+                            payments: pays,
+                          );
+                          await BluetoothService().sendBytes(data);
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(l10n.printingDone)),
+                            );
+                          }
+                        } catch (e) {
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(l10n.printingFailed)),
+                            );
+                          }
                         }
-                      } catch (e) {
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.printingFailed)));
-                        }
-                      }
-                    } else if (v == 'pair') {
-                      if (context.mounted) context.pushNamed('printers');
-                    } else if (v == 'share') {
-                      final pdf = await ReceiptService.buildPdf(sale: sale, payments: pays);
-                      final dir = await getTemporaryDirectory();
-                      final f = File('${dir.path}/receipt_${sale.id}.pdf');
-                      await f.writeAsBytes(pdf, flush: true);
-                      await Share.shareXFiles([XFile(f.path)], text: l10n.receipt);
-                    } else if (v == 'preview') {
-                      if (context.mounted) context.pushNamed('receipt_preview', pathParameters: {'id': sale.id});
-                    } else if (v == 'tg') {
-                      try {
-                        final pdf = await ReceiptService.buildPdf(sale: sale, payments: pays);
+                      } else if (v == 'pair') {
+                        if (context.mounted) context.pushNamed('printers');
+                      } else if (v == 'share') {
+                        final pdf = await ReceiptService.buildPdf(
+                          sale: sale,
+                          payments: pays,
+                        );
                         final dir = await getTemporaryDirectory();
                         final f = File('${dir.path}/receipt_${sale.id}.pdf');
                         await f.writeAsBytes(pdf, flush: true);
-                        await TelegramService().sendDocument(file: f, caption: l10n.receipt);
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Telegram: OK')));
-                        }
-                      } catch (e) {
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.telegramNotConfigured)));
+                        await Share.shareXFiles([
+                          XFile(f.path),
+                        ], text: l10n.receipt);
+                      } else if (v == 'preview') {
+                        if (context.mounted)
+                          context.pushNamed(
+                            'receipt_preview',
+                            pathParameters: {'id': sale.id},
+                          );
+                      } else if (v == 'tg') {
+                        try {
+                          final pdf = await ReceiptService.buildPdf(
+                            sale: sale,
+                            payments: pays,
+                          );
+                          final dir = await getTemporaryDirectory();
+                          final f = File('${dir.path}/receipt_${sale.id}.pdf');
+                          await f.writeAsBytes(pdf, flush: true);
+                          await TelegramService().sendDocument(
+                            file: f,
+                            caption: l10n.receipt,
+                          );
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Telegram: OK')),
+                            );
+                          }
+                        } catch (e) {
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(l10n.telegramNotConfigured),
+                              ),
+                            );
+                          }
                         }
                       }
-                    }
-                  },
-                  itemBuilder: (ctx) => [
-                    PopupMenuItem(value: 'pair', child: Text(l10n.pairPrinter)),
-                    PopupMenuItem(value: 'print', child: Text(l10n.printBluetooth)),
-                    PopupMenuItem(value: 'share', child: Text(l10n.sharePdf)),
-                    const PopupMenuItem(value: 'preview', child: Text('Preview')),
-                    PopupMenuItem(value: 'tg', child: Text(l10n.sendTelegram)),
-                  ],
-                )
-              ],
-            ),
-            body: Column(
+                    },
+                    itemBuilder: (ctx) => [
+                      PopupMenuItem(
+                        value: 'pair',
+                        child: Text(l10n.pairPrinter),
+                      ),
+                      PopupMenuItem(
+                        value: 'print',
+                        child: Text(l10n.printBluetooth),
+                      ),
+                      PopupMenuItem(value: 'share', child: Text(l10n.sharePdf)),
+                      const PopupMenuItem(
+                        value: 'preview',
+                        child: Text('Preview'),
+                      ),
+                      PopupMenuItem(
+                        value: 'tg',
+                        child: Text(l10n.sendTelegram),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              body: Column(
                 children: [
                   _SaleHeader(sale: sale, paid: paid, remaining: remaining),
                   const Divider(height: 0),
@@ -152,16 +209,21 @@ class SaleDetailScreen extends StatelessWidget {
                         ? Center(child: Text(l10n.noPayments))
                         : ListView.separated(
                             itemCount: pays.length,
-                            separatorBuilder: (_, __) => const Divider(height: 0),
+                            separatorBuilder: (_, __) =>
+                                const Divider(height: 0),
                             itemBuilder: (_, i) {
                               final p = pays[i];
-                              final ref = KeyValueService.get<String>('payment_ref_${p.id}');
+                              final ref = KeyValueService.get<String>(
+                                'payment_ref_${p.id}',
+                              );
 
                               Future<void> deletePayment() async {
                                 final prevRef = ref;
                                 await payRepo.delete(p.id);
                                 if (prevRef != null && prevRef.isNotEmpty) {
-                                  await KeyValueService.remove('payment_ref_${p.id}');
+                                  await KeyValueService.remove(
+                                    'payment_ref_${p.id}',
+                                  );
                                 }
                                 if (context.mounted) {
                                   final snack = SnackBar(
@@ -170,13 +232,19 @@ class SaleDetailScreen extends StatelessWidget {
                                       label: l10n.undo,
                                       onPressed: () async {
                                         await payRepo.add(p);
-                                        if (prevRef != null && prevRef.isNotEmpty) {
-                                          await KeyValueService.set('payment_ref_${p.id}', prevRef);
+                                        if (prevRef != null &&
+                                            prevRef.isNotEmpty) {
+                                          await KeyValueService.set(
+                                            'payment_ref_${p.id}',
+                                            prevRef,
+                                          );
                                         }
                                       },
                                     ),
                                   );
-                                  ScaffoldMessenger.of(context).showSnackBar(snack);
+                                  ScaffoldMessenger.of(
+                                    context,
+                                  ).showSnackBar(snack);
                                 }
                               }
 
@@ -188,7 +256,11 @@ class SaleDetailScreen extends StatelessWidget {
                                 child: ListTile(
                                   leading: const Icon(Icons.payments),
                                   title: Text('៛${p.amount.amount}'),
-                                  subtitle: Text(ref == null || ref.isEmpty ? p.method : '${p.method} • ${l10n.txRefLabel(ref)}'),
+                                  subtitle: Text(
+                                    ref == null || ref.isEmpty
+                                        ? p.method
+                                        : '${p.method} • ${l10n.txRefLabel(ref)}',
+                                  ),
                                   trailing: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -197,10 +269,18 @@ class SaleDetailScreen extends StatelessWidget {
                                           tooltip: l10n.aboutCopied,
                                           icon: const Icon(Icons.copy),
                                           onPressed: () async {
-                                            await Clipboard.setData(ClipboardData(text: ref));
+                                            await Clipboard.setData(
+                                              ClipboardData(text: ref),
+                                            );
                                             if (context.mounted) {
-                                              ScaffoldMessenger.of(context).showSnackBar(
-                                                SnackBar(content: Text(l10n.aboutCopied)),
+                                              ScaffoldMessenger.of(
+                                                context,
+                                              ).showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    l10n.aboutCopied,
+                                                  ),
+                                                ),
                                               );
                                             }
                                           },
@@ -251,7 +331,11 @@ class _SaleHeader extends StatelessWidget {
   final Sale sale;
   final int paid;
   final int remaining;
-  const _SaleHeader({required this.sale, required this.paid, required this.remaining});
+  const _SaleHeader({
+    required this.sale,
+    required this.paid,
+    required this.remaining,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -261,7 +345,10 @@ class _SaleHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Sale ${sale.id}', style: Theme.of(context).textTheme.titleMedium),
+          Text(
+            'Sale ${sale.id}',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           const SizedBox(height: 4),
           Text(dt, style: Theme.of(context).textTheme.bodySmall),
           const SizedBox(height: 12),
@@ -269,7 +356,10 @@ class _SaleHeader extends StatelessWidget {
             children: [
               Text(AppLocalizations.of(context).checkoutTotal),
               const Spacer(),
-              Text('៛${sale.total.amount}', style: Theme.of(context).textTheme.titleMedium),
+              Text(
+                '៛${sale.total.amount}',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ],
           ),
           const SizedBox(height: 4),
@@ -283,9 +373,15 @@ class _SaleHeader extends StatelessWidget {
           const SizedBox(height: 4),
           Row(
             children: [
-              Text(AppLocalizations.of(context).balance, style: Theme.of(context).textTheme.titleSmall),
+              Text(
+                AppLocalizations.of(context).balance,
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
               const Spacer(),
-              Text('៛$remaining', style: Theme.of(context).textTheme.titleLarge),
+              Text(
+                '៛$remaining',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
             ],
           ),
         ],

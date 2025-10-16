@@ -26,7 +26,10 @@ void main() {
 
   testWidgets('navigates away after successful authentication', (tester) async {
     final authService = TestAuthService();
-    final bloc = AuthBloc(tokenStorage: MemoryTokenStorage(), authService: authService);
+    final bloc = AuthBloc(
+      tokenStorage: MemoryTokenStorage(),
+      authService: authService,
+    );
     addTearDown(bloc.close);
 
     final refresh = GoRouterRefreshStream(bloc.stream);
@@ -34,7 +37,10 @@ void main() {
       initialLocation: '/login',
       refreshListenable: refresh,
       redirect: (_, state) {
-        final loggedIn = bloc.state.maybeWhen(authenticated: (_) => true, orElse: () => false);
+        final loggedIn = bloc.state.maybeWhen(
+          authenticated: (_) => true,
+          orElse: () => false,
+        );
         final goingToLogin = state.matchedLocation == '/login';
         if (!loggedIn && !goingToLogin) return '/login';
         if (loggedIn && goingToLogin) return '/';
@@ -61,7 +67,9 @@ void main() {
 
     expect(find.byType(LoginScreen), findsOneWidget);
 
-    bloc.add(const AuthLoginRequested(email: 'user@example.com', password: 'secret'));
+    bloc.add(
+      const AuthLoginRequested(email: 'user@example.com', password: 'secret'),
+    );
     await tester.pump(const Duration(milliseconds: 10));
     await tester.pumpAndSettle();
 

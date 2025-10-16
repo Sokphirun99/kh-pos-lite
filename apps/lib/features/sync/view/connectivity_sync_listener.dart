@@ -9,7 +9,8 @@ class ConnectivitySyncListener extends StatefulWidget {
   const ConnectivitySyncListener({super.key, required this.child});
 
   @override
-  State<ConnectivitySyncListener> createState() => _ConnectivitySyncListenerState();
+  State<ConnectivitySyncListener> createState() =>
+      _ConnectivitySyncListenerState();
 }
 
 class _ConnectivitySyncListenerState extends State<ConnectivitySyncListener> {
@@ -19,7 +20,8 @@ class _ConnectivitySyncListenerState extends State<ConnectivitySyncListener> {
   void initState() {
     super.initState();
     _sub = Connectivity().onConnectivityChanged.listen((results) {
-      if (results.contains(ConnectivityResult.mobile) || results.contains(ConnectivityResult.wifi)) {
+      if (results.contains(ConnectivityResult.mobile) ||
+          results.contains(ConnectivityResult.wifi)) {
         context.read<SyncBloc>().add(const SyncTriggered());
       }
     });
@@ -34,4 +36,3 @@ class _ConnectivitySyncListenerState extends State<ConnectivitySyncListener> {
   @override
   Widget build(BuildContext context) => widget.child;
 }
-

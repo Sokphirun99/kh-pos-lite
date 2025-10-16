@@ -62,4 +62,3 @@ class CartDiscountValueSet extends CartEvent {
   @override
   List<Object?> get props => [value];
 }
-
