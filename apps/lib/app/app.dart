@@ -37,14 +37,27 @@ class App extends StatelessWidget {
         BlocProvider(create: (_) => FeatureFlagsCubit()),
         BlocProvider(
           create: (ctx) {
-            final token = ctx.read<AuthBloc>().state.whenOrNull(
-              authenticated: (t) => t,
-            );
-            final api = buildApiClient(
-              token: token,
-              baseUrl: EnvConfig.dev.apiBaseUrl,
-            );
-            return SyncBloc(SyncService(api));
+            // Check if we're in offline mode
+            const isOffline = bool.fromEnvironment('OFFLINE_MODE', defaultValue: false);
+            
+            if (isOffline || EnvConfig.current.isOfflineOnly) {
+              // Use a no-op sync service for offline mode
+              final api = buildApiClient(
+                token: null,
+                baseUrl: '', // No API needed
+              );
+              return SyncBloc(SyncService(api));
+            } else {
+              // Normal online mode
+              final token = ctx.read<AuthBloc>().state.whenOrNull(
+                authenticated: (t) => t,
+              );
+              final api = buildApiClient(
+                token: token,
+                baseUrl: EnvConfig.current.apiBaseUrl,
+              );
+              return SyncBloc(SyncService(api));
+            }
           },
         ),
       ],
@@ -53,32 +66,44 @@ class App extends StatelessWidget {
           final router = buildRouter(context);
           final isDark = context.watch<ThemeCubit>().state;
           final locale = context.watch<LocaleCubit>().state;
-          return ConnectivitySyncListener(
-            child: DynamicColorBuilder(
-              builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-                final lightScheme =
-                    lightDynamic ??
-                    ColorScheme.fromSeed(seedColor: AppTheme.seed);
-                final darkScheme =
-                    darkDynamic ??
-                    ColorScheme.fromSeed(
-                      seedColor: AppTheme.seed,
-                      brightness: Brightness.dark,
-                    );
+          return Builder(
+            builder: (context) {
+              // Check if we're in offline mode
+              const isOffline = bool.fromEnvironment('OFFLINE_MODE', defaultValue: false);
+              
+              final child = DynamicColorBuilder(
+                builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+                  final lightScheme =
+                      lightDynamic ??
+                      ColorScheme.fromSeed(seedColor: AppTheme.seed);
+                  final darkScheme =
+                      darkDynamic ??
+                      ColorScheme.fromSeed(
+                        seedColor: AppTheme.seed,
+                        brightness: Brightness.dark,
+                      );
 
-                return MaterialApp.router(
-                  title: 'KH POS Lite',
-                  theme: AppTheme.lightFrom(lightScheme),
-                  darkTheme: AppTheme.darkFrom(darkScheme),
-                  themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
-                  localizationsDelegates:
-                      AppLocalizations.localizationsDelegates,
-                  supportedLocales: AppLocalizations.supportedLocales,
-                  locale: locale,
-                  routerConfig: router,
-                );
-              },
-            ),
+                  return MaterialApp.router(
+                    title: isOffline ? 'KH POS Lite (Offline)' : 'KH POS Lite',
+                    theme: AppTheme.lightFrom(lightScheme),
+                    darkTheme: AppTheme.darkFrom(darkScheme),
+                    themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+                    localizationsDelegates:
+                        AppLocalizations.localizationsDelegates,
+                    supportedLocales: AppLocalizations.supportedLocales,
+                    locale: locale,
+                    routerConfig: router,
+                  );
+                },
+              );
+
+              // Only wrap with ConnectivitySyncListener if not in offline mode
+              if (isOffline || EnvConfig.current.isOfflineOnly) {
+                return child;
+              } else {
+                return ConnectivitySyncListener(child: child);
+              }
+            },
           );
         },
       ),
