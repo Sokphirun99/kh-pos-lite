@@ -9,6 +9,6 @@ class EnvConfig {
 
   static const EnvConfig dev = EnvConfig(
     flavor: BuildFlavor.dev,
-    apiBaseUrl: 'http://172.16.5.103:8080/api',
+    apiBaseUrl: 'https://dev.example.com/api',
   );
 }
